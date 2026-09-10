@@ -197,4 +197,7 @@ Shadow AI extends ProSan's prompt-privacy sanitization concept into a full end-t
 
 ## License
 
-_TBD by project team._
+Santhosh.S
+Balaji.M
+Seyed Ismail Bilal.S
+Aravindsamy.D
