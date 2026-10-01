@@ -1,0 +1,43 @@
+[
+    {
+        "id": "V5-STATE-007",
+        "category": "cross_turn_person_email",
+        "turns": [
+            "My name is Balaji.",
+            "My contact email is analyst@example.com."
+        ],
+        "expected_entities": ["PERSON", "EMAIL"],
+        "description": "Person identity and email disclosed across turns"
+    },
+    {
+        "id": "V5-STATE-008",
+        "category": "cross_turn_phone_email",
+        "turns": [
+            "My phone number is +1 202-555-0147.",
+            "Contact me at analyst@example.com."
+        ],
+        "expected_entities": ["PHONE", "EMAIL"],
+        "description": "Phone number and email disclosed across turns"
+    },
+    {
+        "id": "V5-STATE-009",
+        "category": "cross_turn_person_phone",
+        "turns": [
+            "My name is Balaji.",
+            "My phone number is +1 202-555-0147."
+        ],
+        "expected_entities": ["PERSON", "PHONE"],
+        "description": "Person identity and phone number disclosed across turns"
+    },
+    {
+        "id": "V5-STATE-010",
+        "category": "three_turn_identity_contact",
+        "turns": [
+            "My name is Balaji.",
+            "My contact email is analyst@example.com.",
+            "My phone number is +1 202-555-0147."
+        ],
+        "expected_entities": ["PERSON", "EMAIL", "PHONE"],
+        "description": "Identity, email, and phone disclosed across three turns"
+    }
+]

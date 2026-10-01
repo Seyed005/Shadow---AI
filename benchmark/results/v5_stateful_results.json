@@ -1,0 +1,805 @@
+{
+    "experiment": "V5 Stateful vs Stateless Risk Evaluation",
+    "method": {
+        "stateless": "Each turn evaluated with empty history.",
+        "stateful": "Previous turns retained as risk history.",
+        "canonicalization": true,
+        "confusable_hardening": true
+    },
+    "summary": {
+        "corpus_cases": 6,
+        "stateless_average_final_risk": 60.6667,
+        "stateful_average_final_risk": 78.6333,
+        "average_final_risk_increase": 17.9667,
+        "stateless_average_latency_ms": 23.9473,
+        "stateful_average_latency_ms": 5.7061
+    },
+    "cases": [
+        {
+            "id": "V5-STATE-001",
+            "category": "single_turn_email",
+            "description": "Single sensitive entity in one turn",
+            "expected_entities": [
+                "EMAIL"
+            ],
+            "turn_count": 1,
+            "stateless": {
+                "turns": [
+                    {
+                        "turn": 1,
+                        "text": "Please send a report to analyst@example.com.",
+                        "entities": [
+                            "EMAIL",
+                            "URL"
+                        ],
+                        "findings": [
+                            {
+                                "type": "EMAIL",
+                                "source": "BASIC+PRESIDIO",
+                                "confidence": 1.0,
+                                "start": 24,
+                                "end": 43
+                            },
+                            {
+                                "type": "URL",
+                                "source": "PRESIDIO",
+                                "confidence": 0.5,
+                                "start": 32,
+                                "end": 43
+                            }
+                        ],
+                        "risk": {
+                            "isolated_risk": 20.0,
+                            "historical_risk": 0.0,
+                            "synergy_risk": 0.0,
+                            "total_risk": 20.0,
+                            "action": "QUARANTINE_HITL"
+                        },
+                        "policy": {
+                            "risk_level": "MEDIUM",
+                            "decision": "HITL",
+                            "requires_human_review": true
+                        },
+                        "latency_ms": 181.6586
+                    }
+                ],
+                "final_total_risk": 20.0,
+                "final_policy": "HITL"
+            },
+            "stateful": {
+                "turns": [
+                    {
+                        "turn": 1,
+                        "text": "Please send a report to analyst@example.com.",
+                        "entities": [
+                            "EMAIL",
+                            "URL"
+                        ],
+                        "findings": [
+                            {
+                                "type": "EMAIL",
+                                "source": "BASIC+PRESIDIO",
+                                "confidence": 1.0,
+                                "start": 24,
+                                "end": 43
+                            },
+                            {
+                                "type": "URL",
+                                "source": "PRESIDIO",
+                                "confidence": 0.5,
+                                "start": 32,
+                                "end": 43
+                            }
+                        ],
+                        "risk": {
+                            "isolated_risk": 20.0,
+                            "historical_risk": 0.0,
+                            "synergy_risk": 0.0,
+                            "total_risk": 20.0,
+                            "action": "QUARANTINE_HITL"
+                        },
+                        "policy": {
+                            "risk_level": "MEDIUM",
+                            "decision": "HITL",
+                            "requires_human_review": true
+                        },
+                        "latency_ms": 6.4088
+                    }
+                ],
+                "final_total_risk": 20.0,
+                "final_policy": "HITL"
+            }
+        },
+        {
+            "id": "V5-STATE-002",
+            "category": "single_turn_email_password",
+            "description": "Email and password disclosed in the same turn",
+            "expected_entities": [
+                "EMAIL",
+                "PASSWORD"
+            ],
+            "turn_count": 1,
+            "stateless": {
+                "turns": [
+                    {
+                        "turn": 1,
+                        "text": "My email is analyst@example.com and my password is DemoPass123.",
+                        "entities": [
+                            "EMAIL",
+                            "PASSWORD",
+                            "URL"
+                        ],
+                        "findings": [
+                            {
+                                "type": "EMAIL",
+                                "source": "BASIC+PRESIDIO",
+                                "confidence": 1.0,
+                                "start": 12,
+                                "end": 31
+                            },
+                            {
+                                "type": "URL",
+                                "source": "PRESIDIO",
+                                "confidence": 0.5,
+                                "start": 20,
+                                "end": 31
+                            },
+                            {
+                                "type": "PASSWORD",
+                                "source": "CUSTOM",
+                                "confidence": 0.95,
+                                "start": 51,
+                                "end": 63
+                            }
+                        ],
+                        "risk": {
+                            "isolated_risk": 96.0,
+                            "historical_risk": 0.0,
+                            "synergy_risk": 15.0,
+                            "total_risk": 111.0,
+                            "action": "BLOCK"
+                        },
+                        "policy": {
+                            "risk_level": "CRITICAL",
+                            "decision": "BLOCK",
+                            "requires_human_review": false
+                        },
+                        "latency_ms": 6.8536
+                    }
+                ],
+                "final_total_risk": 111.0,
+                "final_policy": "BLOCK"
+            },
+            "stateful": {
+                "turns": [
+                    {
+                        "turn": 1,
+                        "text": "My email is analyst@example.com and my password is DemoPass123.",
+                        "entities": [
+                            "EMAIL",
+                            "PASSWORD",
+                            "URL"
+                        ],
+                        "findings": [
+                            {
+                                "type": "EMAIL",
+                                "source": "BASIC+PRESIDIO",
+                                "confidence": 1.0,
+                                "start": 12,
+                                "end": 31
+                            },
+                            {
+                                "type": "URL",
+                                "source": "PRESIDIO",
+                                "confidence": 0.5,
+                                "start": 20,
+                                "end": 31
+                            },
+                            {
+                                "type": "PASSWORD",
+                                "source": "CUSTOM",
+                                "confidence": 0.95,
+                                "start": 51,
+                                "end": 63
+                            }
+                        ],
+                        "risk": {
+                            "isolated_risk": 96.0,
+                            "historical_risk": 0.0,
+                            "synergy_risk": 15.0,
+                            "total_risk": 111.0,
+                            "action": "BLOCK"
+                        },
+                        "policy": {
+                            "risk_level": "CRITICAL",
+                            "decision": "BLOCK",
+                            "requires_human_review": false
+                        },
+                        "latency_ms": 6.0887
+                    }
+                ],
+                "final_total_risk": 111.0,
+                "final_policy": "BLOCK"
+            }
+        },
+        {
+            "id": "V5-STATE-003",
+            "category": "cross_turn_email_password",
+            "description": "Email and password disclosed across two turns",
+            "expected_entities": [
+                "EMAIL",
+                "PASSWORD"
+            ],
+            "turn_count": 2,
+            "stateless": {
+                "turns": [
+                    {
+                        "turn": 1,
+                        "text": "My email is analyst@example.com.",
+                        "entities": [
+                            "EMAIL",
+                            "URL"
+                        ],
+                        "findings": [
+                            {
+                                "type": "EMAIL",
+                                "source": "BASIC+PRESIDIO",
+                                "confidence": 1.0,
+                                "start": 12,
+                                "end": 31
+                            },
+                            {
+                                "type": "URL",
+                                "source": "PRESIDIO",
+                                "confidence": 0.5,
+                                "start": 20,
+                                "end": 31
+                            }
+                        ],
+                        "risk": {
+                            "isolated_risk": 20.0,
+                            "historical_risk": 0.0,
+                            "synergy_risk": 0.0,
+                            "total_risk": 20.0,
+                            "action": "QUARANTINE_HITL"
+                        },
+                        "policy": {
+                            "risk_level": "MEDIUM",
+                            "decision": "HITL",
+                            "requires_human_review": true
+                        },
+                        "latency_ms": 5.1853
+                    },
+                    {
+                        "turn": 2,
+                        "text": "My password is DemoPass123.",
+                        "entities": [
+                            "PASSWORD"
+                        ],
+                        "findings": [
+                            {
+                                "type": "PASSWORD",
+                                "source": "CUSTOM",
+                                "confidence": 0.95,
+                                "start": 15,
+                                "end": 27
+                            }
+                        ],
+                        "risk": {
+                            "isolated_risk": 76.0,
+                            "historical_risk": 0.0,
+                            "synergy_risk": 0.0,
+                            "total_risk": 76.0,
+                            "action": "BLOCK"
+                        },
+                        "policy": {
+                            "risk_level": "CRITICAL",
+                            "decision": "BLOCK",
+                            "requires_human_review": false
+                        },
+                        "latency_ms": 4.8979
+                    }
+                ],
+                "final_total_risk": 76.0,
+                "final_policy": "BLOCK"
+            },
+            "stateful": {
+                "turns": [
+                    {
+                        "turn": 1,
+                        "text": "My email is analyst@example.com.",
+                        "entities": [
+                            "EMAIL",
+                            "URL"
+                        ],
+                        "findings": [
+                            {
+                                "type": "EMAIL",
+                                "source": "BASIC+PRESIDIO",
+                                "confidence": 1.0,
+                                "start": 12,
+                                "end": 31
+                            },
+                            {
+                                "type": "URL",
+                                "source": "PRESIDIO",
+                                "confidence": 0.5,
+                                "start": 20,
+                                "end": 31
+                            }
+                        ],
+                        "risk": {
+                            "isolated_risk": 20.0,
+                            "historical_risk": 0.0,
+                            "synergy_risk": 0.0,
+                            "total_risk": 20.0,
+                            "action": "QUARANTINE_HITL"
+                        },
+                        "policy": {
+                            "risk_level": "MEDIUM",
+                            "decision": "HITL",
+                            "requires_human_review": true
+                        },
+                        "latency_ms": 5.1143
+                    },
+                    {
+                        "turn": 2,
+                        "text": "My password is DemoPass123.",
+                        "entities": [
+                            "PASSWORD"
+                        ],
+                        "findings": [
+                            {
+                                "type": "PASSWORD",
+                                "source": "CUSTOM",
+                                "confidence": 0.95,
+                                "start": 15,
+                                "end": 27
+                            }
+                        ],
+                        "risk": {
+                            "isolated_risk": 76.0,
+                            "historical_risk": 16.0,
+                            "synergy_risk": 15.0,
+                            "total_risk": 107.0,
+                            "action": "BLOCK"
+                        },
+                        "policy": {
+                            "risk_level": "CRITICAL",
+                            "decision": "BLOCK",
+                            "requires_human_review": false
+                        },
+                        "latency_ms": 4.9078
+                    }
+                ],
+                "final_total_risk": 107.0,
+                "final_policy": "BLOCK"
+            }
+        },
+        {
+            "id": "V5-STATE-004",
+            "category": "cross_turn_employee_password",
+            "description": "Employee ID and password disclosed across turns",
+            "expected_entities": [
+                "EMPLOYEE_ID",
+                "PASSWORD"
+            ],
+            "turn_count": 2,
+            "stateless": {
+                "turns": [
+                    {
+                        "turn": 1,
+                        "text": "My employee ID is EMP-2026-1234.",
+                        "entities": [
+                            "DATE_TIME",
+                            "EMPLOYEE_ID"
+                        ],
+                        "findings": [
+                            {
+                                "type": "DATE_TIME",
+                                "source": "PRESIDIO",
+                                "confidence": 0.85,
+                                "start": 18,
+                                "end": 31
+                            },
+                            {
+                                "type": "EMPLOYEE_ID",
+                                "source": "CUSTOM",
+                                "confidence": 0.95,
+                                "start": 18,
+                                "end": 31
+                            }
+                        ],
+                        "risk": {
+                            "isolated_risk": 28.5,
+                            "historical_risk": 0.0,
+                            "synergy_risk": 0.0,
+                            "total_risk": 28.5,
+                            "action": "BLOCK"
+                        },
+                        "policy": {
+                            "risk_level": "HIGH",
+                            "decision": "HITL",
+                            "requires_human_review": true
+                        },
+                        "latency_ms": 25.7838
+                    },
+                    {
+                        "turn": 2,
+                        "text": "My password is DemoPass123.",
+                        "entities": [
+                            "PASSWORD"
+                        ],
+                        "findings": [
+                            {
+                                "type": "PASSWORD",
+                                "source": "CUSTOM",
+                                "confidence": 0.95,
+                                "start": 15,
+                                "end": 27
+                            }
+                        ],
+                        "risk": {
+                            "isolated_risk": 76.0,
+                            "historical_risk": 0.0,
+                            "synergy_risk": 0.0,
+                            "total_risk": 76.0,
+                            "action": "BLOCK"
+                        },
+                        "policy": {
+                            "risk_level": "CRITICAL",
+                            "decision": "BLOCK",
+                            "requires_human_review": false
+                        },
+                        "latency_ms": 5.659
+                    }
+                ],
+                "final_total_risk": 76.0,
+                "final_policy": "BLOCK"
+            },
+            "stateful": {
+                "turns": [
+                    {
+                        "turn": 1,
+                        "text": "My employee ID is EMP-2026-1234.",
+                        "entities": [
+                            "DATE_TIME",
+                            "EMPLOYEE_ID"
+                        ],
+                        "findings": [
+                            {
+                                "type": "DATE_TIME",
+                                "source": "PRESIDIO",
+                                "confidence": 0.85,
+                                "start": 18,
+                                "end": 31
+                            },
+                            {
+                                "type": "EMPLOYEE_ID",
+                                "source": "CUSTOM",
+                                "confidence": 0.95,
+                                "start": 18,
+                                "end": 31
+                            }
+                        ],
+                        "risk": {
+                            "isolated_risk": 28.5,
+                            "historical_risk": 0.0,
+                            "synergy_risk": 0.0,
+                            "total_risk": 28.5,
+                            "action": "BLOCK"
+                        },
+                        "policy": {
+                            "risk_level": "HIGH",
+                            "decision": "HITL",
+                            "requires_human_review": true
+                        },
+                        "latency_ms": 6.7176
+                    },
+                    {
+                        "turn": 2,
+                        "text": "My password is DemoPass123.",
+                        "entities": [
+                            "PASSWORD"
+                        ],
+                        "findings": [
+                            {
+                                "type": "PASSWORD",
+                                "source": "CUSTOM",
+                                "confidence": 0.95,
+                                "start": 15,
+                                "end": 27
+                            }
+                        ],
+                        "risk": {
+                            "isolated_risk": 76.0,
+                            "historical_risk": 22.8,
+                            "synergy_risk": 15.0,
+                            "total_risk": 113.8,
+                            "action": "BLOCK"
+                        },
+                        "policy": {
+                            "risk_level": "CRITICAL",
+                            "decision": "BLOCK",
+                            "requires_human_review": false
+                        },
+                        "latency_ms": 5.1389
+                    }
+                ],
+                "final_total_risk": 113.8,
+                "final_policy": "BLOCK"
+            }
+        },
+        {
+            "id": "V5-STATE-005",
+            "category": "cross_turn_api_ip",
+            "description": "IP address and API-key-like value disclosed across turns",
+            "expected_entities": [
+                "IP_ADDRESS",
+                "API_KEY_LIKE"
+            ],
+            "turn_count": 2,
+            "stateless": {
+                "turns": [
+                    {
+                        "turn": 1,
+                        "text": "The server address is 192.168.1.20.",
+                        "entities": [
+                            "IP_ADDRESS"
+                        ],
+                        "findings": [
+                            {
+                                "type": "IP_ADDRESS",
+                                "source": "BASIC+PRESIDIO",
+                                "confidence": 1.0,
+                                "start": 22,
+                                "end": 34
+                            }
+                        ],
+                        "risk": {
+                            "isolated_risk": 30.0,
+                            "historical_risk": 0.0,
+                            "synergy_risk": 0.0,
+                            "total_risk": 30.0,
+                            "action": "BLOCK"
+                        },
+                        "policy": {
+                            "risk_level": "HIGH",
+                            "decision": "HITL",
+                            "requires_human_review": true
+                        },
+                        "latency_ms": 10.6749
+                    },
+                    {
+                        "turn": 2,
+                        "text": "The API key is api_SECRET_123456789.",
+                        "entities": [
+                            "API_KEY_LIKE"
+                        ],
+                        "findings": [
+                            {
+                                "type": "API_KEY_LIKE",
+                                "source": "CUSTOM",
+                                "confidence": 0.9,
+                                "start": 15,
+                                "end": 35
+                            }
+                        ],
+                        "risk": {
+                            "isolated_risk": 81.0,
+                            "historical_risk": 0.0,
+                            "synergy_risk": 0.0,
+                            "total_risk": 81.0,
+                            "action": "BLOCK"
+                        },
+                        "policy": {
+                            "risk_level": "CRITICAL",
+                            "decision": "BLOCK",
+                            "requires_human_review": false
+                        },
+                        "latency_ms": 6.2366
+                    }
+                ],
+                "final_total_risk": 81.0,
+                "final_policy": "BLOCK"
+            },
+            "stateful": {
+                "turns": [
+                    {
+                        "turn": 1,
+                        "text": "The server address is 192.168.1.20.",
+                        "entities": [
+                            "IP_ADDRESS"
+                        ],
+                        "findings": [
+                            {
+                                "type": "IP_ADDRESS",
+                                "source": "BASIC+PRESIDIO",
+                                "confidence": 1.0,
+                                "start": 22,
+                                "end": 34
+                            }
+                        ],
+                        "risk": {
+                            "isolated_risk": 30.0,
+                            "historical_risk": 0.0,
+                            "synergy_risk": 0.0,
+                            "total_risk": 30.0,
+                            "action": "BLOCK"
+                        },
+                        "policy": {
+                            "risk_level": "HIGH",
+                            "decision": "HITL",
+                            "requires_human_review": true
+                        },
+                        "latency_ms": 6.6987
+                    },
+                    {
+                        "turn": 2,
+                        "text": "The API key is api_SECRET_123456789.",
+                        "entities": [
+                            "API_KEY_LIKE"
+                        ],
+                        "findings": [
+                            {
+                                "type": "API_KEY_LIKE",
+                                "source": "CUSTOM",
+                                "confidence": 0.9,
+                                "start": 15,
+                                "end": 35
+                            }
+                        ],
+                        "risk": {
+                            "isolated_risk": 81.0,
+                            "historical_risk": 24.0,
+                            "synergy_risk": 15.0,
+                            "total_risk": 120.0,
+                            "action": "BLOCK"
+                        },
+                        "policy": {
+                            "risk_level": "CRITICAL",
+                            "decision": "BLOCK",
+                            "requires_human_review": false
+                        },
+                        "latency_ms": 5.2715
+                    }
+                ],
+                "final_total_risk": 120.0,
+                "final_policy": "BLOCK"
+            }
+        },
+        {
+            "id": "V5-STATE-006",
+            "category": "benign_multi_turn",
+            "description": "Benign multi-turn conversation",
+            "expected_entities": [],
+            "turn_count": 3,
+            "stateless": {
+                "turns": [
+                    {
+                        "turn": 1,
+                        "text": "Can you explain network segmentation?",
+                        "entities": [],
+                        "findings": [],
+                        "risk": {
+                            "isolated_risk": 0.0,
+                            "historical_risk": 0.0,
+                            "synergy_risk": 0.0,
+                            "total_risk": 0.0,
+                            "action": "FORWARD"
+                        },
+                        "policy": {
+                            "risk_level": "LOW",
+                            "decision": "ALLOW",
+                            "requires_human_review": false
+                        },
+                        "latency_ms": 4.9087
+                    },
+                    {
+                        "turn": 2,
+                        "text": "What is the difference between a firewall and an IDS?",
+                        "entities": [],
+                        "findings": [],
+                        "risk": {
+                            "isolated_risk": 0.0,
+                            "historical_risk": 0.0,
+                            "synergy_risk": 0.0,
+                            "total_risk": 0.0,
+                            "action": "FORWARD"
+                        },
+                        "policy": {
+                            "risk_level": "LOW",
+                            "decision": "ALLOW",
+                            "requires_human_review": false
+                        },
+                        "latency_ms": 6.3727
+                    },
+                    {
+                        "turn": 3,
+                        "text": "Give me a simple example.",
+                        "entities": [],
+                        "findings": [],
+                        "risk": {
+                            "isolated_risk": 0.0,
+                            "historical_risk": 0.0,
+                            "synergy_risk": 0.0,
+                            "total_risk": 0.0,
+                            "action": "FORWARD"
+                        },
+                        "policy": {
+                            "risk_level": "LOW",
+                            "decision": "ALLOW",
+                            "requires_human_review": false
+                        },
+                        "latency_ms": 5.1894
+                    }
+                ],
+                "final_total_risk": 0.0,
+                "final_policy": "ALLOW"
+            },
+            "stateful": {
+                "turns": [
+                    {
+                        "turn": 1,
+                        "text": "Can you explain network segmentation?",
+                        "entities": [],
+                        "findings": [],
+                        "risk": {
+                            "isolated_risk": 0.0,
+                            "historical_risk": 0.0,
+                            "synergy_risk": 0.0,
+                            "total_risk": 0.0,
+                            "action": "FORWARD"
+                        },
+                        "policy": {
+                            "risk_level": "LOW",
+                            "decision": "ALLOW",
+                            "requires_human_review": false
+                        },
+                        "latency_ms": 5.5155
+                    },
+                    {
+                        "turn": 2,
+                        "text": "What is the difference between a firewall and an IDS?",
+                        "entities": [],
+                        "findings": [],
+                        "risk": {
+                            "isolated_risk": 0.0,
+                            "historical_risk": 0.0,
+                            "synergy_risk": 0.0,
+                            "total_risk": 0.0,
+                            "action": "FORWARD"
+                        },
+                        "policy": {
+                            "risk_level": "LOW",
+                            "decision": "ALLOW",
+                            "requires_human_review": false
+                        },
+                        "latency_ms": 6.0281
+                    },
+                    {
+                        "turn": 3,
+                        "text": "Give me a simple example.",
+                        "entities": [],
+                        "findings": [],
+                        "risk": {
+                            "isolated_risk": 0.0,
+                            "historical_risk": 0.0,
+                            "synergy_risk": 0.0,
+                            "total_risk": 0.0,
+                            "action": "FORWARD"
+                        },
+                        "policy": {
+                            "risk_level": "LOW",
+                            "decision": "ALLOW",
+                            "requires_human_review": false
+                        },
+                        "latency_ms": 4.8772
+                    }
+                ],
+                "final_total_risk": 0.0,
+                "final_policy": "ALLOW"
+            }
+        }
+    ]
+}

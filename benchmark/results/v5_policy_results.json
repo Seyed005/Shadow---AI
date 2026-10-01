@@ -1,0 +1,701 @@
+{
+    "experiment": "V5.1 Stateful Policy Transition Evaluation",
+    "method": {
+        "stateless": "Each turn evaluated with empty history.",
+        "stateful": "Previous turns retained as risk history.",
+        "policy_authority": "backend.policy.get_policy_decision",
+        "canonicalization": true,
+        "confusable_hardening": true
+    },
+    "summary": {
+        "corpus_cases": 4,
+        "policy_changed_cases": 0,
+        "policy_change_rate": 0.0,
+        "average_final_risk_difference": 11.76,
+        "average_historical_risk_contribution": 10.768,
+        "stateful_synergy_case_count": 0,
+        "stateless_average_latency_ms": 28.5656,
+        "stateful_average_latency_ms": 6.1917
+    },
+    "cases": [
+        {
+            "id": "V5-STATE-007",
+            "category": "cross_turn_person_email",
+            "description": "Person identity and email disclosed across turns",
+            "expected_entities": [
+                "PERSON",
+                "EMAIL"
+            ],
+            "turn_count": 2,
+            "stateless": {
+                "turns": [
+                    {
+                        "turn": 1,
+                        "text": "My name is Balaji.",
+                        "entities": [
+                            "PERSON"
+                        ],
+                        "findings": [
+                            {
+                                "type": "PERSON",
+                                "source": "PRESIDIO",
+                                "confidence": 0.85,
+                                "start": 11,
+                                "end": 17
+                            }
+                        ],
+                        "risk": {
+                            "isolated_risk": 8.5,
+                            "historical_risk": 0.0,
+                            "synergy_risk": 0.0,
+                            "total_risk": 8.5,
+                            "action": "FORWARD"
+                        },
+                        "policy": {
+                            "risk_level": "LOW",
+                            "decision": "ALLOW",
+                            "requires_human_review": false
+                        },
+                        "latency_ms": 179.6891
+                    },
+                    {
+                        "turn": 2,
+                        "text": "My contact email is analyst@example.com.",
+                        "entities": [
+                            "EMAIL",
+                            "URL"
+                        ],
+                        "findings": [
+                            {
+                                "type": "EMAIL",
+                                "source": "BASIC+PRESIDIO",
+                                "confidence": 1.0,
+                                "start": 20,
+                                "end": 39
+                            },
+                            {
+                                "type": "URL",
+                                "source": "PRESIDIO",
+                                "confidence": 0.5,
+                                "start": 28,
+                                "end": 39
+                            }
+                        ],
+                        "risk": {
+                            "isolated_risk": 20.0,
+                            "historical_risk": 0.0,
+                            "synergy_risk": 0.0,
+                            "total_risk": 20.0,
+                            "action": "QUARANTINE_HITL"
+                        },
+                        "policy": {
+                            "risk_level": "MEDIUM",
+                            "decision": "HITL",
+                            "requires_human_review": true
+                        },
+                        "latency_ms": 25.6631
+                    }
+                ],
+                "final_total_risk": 20.0,
+                "final_policy": "HITL"
+            },
+            "stateful": {
+                "turns": [
+                    {
+                        "turn": 1,
+                        "text": "My name is Balaji.",
+                        "entities": [
+                            "PERSON"
+                        ],
+                        "findings": [
+                            {
+                                "type": "PERSON",
+                                "source": "PRESIDIO",
+                                "confidence": 0.85,
+                                "start": 11,
+                                "end": 17
+                            }
+                        ],
+                        "risk": {
+                            "isolated_risk": 8.5,
+                            "historical_risk": 0.0,
+                            "synergy_risk": 0.0,
+                            "total_risk": 8.5,
+                            "action": "FORWARD"
+                        },
+                        "policy": {
+                            "risk_level": "LOW",
+                            "decision": "ALLOW",
+                            "requires_human_review": false
+                        },
+                        "latency_ms": 5.7583
+                    },
+                    {
+                        "turn": 2,
+                        "text": "My contact email is analyst@example.com.",
+                        "entities": [
+                            "EMAIL",
+                            "URL"
+                        ],
+                        "findings": [
+                            {
+                                "type": "EMAIL",
+                                "source": "BASIC+PRESIDIO",
+                                "confidence": 1.0,
+                                "start": 20,
+                                "end": 39
+                            },
+                            {
+                                "type": "URL",
+                                "source": "PRESIDIO",
+                                "confidence": 0.5,
+                                "start": 28,
+                                "end": 39
+                            }
+                        ],
+                        "risk": {
+                            "isolated_risk": 20.0,
+                            "historical_risk": 6.8,
+                            "synergy_risk": 0.0,
+                            "total_risk": 26.8,
+                            "action": "BLOCK"
+                        },
+                        "policy": {
+                            "risk_level": "HIGH",
+                            "decision": "HITL",
+                            "requires_human_review": true
+                        },
+                        "latency_ms": 6.3728
+                    }
+                ],
+                "final_total_risk": 26.8,
+                "final_policy": "HITL"
+            },
+            "comparison": {
+                "final_risk_difference": 6.8,
+                "policy_changed": false,
+                "policy_transition": "HITL"
+            }
+        },
+        {
+            "id": "V5-STATE-008",
+            "category": "cross_turn_phone_email",
+            "description": "Phone number and email disclosed across turns",
+            "expected_entities": [
+                "PHONE",
+                "EMAIL"
+            ],
+            "turn_count": 2,
+            "stateless": {
+                "turns": [
+                    {
+                        "turn": 1,
+                        "text": "My phone number is +1 202-555-0147.",
+                        "entities": [
+                            "PHONE"
+                        ],
+                        "findings": [
+                            {
+                                "type": "PHONE",
+                                "source": "PRESIDIO",
+                                "confidence": 0.75,
+                                "start": 19,
+                                "end": 34
+                            }
+                        ],
+                        "risk": {
+                            "isolated_risk": 15.0,
+                            "historical_risk": 0.0,
+                            "synergy_risk": 0.0,
+                            "total_risk": 15.0,
+                            "action": "QUARANTINE_HITL"
+                        },
+                        "policy": {
+                            "risk_level": "MEDIUM",
+                            "decision": "HITL",
+                            "requires_human_review": true
+                        },
+                        "latency_ms": 14.3666
+                    },
+                    {
+                        "turn": 2,
+                        "text": "Contact me at analyst@example.com.",
+                        "entities": [
+                            "EMAIL",
+                            "URL"
+                        ],
+                        "findings": [
+                            {
+                                "type": "EMAIL",
+                                "source": "BASIC+PRESIDIO",
+                                "confidence": 1.0,
+                                "start": 14,
+                                "end": 33
+                            },
+                            {
+                                "type": "URL",
+                                "source": "PRESIDIO",
+                                "confidence": 0.5,
+                                "start": 22,
+                                "end": 33
+                            }
+                        ],
+                        "risk": {
+                            "isolated_risk": 20.0,
+                            "historical_risk": 0.0,
+                            "synergy_risk": 0.0,
+                            "total_risk": 20.0,
+                            "action": "QUARANTINE_HITL"
+                        },
+                        "policy": {
+                            "risk_level": "MEDIUM",
+                            "decision": "HITL",
+                            "requires_human_review": true
+                        },
+                        "latency_ms": 5.8715
+                    }
+                ],
+                "final_total_risk": 20.0,
+                "final_policy": "HITL"
+            },
+            "stateful": {
+                "turns": [
+                    {
+                        "turn": 1,
+                        "text": "My phone number is +1 202-555-0147.",
+                        "entities": [
+                            "PHONE"
+                        ],
+                        "findings": [
+                            {
+                                "type": "PHONE",
+                                "source": "PRESIDIO",
+                                "confidence": 0.75,
+                                "start": 19,
+                                "end": 34
+                            }
+                        ],
+                        "risk": {
+                            "isolated_risk": 15.0,
+                            "historical_risk": 0.0,
+                            "synergy_risk": 0.0,
+                            "total_risk": 15.0,
+                            "action": "QUARANTINE_HITL"
+                        },
+                        "policy": {
+                            "risk_level": "MEDIUM",
+                            "decision": "HITL",
+                            "requires_human_review": true
+                        },
+                        "latency_ms": 7.4821
+                    },
+                    {
+                        "turn": 2,
+                        "text": "Contact me at analyst@example.com.",
+                        "entities": [
+                            "EMAIL",
+                            "URL"
+                        ],
+                        "findings": [
+                            {
+                                "type": "EMAIL",
+                                "source": "BASIC+PRESIDIO",
+                                "confidence": 1.0,
+                                "start": 14,
+                                "end": 33
+                            },
+                            {
+                                "type": "URL",
+                                "source": "PRESIDIO",
+                                "confidence": 0.5,
+                                "start": 22,
+                                "end": 33
+                            }
+                        ],
+                        "risk": {
+                            "isolated_risk": 20.0,
+                            "historical_risk": 12.0,
+                            "synergy_risk": 0.0,
+                            "total_risk": 32.0,
+                            "action": "BLOCK"
+                        },
+                        "policy": {
+                            "risk_level": "HIGH",
+                            "decision": "HITL",
+                            "requires_human_review": true
+                        },
+                        "latency_ms": 5.446
+                    }
+                ],
+                "final_total_risk": 32.0,
+                "final_policy": "HITL"
+            },
+            "comparison": {
+                "final_risk_difference": 12.0,
+                "policy_changed": false,
+                "policy_transition": "HITL"
+            }
+        },
+        {
+            "id": "V5-STATE-009",
+            "category": "cross_turn_person_phone",
+            "description": "Person identity and phone number disclosed across turns",
+            "expected_entities": [
+                "PERSON",
+                "PHONE"
+            ],
+            "turn_count": 2,
+            "stateless": {
+                "turns": [
+                    {
+                        "turn": 1,
+                        "text": "My name is Balaji.",
+                        "entities": [
+                            "PERSON"
+                        ],
+                        "findings": [
+                            {
+                                "type": "PERSON",
+                                "source": "PRESIDIO",
+                                "confidence": 0.85,
+                                "start": 11,
+                                "end": 17
+                            }
+                        ],
+                        "risk": {
+                            "isolated_risk": 8.5,
+                            "historical_risk": 0.0,
+                            "synergy_risk": 0.0,
+                            "total_risk": 8.5,
+                            "action": "FORWARD"
+                        },
+                        "policy": {
+                            "risk_level": "LOW",
+                            "decision": "ALLOW",
+                            "requires_human_review": false
+                        },
+                        "latency_ms": 5.6308
+                    },
+                    {
+                        "turn": 2,
+                        "text": "My phone number is +1 202-555-0147.",
+                        "entities": [
+                            "PHONE"
+                        ],
+                        "findings": [
+                            {
+                                "type": "PHONE",
+                                "source": "PRESIDIO",
+                                "confidence": 0.75,
+                                "start": 19,
+                                "end": 34
+                            }
+                        ],
+                        "risk": {
+                            "isolated_risk": 15.0,
+                            "historical_risk": 0.0,
+                            "synergy_risk": 0.0,
+                            "total_risk": 15.0,
+                            "action": "QUARANTINE_HITL"
+                        },
+                        "policy": {
+                            "risk_level": "MEDIUM",
+                            "decision": "HITL",
+                            "requires_human_review": true
+                        },
+                        "latency_ms": 7.0241
+                    }
+                ],
+                "final_total_risk": 15.0,
+                "final_policy": "HITL"
+            },
+            "stateful": {
+                "turns": [
+                    {
+                        "turn": 1,
+                        "text": "My name is Balaji.",
+                        "entities": [
+                            "PERSON"
+                        ],
+                        "findings": [
+                            {
+                                "type": "PERSON",
+                                "source": "PRESIDIO",
+                                "confidence": 0.85,
+                                "start": 11,
+                                "end": 17
+                            }
+                        ],
+                        "risk": {
+                            "isolated_risk": 8.5,
+                            "historical_risk": 0.0,
+                            "synergy_risk": 0.0,
+                            "total_risk": 8.5,
+                            "action": "FORWARD"
+                        },
+                        "policy": {
+                            "risk_level": "LOW",
+                            "decision": "ALLOW",
+                            "requires_human_review": false
+                        },
+                        "latency_ms": 5.3733
+                    },
+                    {
+                        "turn": 2,
+                        "text": "My phone number is +1 202-555-0147.",
+                        "entities": [
+                            "PHONE"
+                        ],
+                        "findings": [
+                            {
+                                "type": "PHONE",
+                                "source": "PRESIDIO",
+                                "confidence": 0.75,
+                                "start": 19,
+                                "end": 34
+                            }
+                        ],
+                        "risk": {
+                            "isolated_risk": 15.0,
+                            "historical_risk": 6.8,
+                            "synergy_risk": 0.0,
+                            "total_risk": 21.8,
+                            "action": "QUARANTINE_HITL"
+                        },
+                        "policy": {
+                            "risk_level": "MEDIUM",
+                            "decision": "HITL",
+                            "requires_human_review": true
+                        },
+                        "latency_ms": 7.8799
+                    }
+                ],
+                "final_total_risk": 21.8,
+                "final_policy": "HITL"
+            },
+            "comparison": {
+                "final_risk_difference": 6.8,
+                "policy_changed": false,
+                "policy_transition": "HITL"
+            }
+        },
+        {
+            "id": "V5-STATE-010",
+            "category": "three_turn_identity_contact",
+            "description": "Identity, email, and phone disclosed across three turns",
+            "expected_entities": [
+                "PERSON",
+                "EMAIL",
+                "PHONE"
+            ],
+            "turn_count": 3,
+            "stateless": {
+                "turns": [
+                    {
+                        "turn": 1,
+                        "text": "My name is Balaji.",
+                        "entities": [
+                            "PERSON"
+                        ],
+                        "findings": [
+                            {
+                                "type": "PERSON",
+                                "source": "PRESIDIO",
+                                "confidence": 0.85,
+                                "start": 11,
+                                "end": 17
+                            }
+                        ],
+                        "risk": {
+                            "isolated_risk": 8.5,
+                            "historical_risk": 0.0,
+                            "synergy_risk": 0.0,
+                            "total_risk": 8.5,
+                            "action": "FORWARD"
+                        },
+                        "policy": {
+                            "risk_level": "LOW",
+                            "decision": "ALLOW",
+                            "requires_human_review": false
+                        },
+                        "latency_ms": 5.321
+                    },
+                    {
+                        "turn": 2,
+                        "text": "My contact email is analyst@example.com.",
+                        "entities": [
+                            "EMAIL",
+                            "URL"
+                        ],
+                        "findings": [
+                            {
+                                "type": "EMAIL",
+                                "source": "BASIC+PRESIDIO",
+                                "confidence": 1.0,
+                                "start": 20,
+                                "end": 39
+                            },
+                            {
+                                "type": "URL",
+                                "source": "PRESIDIO",
+                                "confidence": 0.5,
+                                "start": 28,
+                                "end": 39
+                            }
+                        ],
+                        "risk": {
+                            "isolated_risk": 20.0,
+                            "historical_risk": 0.0,
+                            "synergy_risk": 0.0,
+                            "total_risk": 20.0,
+                            "action": "QUARANTINE_HITL"
+                        },
+                        "policy": {
+                            "risk_level": "MEDIUM",
+                            "decision": "HITL",
+                            "requires_human_review": true
+                        },
+                        "latency_ms": 6.1536
+                    },
+                    {
+                        "turn": 3,
+                        "text": "My phone number is +1 202-555-0147.",
+                        "entities": [
+                            "PHONE"
+                        ],
+                        "findings": [
+                            {
+                                "type": "PHONE",
+                                "source": "PRESIDIO",
+                                "confidence": 0.75,
+                                "start": 19,
+                                "end": 34
+                            }
+                        ],
+                        "risk": {
+                            "isolated_risk": 15.0,
+                            "historical_risk": 0.0,
+                            "synergy_risk": 0.0,
+                            "total_risk": 15.0,
+                            "action": "QUARANTINE_HITL"
+                        },
+                        "policy": {
+                            "risk_level": "MEDIUM",
+                            "decision": "HITL",
+                            "requires_human_review": true
+                        },
+                        "latency_ms": 7.3704
+                    }
+                ],
+                "final_total_risk": 15.0,
+                "final_policy": "HITL"
+            },
+            "stateful": {
+                "turns": [
+                    {
+                        "turn": 1,
+                        "text": "My name is Balaji.",
+                        "entities": [
+                            "PERSON"
+                        ],
+                        "findings": [
+                            {
+                                "type": "PERSON",
+                                "source": "PRESIDIO",
+                                "confidence": 0.85,
+                                "start": 11,
+                                "end": 17
+                            }
+                        ],
+                        "risk": {
+                            "isolated_risk": 8.5,
+                            "historical_risk": 0.0,
+                            "synergy_risk": 0.0,
+                            "total_risk": 8.5,
+                            "action": "FORWARD"
+                        },
+                        "policy": {
+                            "risk_level": "LOW",
+                            "decision": "ALLOW",
+                            "requires_human_review": false
+                        },
+                        "latency_ms": 5.0627
+                    },
+                    {
+                        "turn": 2,
+                        "text": "My contact email is analyst@example.com.",
+                        "entities": [
+                            "EMAIL",
+                            "URL"
+                        ],
+                        "findings": [
+                            {
+                                "type": "EMAIL",
+                                "source": "BASIC+PRESIDIO",
+                                "confidence": 1.0,
+                                "start": 20,
+                                "end": 39
+                            },
+                            {
+                                "type": "URL",
+                                "source": "PRESIDIO",
+                                "confidence": 0.5,
+                                "start": 28,
+                                "end": 39
+                            }
+                        ],
+                        "risk": {
+                            "isolated_risk": 20.0,
+                            "historical_risk": 6.8,
+                            "synergy_risk": 0.0,
+                            "total_risk": 26.8,
+                            "action": "BLOCK"
+                        },
+                        "policy": {
+                            "risk_level": "HIGH",
+                            "decision": "HITL",
+                            "requires_human_review": true
+                        },
+                        "latency_ms": 5.4053
+                    },
+                    {
+                        "turn": 3,
+                        "text": "My phone number is +1 202-555-0147.",
+                        "entities": [
+                            "PHONE"
+                        ],
+                        "findings": [
+                            {
+                                "type": "PHONE",
+                                "source": "PRESIDIO",
+                                "confidence": 0.75,
+                                "start": 19,
+                                "end": 34
+                            }
+                        ],
+                        "risk": {
+                            "isolated_risk": 15.0,
+                            "historical_risk": 21.44,
+                            "synergy_risk": 0.0,
+                            "total_risk": 36.44,
+                            "action": "BLOCK"
+                        },
+                        "policy": {
+                            "risk_level": "HIGH",
+                            "decision": "HITL",
+                            "requires_human_review": true
+                        },
+                        "latency_ms": 6.9449
+                    }
+                ],
+                "final_total_risk": 36.44,
+                "final_policy": "HITL"
+            },
+            "comparison": {
+                "final_risk_difference": 21.44,
+                "policy_changed": false,
+                "policy_transition": "HITL"
+            }
+        }
+    ]
+}

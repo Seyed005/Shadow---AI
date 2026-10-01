@@ -1,0 +1,61 @@
+[
+    {
+        "id": "V5-STATE-001",
+        "category": "single_turn_email",
+        "turns": [
+            "Please send a report to analyst@example.com."
+        ],
+        "expected_entities": ["EMAIL"],
+        "description": "Single sensitive entity in one turn"
+    },
+    {
+        "id": "V5-STATE-002",
+        "category": "single_turn_email_password",
+        "turns": [
+            "My email is analyst@example.com and my password is DemoPass123."
+        ],
+        "expected_entities": ["EMAIL", "PASSWORD"],
+        "description": "Email and password disclosed in the same turn"
+    },
+    {
+        "id": "V5-STATE-003",
+        "category": "cross_turn_email_password",
+        "turns": [
+            "My email is analyst@example.com.",
+            "My password is DemoPass123."
+        ],
+        "expected_entities": ["EMAIL", "PASSWORD"],
+        "description": "Email and password disclosed across two turns"
+    },
+    {
+        "id": "V5-STATE-004",
+        "category": "cross_turn_employee_password",
+        "turns": [
+            "My employee ID is EMP-2026-1234.",
+            "My password is DemoPass123."
+        ],
+        "expected_entities": ["EMPLOYEE_ID", "PASSWORD"],
+        "description": "Employee ID and password disclosed across turns"
+    },
+    {
+        "id": "V5-STATE-005",
+        "category": "cross_turn_api_ip",
+        "turns": [
+            "The server address is 192.168.1.20.",
+            "The API key is api_SECRET_123456789."
+        ],
+        "expected_entities": ["IP_ADDRESS", "API_KEY_LIKE"],
+        "description": "IP address and API-key-like value disclosed across turns"
+    },
+    {
+        "id": "V5-STATE-006",
+        "category": "benign_multi_turn",
+        "turns": [
+            "Can you explain network segmentation?",
+            "What is the difference between a firewall and an IDS?",
+            "Give me a simple example."
+        ],
+        "expected_entities": [],
+        "description": "Benign multi-turn conversation"
+    }
+]
