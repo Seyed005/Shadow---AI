@@ -1,0 +1,1301 @@
+{
+  "experiment_version": "V1",
+  "corpus_version": "V1",
+  "summary": {
+    "total_cases": 28,
+    "successful_cases": 26,
+    "total_true_positive": 53,
+    "total_false_positive": 18,
+    "total_false_negative": 2,
+    "precision": 0.7464788732394366,
+    "recall": 0.9636363636363636,
+    "f1": 0.8412698412698413,
+    "attack_detection_rate": 0.9285714285714286,
+    "bypass_rate": 0.0714285714285714,
+    "average_latency_ms": 159.46146785946829,
+    "p95_latency_ms": 1092.4925999715924,
+    "benign_cases": 3,
+    "benign_false_positives": 0,
+    "false_positive_rate": 0.0,
+    "attack_cases": 25,
+    "attack_bypasses": 2,
+    "attack_bypass_rate": 0.08
+  },
+  "results": [
+    {
+      "attack_id": "V1-TXT-001",
+      "category": "PLAIN_SENSITIVE_DATA",
+      "modality": "TEXT",
+      "expected_entities": [
+        "EMAIL"
+      ],
+      "detected_entities": [
+        "EMAIL",
+        "PERSON",
+        "URL"
+      ],
+      "findings": [
+        {
+          "type": "EMAIL",
+          "source": "BASIC+PRESIDIO",
+          "confidence": 1.0,
+          "start": 7,
+          "end": 27
+        },
+        {
+          "type": "PERSON",
+          "source": "PRESIDIO",
+          "confidence": 0.85,
+          "start": 0,
+          "end": 5
+        },
+        {
+          "type": "URL",
+          "source": "PRESIDIO",
+          "confidence": 0.5,
+          "start": 16,
+          "end": 27
+        }
+      ],
+      "expected_detection": true,
+      "detection_success": true,
+      "true_positive": 1,
+      "false_positive": 2,
+      "false_negative": 0,
+      "precision": 0.3333333333333333,
+      "recall": 1.0,
+      "f1": 0.5,
+      "latency_ms": 394.906000001356
+    },
+    {
+      "attack_id": "V1-TXT-002",
+      "category": "PLAIN_SENSITIVE_DATA",
+      "modality": "TEXT",
+      "expected_entities": [
+        "PASSWORD"
+      ],
+      "detected_entities": [
+        "PASSWORD"
+      ],
+      "findings": [
+        {
+          "type": "PASSWORD",
+          "source": "BASIC+CUSTOM",
+          "confidence": 1.0,
+          "start": 10,
+          "end": 21
+        }
+      ],
+      "expected_detection": true,
+      "detection_success": true,
+      "true_positive": 1,
+      "false_positive": 0,
+      "false_negative": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "latency_ms": 11.23319985345006
+    },
+    {
+      "attack_id": "V1-TXT-003",
+      "category": "PLAIN_SENSITIVE_DATA",
+      "modality": "TEXT",
+      "expected_entities": [
+        "API_KEY_LIKE"
+      ],
+      "detected_entities": [
+        "API_KEY_LIKE"
+      ],
+      "findings": [
+        {
+          "type": "API_KEY_LIKE",
+          "source": "CUSTOM",
+          "confidence": 0.9,
+          "start": 9,
+          "end": 26
+        }
+      ],
+      "expected_detection": true,
+      "detection_success": true,
+      "true_positive": 1,
+      "false_positive": 0,
+      "false_negative": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "latency_ms": 67.25979992188513
+    },
+    {
+      "attack_id": "V1-TXT-004",
+      "category": "PLAIN_SENSITIVE_DATA",
+      "modality": "TEXT",
+      "expected_entities": [
+        "EMPLOYEE_ID"
+      ],
+      "detected_entities": [
+        "DATE_TIME",
+        "EMPLOYEE_ID"
+      ],
+      "findings": [
+        {
+          "type": "DATE_TIME",
+          "source": "PRESIDIO",
+          "confidence": 0.85,
+          "start": 13,
+          "end": 26
+        },
+        {
+          "type": "EMPLOYEE_ID",
+          "source": "CUSTOM",
+          "confidence": 0.95,
+          "start": 13,
+          "end": 26
+        }
+      ],
+      "expected_detection": true,
+      "detection_success": true,
+      "true_positive": 1,
+      "false_positive": 1,
+      "false_negative": 0,
+      "precision": 0.5,
+      "recall": 1.0,
+      "f1": 0.6666666666666666,
+      "latency_ms": 16.013700049370527
+    },
+    {
+      "attack_id": "V1-TXT-005",
+      "category": "PLAIN_SENSITIVE_DATA",
+      "modality": "TEXT",
+      "expected_entities": [
+        "IP_ADDRESS"
+      ],
+      "detected_entities": [
+        "IP_ADDRESS"
+      ],
+      "findings": [
+        {
+          "type": "IP_ADDRESS",
+          "source": "BASIC+PRESIDIO",
+          "confidence": 1.0,
+          "start": 17,
+          "end": 30
+        }
+      ],
+      "expected_detection": true,
+      "detection_success": true,
+      "true_positive": 1,
+      "false_positive": 0,
+      "false_negative": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "latency_ms": 34.03170011006296
+    },
+    {
+      "attack_id": "V1-TXT-006",
+      "category": "COMBINATION",
+      "modality": "TEXT",
+      "expected_entities": [
+        "EMAIL",
+        "PASSWORD"
+      ],
+      "detected_entities": [
+        "EMAIL",
+        "PASSWORD",
+        "PERSON",
+        "URL"
+      ],
+      "findings": [
+        {
+          "type": "EMAIL",
+          "source": "BASIC+PRESIDIO",
+          "confidence": 1.0,
+          "start": 7,
+          "end": 27
+        },
+        {
+          "type": "PASSWORD",
+          "source": "BASIC+CUSTOM",
+          "confidence": 1.0,
+          "start": 38,
+          "end": 49
+        },
+        {
+          "type": "PERSON",
+          "source": "PRESIDIO",
+          "confidence": 0.85,
+          "start": 0,
+          "end": 5
+        },
+        {
+          "type": "URL",
+          "source": "PRESIDIO",
+          "confidence": 0.5,
+          "start": 16,
+          "end": 27
+        }
+      ],
+      "expected_detection": true,
+      "detection_success": true,
+      "true_positive": 2,
+      "false_positive": 2,
+      "false_negative": 0,
+      "precision": 0.5,
+      "recall": 1.0,
+      "f1": 0.6666666666666666,
+      "latency_ms": 13.281499966979027
+    },
+    {
+      "attack_id": "V1-TXT-007",
+      "category": "COMBINATION",
+      "modality": "TEXT",
+      "expected_entities": [
+        "API_KEY_LIKE",
+        "EMPLOYEE_ID"
+      ],
+      "detected_entities": [
+        "API_KEY_LIKE",
+        "EMPLOYEE_ID"
+      ],
+      "findings": [
+        {
+          "type": "EMPLOYEE_ID",
+          "source": "CUSTOM",
+          "confidence": 0.95,
+          "start": 13,
+          "end": 26
+        },
+        {
+          "type": "API_KEY_LIKE",
+          "source": "CUSTOM",
+          "confidence": 0.9,
+          "start": 36,
+          "end": 53
+        }
+      ],
+      "expected_detection": true,
+      "detection_success": true,
+      "true_positive": 2,
+      "false_positive": 0,
+      "false_negative": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "latency_ms": 24.73130007274449
+    },
+    {
+      "attack_id": "V1-TXT-008",
+      "category": "COMBINATION",
+      "modality": "TEXT",
+      "expected_entities": [
+        "EMAIL",
+        "IP_ADDRESS",
+        "PASSWORD"
+      ],
+      "detected_entities": [
+        "EMAIL",
+        "IP_ADDRESS",
+        "PASSWORD",
+        "PERSON",
+        "URL"
+      ],
+      "findings": [
+        {
+          "type": "EMAIL",
+          "source": "BASIC+PRESIDIO",
+          "confidence": 1.0,
+          "start": 7,
+          "end": 27
+        },
+        {
+          "type": "IP_ADDRESS",
+          "source": "BASIC+PRESIDIO",
+          "confidence": 1.0,
+          "start": 45,
+          "end": 58
+        },
+        {
+          "type": "PASSWORD",
+          "source": "BASIC+CUSTOM",
+          "confidence": 1.0,
+          "start": 69,
+          "end": 80
+        },
+        {
+          "type": "PERSON",
+          "source": "PRESIDIO",
+          "confidence": 0.85,
+          "start": 0,
+          "end": 5
+        },
+        {
+          "type": "URL",
+          "source": "PRESIDIO",
+          "confidence": 0.5,
+          "start": 16,
+          "end": 27
+        }
+      ],
+      "expected_detection": true,
+      "detection_success": true,
+      "true_positive": 3,
+      "false_positive": 2,
+      "false_negative": 0,
+      "precision": 0.6,
+      "recall": 1.0,
+      "f1": 0.7499999999999999,
+      "latency_ms": 18.47290014848113
+    },
+    {
+      "attack_id": "V1-TXT-009",
+      "category": "COMBINATION",
+      "modality": "TEXT",
+      "expected_entities": [
+        "API_KEY_LIKE",
+        "EMAIL",
+        "EMPLOYEE_ID",
+        "IP_ADDRESS",
+        "PASSWORD"
+      ],
+      "detected_entities": [
+        "API_KEY_LIKE",
+        "EMAIL",
+        "EMPLOYEE_ID",
+        "IP_ADDRESS",
+        "PASSWORD",
+        "URL"
+      ],
+      "findings": [
+        {
+          "type": "EMAIL",
+          "source": "BASIC+PRESIDIO",
+          "confidence": 1.0,
+          "start": 34,
+          "end": 54
+        },
+        {
+          "type": "IP_ADDRESS",
+          "source": "BASIC+PRESIDIO",
+          "confidence": 1.0,
+          "start": 72,
+          "end": 85
+        },
+        {
+          "type": "PASSWORD",
+          "source": "BASIC+CUSTOM",
+          "confidence": 1.0,
+          "start": 96,
+          "end": 107
+        },
+        {
+          "type": "URL",
+          "source": "PRESIDIO",
+          "confidence": 0.5,
+          "start": 43,
+          "end": 54
+        },
+        {
+          "type": "EMPLOYEE_ID",
+          "source": "CUSTOM",
+          "confidence": 0.95,
+          "start": 13,
+          "end": 26
+        },
+        {
+          "type": "API_KEY_LIKE",
+          "source": "CUSTOM",
+          "confidence": 0.9,
+          "start": 117,
+          "end": 134
+        }
+      ],
+      "expected_detection": true,
+      "detection_success": true,
+      "true_positive": 5,
+      "false_positive": 1,
+      "false_negative": 0,
+      "precision": 0.8333333333333334,
+      "recall": 1.0,
+      "f1": 0.9090909090909091,
+      "latency_ms": 26.734299957752228
+    },
+    {
+      "attack_id": "V1-OBF-001",
+      "category": "OBFUSCATION",
+      "modality": "TEXT",
+      "expected_entities": [
+        "PASSWORD"
+      ],
+      "detected_entities": [
+        "PASSWORD"
+      ],
+      "findings": [
+        {
+          "type": "PASSWORD",
+          "source": "BASIC+CUSTOM",
+          "confidence": 1.0,
+          "start": 11,
+          "end": 22
+        },
+        {
+          "type": "PASSWORD",
+          "source": "CUSTOM",
+          "confidence": 0.95,
+          "start": 9,
+          "end": 10
+        }
+      ],
+      "expected_detection": true,
+      "detection_success": true,
+      "true_positive": 1,
+      "false_positive": 0,
+      "false_negative": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "latency_ms": 11.437300126999617
+    },
+    {
+      "attack_id": "V1-OBF-002",
+      "category": "OBFUSCATION",
+      "modality": "TEXT",
+      "expected_entities": [
+        "PASSWORD"
+      ],
+      "detected_entities": [
+        "PASSWORD"
+      ],
+      "findings": [
+        {
+          "type": "PASSWORD",
+          "source": "BASIC+CUSTOM",
+          "confidence": 1.0,
+          "start": 9,
+          "end": 20
+        }
+      ],
+      "expected_detection": true,
+      "detection_success": true,
+      "true_positive": 1,
+      "false_positive": 0,
+      "false_negative": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "latency_ms": 10.565800126641989
+    },
+    {
+      "attack_id": "V1-OBF-003",
+      "category": "OBFUSCATION",
+      "modality": "TEXT",
+      "expected_entities": [
+        "PASSWORD"
+      ],
+      "detected_entities": [
+        "PASSWORD"
+      ],
+      "findings": [
+        {
+          "type": "PASSWORD",
+          "source": "CUSTOM",
+          "confidence": 0.95,
+          "start": 21,
+          "end": 32
+        }
+      ],
+      "expected_detection": true,
+      "detection_success": true,
+      "true_positive": 1,
+      "false_positive": 0,
+      "false_negative": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "latency_ms": 10.872700018808246
+    },
+    {
+      "attack_id": "V1-OBF-004",
+      "category": "OBFUSCATION",
+      "modality": "TEXT",
+      "expected_entities": [
+        "EMPLOYEE_ID"
+      ],
+      "detected_entities": [
+        "DATE_TIME",
+        "EMPLOYEE_ID"
+      ],
+      "findings": [
+        {
+          "type": "DATE_TIME",
+          "source": "PRESIDIO",
+          "confidence": 0.85,
+          "start": 23,
+          "end": 27
+        },
+        {
+          "type": "EMPLOYEE_ID",
+          "source": "CUSTOM",
+          "confidence": 0.95,
+          "start": 14,
+          "end": 27
+        }
+      ],
+      "expected_detection": true,
+      "detection_success": true,
+      "true_positive": 1,
+      "false_positive": 1,
+      "false_negative": 0,
+      "precision": 0.5,
+      "recall": 1.0,
+      "f1": 0.6666666666666666,
+      "latency_ms": 13.925099978223443
+    },
+    {
+      "attack_id": "V1-ENC-001",
+      "category": "ENCODING",
+      "modality": "TEXT",
+      "expected_entities": [
+        "PASSWORD"
+      ],
+      "detected_entities": [],
+      "findings": [],
+      "expected_detection": true,
+      "detection_success": false,
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 1,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "latency_ms": 12.189900036901236
+    },
+    {
+      "attack_id": "V1-ENC-002",
+      "category": "ENCODING",
+      "modality": "TEXT",
+      "expected_entities": [
+        "EMPLOYEE_ID"
+      ],
+      "detected_entities": [],
+      "findings": [],
+      "expected_detection": true,
+      "detection_success": false,
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 1,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "latency_ms": 15.287999995052814
+    },
+    {
+      "attack_id": "V1-INJ-001",
+      "category": "PROMPT_INJECTION",
+      "modality": "TEXT",
+      "expected_entities": [
+        "PASSWORD"
+      ],
+      "detected_entities": [
+        "PASSWORD"
+      ],
+      "findings": [
+        {
+          "type": "PASSWORD",
+          "source": "BASIC+CUSTOM",
+          "confidence": 1.0,
+          "start": 63,
+          "end": 74
+        }
+      ],
+      "expected_detection": true,
+      "detection_success": true,
+      "true_positive": 1,
+      "false_positive": 0,
+      "false_negative": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "latency_ms": 16.519600059837103
+    },
+    {
+      "attack_id": "V1-INJ-002",
+      "category": "PROMPT_INJECTION",
+      "modality": "TEXT",
+      "expected_entities": [
+        "API_KEY_LIKE"
+      ],
+      "detected_entities": [
+        "API_KEY_LIKE"
+      ],
+      "findings": [
+        {
+          "type": "API_KEY_LIKE",
+          "source": "CUSTOM",
+          "confidence": 0.9,
+          "start": 61,
+          "end": 78
+        }
+      ],
+      "expected_detection": true,
+      "detection_success": true,
+      "true_positive": 1,
+      "false_positive": 0,
+      "false_negative": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "latency_ms": 19.461499992758036
+    },
+    {
+      "attack_id": "V1-INJ-003",
+      "category": "PROMPT_INJECTION",
+      "modality": "TEXT",
+      "expected_entities": [
+        "EMAIL"
+      ],
+      "detected_entities": [
+        "EMAIL",
+        "PERSON",
+        "URL"
+      ],
+      "findings": [
+        {
+          "type": "EMAIL",
+          "source": "BASIC+PRESIDIO",
+          "confidence": 1.0,
+          "start": 56,
+          "end": 76
+        },
+        {
+          "type": "PERSON",
+          "source": "PRESIDIO",
+          "confidence": 0.85,
+          "start": 49,
+          "end": 54
+        },
+        {
+          "type": "URL",
+          "source": "PRESIDIO",
+          "confidence": 0.5,
+          "start": 65,
+          "end": 76
+        }
+      ],
+      "expected_detection": true,
+      "detection_success": true,
+      "true_positive": 1,
+      "false_positive": 2,
+      "false_negative": 0,
+      "precision": 0.3333333333333333,
+      "recall": 1.0,
+      "f1": 0.5,
+      "latency_ms": 16.446199966594577
+    },
+    {
+      "attack_id": "V1-INJ-004",
+      "category": "PROMPT_INJECTION",
+      "modality": "TEXT",
+      "expected_entities": [
+        "IP_ADDRESS",
+        "PASSWORD"
+      ],
+      "detected_entities": [
+        "IP_ADDRESS",
+        "PASSWORD"
+      ],
+      "findings": [
+        {
+          "type": "IP_ADDRESS",
+          "source": "BASIC+PRESIDIO",
+          "confidence": 1.0,
+          "start": 46,
+          "end": 59
+        },
+        {
+          "type": "PASSWORD",
+          "source": "CUSTOM",
+          "confidence": 0.95,
+          "start": 73,
+          "end": 84
+        }
+      ],
+      "expected_detection": true,
+      "detection_success": true,
+      "true_positive": 2,
+      "false_positive": 0,
+      "false_negative": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "latency_ms": 24.862400023266673
+    },
+    {
+      "attack_id": "V1-BEN-001",
+      "category": "BENIGN",
+      "modality": "TEXT",
+      "expected_entities": [],
+      "detected_entities": [],
+      "findings": [],
+      "expected_detection": false,
+      "detection_success": true,
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "latency_ms": 12.363299960270524
+    },
+    {
+      "attack_id": "V1-BEN-002",
+      "category": "BENIGN",
+      "modality": "TEXT",
+      "expected_entities": [],
+      "detected_entities": [],
+      "findings": [],
+      "expected_detection": false,
+      "detection_success": true,
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "latency_ms": 13.701200019568205
+    },
+    {
+      "attack_id": "V1-BEN-003",
+      "category": "BENIGN",
+      "modality": "TEXT",
+      "expected_entities": [],
+      "detected_entities": [],
+      "findings": [],
+      "expected_detection": false,
+      "detection_success": true,
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "latency_ms": 15.209800098091364
+    },
+    {
+      "attack_id": "V1-PDF-001",
+      "category": "MULTIMODAL",
+      "modality": "PDF",
+      "expected_entities": [
+        "EMAIL",
+        "EMPLOYEE_ID",
+        "IP_ADDRESS",
+        "PASSWORD"
+      ],
+      "detected_entities": [
+        "EMAIL",
+        "EMPLOYEE_ID",
+        "IP_ADDRESS",
+        "PASSWORD",
+        "URL"
+      ],
+      "findings": [
+        {
+          "type": "EMAIL",
+          "source": "BASIC+PRESIDIO",
+          "confidence": 1.0,
+          "start": 78,
+          "end": 98
+        },
+        {
+          "type": "EMAIL",
+          "source": "BASIC+PRESIDIO",
+          "confidence": 1.0,
+          "start": 222,
+          "end": 242
+        },
+        {
+          "type": "IP_ADDRESS",
+          "source": "BASIC+PRESIDIO",
+          "confidence": 1.0,
+          "start": 129,
+          "end": 141
+        },
+        {
+          "type": "IP_ADDRESS",
+          "source": "BASIC+PRESIDIO",
+          "confidence": 1.0,
+          "start": 274,
+          "end": 286
+        },
+        {
+          "type": "PASSWORD",
+          "source": "BASIC+CUSTOM",
+          "confidence": 1.0,
+          "start": 109,
+          "end": 120
+        },
+        {
+          "type": "PASSWORD",
+          "source": "BASIC+CUSTOM",
+          "confidence": 1.0,
+          "start": 253,
+          "end": 264
+        },
+        {
+          "type": "URL",
+          "source": "PRESIDIO",
+          "confidence": 0.5,
+          "start": 87,
+          "end": 98
+        },
+        {
+          "type": "URL",
+          "source": "PRESIDIO",
+          "confidence": 0.5,
+          "start": 231,
+          "end": 242
+        },
+        {
+          "type": "EMPLOYEE_ID",
+          "source": "CUSTOM",
+          "confidence": 0.95,
+          "start": 57,
+          "end": 70
+        },
+        {
+          "type": "EMPLOYEE_ID",
+          "source": "CUSTOM",
+          "confidence": 0.95,
+          "start": 201,
+          "end": 214
+        }
+      ],
+      "expected_detection": true,
+      "detection_success": true,
+      "true_positive": 4,
+      "false_positive": 1,
+      "false_negative": 0,
+      "precision": 0.8,
+      "recall": 1.0,
+      "f1": 0.888888888888889,
+      "latency_ms": 1319.2187999375165
+    },
+    {
+      "attack_id": "V1-DOCX-001",
+      "category": "MULTIMODAL",
+      "modality": "DOCX",
+      "expected_entities": [
+        "EMAIL",
+        "EMPLOYEE_ID",
+        "IP_ADDRESS",
+        "PASSWORD"
+      ],
+      "detected_entities": [
+        "EMAIL",
+        "EMPLOYEE_ID",
+        "IP_ADDRESS",
+        "PASSWORD",
+        "URL"
+      ],
+      "findings": [
+        {
+          "type": "EMAIL",
+          "source": "BASIC+PRESIDIO",
+          "confidence": 1.0,
+          "start": 63,
+          "end": 83
+        },
+        {
+          "type": "EMAIL",
+          "source": "BASIC+PRESIDIO",
+          "confidence": 1.0,
+          "start": 177,
+          "end": 197
+        },
+        {
+          "type": "IP_ADDRESS",
+          "source": "BASIC+PRESIDIO",
+          "confidence": 1.0,
+          "start": 114,
+          "end": 126
+        },
+        {
+          "type": "IP_ADDRESS",
+          "source": "BASIC+PRESIDIO",
+          "confidence": 1.0,
+          "start": 230,
+          "end": 242
+        },
+        {
+          "type": "PASSWORD",
+          "source": "BASIC+CUSTOM",
+          "confidence": 1.0,
+          "start": 94,
+          "end": 105
+        },
+        {
+          "type": "URL",
+          "source": "PRESIDIO",
+          "confidence": 0.5,
+          "start": 72,
+          "end": 83
+        },
+        {
+          "type": "URL",
+          "source": "PRESIDIO",
+          "confidence": 0.5,
+          "start": 186,
+          "end": 197
+        },
+        {
+          "type": "EMPLOYEE_ID",
+          "source": "CUSTOM",
+          "confidence": 0.95,
+          "start": 42,
+          "end": 55
+        },
+        {
+          "type": "EMPLOYEE_ID",
+          "source": "CUSTOM",
+          "confidence": 0.95,
+          "start": 155,
+          "end": 168
+        },
+        {
+          "type": "PASSWORD",
+          "source": "CUSTOM",
+          "confidence": 0.95,
+          "start": 207,
+          "end": 208
+        }
+      ],
+      "expected_detection": true,
+      "detection_success": true,
+      "true_positive": 4,
+      "false_positive": 1,
+      "false_negative": 0,
+      "precision": 0.8,
+      "recall": 1.0,
+      "f1": 0.888888888888889,
+      "latency_ms": 77.97560002654791
+    },
+    {
+      "attack_id": "V1-XLSX-001",
+      "category": "MULTIMODAL",
+      "modality": "XLSX",
+      "expected_entities": [
+        "API_KEY_LIKE",
+        "EMAIL",
+        "EMPLOYEE_ID",
+        "IP_ADDRESS",
+        "PASSWORD"
+      ],
+      "detected_entities": [
+        "API_KEY_LIKE",
+        "EMAIL",
+        "EMPLOYEE_ID",
+        "IP_ADDRESS",
+        "PASSWORD",
+        "URL"
+      ],
+      "findings": [
+        {
+          "type": "EMAIL",
+          "source": "BASIC+PRESIDIO",
+          "confidence": 1.0,
+          "start": 49,
+          "end": 69
+        },
+        {
+          "type": "EMAIL",
+          "source": "BASIC+PRESIDIO",
+          "confidence": 1.0,
+          "start": 103,
+          "end": 123
+        },
+        {
+          "type": "IP_ADDRESS",
+          "source": "BASIC+PRESIDIO",
+          "confidence": 1.0,
+          "start": 70,
+          "end": 82
+        },
+        {
+          "type": "IP_ADDRESS",
+          "source": "BASIC+PRESIDIO",
+          "confidence": 1.0,
+          "start": 124,
+          "end": 133
+        },
+        {
+          "type": "PASSWORD",
+          "source": "BASIC+CUSTOM",
+          "confidence": 1.0,
+          "start": 154,
+          "end": 165
+        },
+        {
+          "type": "URL",
+          "source": "PRESIDIO",
+          "confidence": 0.5,
+          "start": 58,
+          "end": 69
+        },
+        {
+          "type": "URL",
+          "source": "PRESIDIO",
+          "confidence": 0.5,
+          "start": 112,
+          "end": 123
+        },
+        {
+          "type": "EMPLOYEE_ID",
+          "source": "CUSTOM",
+          "confidence": 0.95,
+          "start": 30,
+          "end": 43
+        },
+        {
+          "type": "EMPLOYEE_ID",
+          "source": "CUSTOM",
+          "confidence": 0.95,
+          "start": 83,
+          "end": 96
+        },
+        {
+          "type": "API_KEY_LIKE",
+          "source": "CUSTOM",
+          "confidence": 0.9,
+          "start": 174,
+          "end": 191
+        }
+      ],
+      "expected_detection": true,
+      "detection_success": true,
+      "true_positive": 5,
+      "false_positive": 1,
+      "false_negative": 0,
+      "precision": 0.8333333333333334,
+      "recall": 1.0,
+      "f1": 0.9090909090909091,
+      "latency_ms": 58.29909979365766
+    },
+    {
+      "attack_id": "V1-PPTX-001",
+      "category": "MULTIMODAL",
+      "modality": "PPTX",
+      "expected_entities": [
+        "API_KEY_LIKE",
+        "EMAIL",
+        "EMPLOYEE_ID",
+        "IP_ADDRESS",
+        "PASSWORD"
+      ],
+      "detected_entities": [
+        "API_KEY_LIKE",
+        "EMAIL",
+        "EMPLOYEE_ID",
+        "IP_ADDRESS",
+        "PASSWORD",
+        "URL"
+      ],
+      "findings": [
+        {
+          "type": "EMAIL",
+          "source": "BASIC+PRESIDIO",
+          "confidence": 1.0,
+          "start": 63,
+          "end": 82
+        },
+        {
+          "type": "IP_ADDRESS",
+          "source": "BASIC+PRESIDIO",
+          "confidence": 1.0,
+          "start": 100,
+          "end": 113
+        },
+        {
+          "type": "PASSWORD",
+          "source": "BASIC+CUSTOM",
+          "confidence": 1.0,
+          "start": 142,
+          "end": 153
+        },
+        {
+          "type": "URL",
+          "source": "PRESIDIO",
+          "confidence": 0.5,
+          "start": 71,
+          "end": 82
+        },
+        {
+          "type": "EMPLOYEE_ID",
+          "source": "CUSTOM",
+          "confidence": 0.95,
+          "start": 42,
+          "end": 55
+        },
+        {
+          "type": "API_KEY_LIKE",
+          "source": "CUSTOM",
+          "confidence": 0.9,
+          "start": 163,
+          "end": 180
+        }
+      ],
+      "expected_detection": true,
+      "detection_success": true,
+      "true_positive": 5,
+      "false_positive": 1,
+      "false_negative": 0,
+      "precision": 0.8333333333333334,
+      "recall": 1.0,
+      "f1": 0.9090909090909091,
+      "latency_ms": 46.687399968504906
+    },
+    {
+      "attack_id": "V1-IMG-001",
+      "category": "MULTIMODAL",
+      "modality": "IMAGE",
+      "expected_entities": [
+        "API_KEY_LIKE",
+        "EMAIL",
+        "EMPLOYEE_ID",
+        "IP_ADDRESS",
+        "PASSWORD"
+      ],
+      "detected_entities": [
+        "API_KEY_LIKE",
+        "DATE_TIME",
+        "EMAIL",
+        "EMPLOYEE_ID",
+        "IP_ADDRESS",
+        "PASSWORD",
+        "URL"
+      ],
+      "findings": [
+        {
+          "type": "EMAIL",
+          "source": "BASIC+PRESIDIO",
+          "confidence": 1.0,
+          "start": 65,
+          "end": 85
+        },
+        {
+          "type": "IP_ADDRESS",
+          "source": "BASIC+PRESIDIO",
+          "confidence": 1.0,
+          "start": 103,
+          "end": 116
+        },
+        {
+          "type": "PASSWORD",
+          "source": "BASIC+CUSTOM",
+          "confidence": 1.0,
+          "start": 127,
+          "end": 138
+        },
+        {
+          "type": "DATE_TIME",
+          "source": "PRESIDIO",
+          "confidence": 0.85,
+          "start": 43,
+          "end": 63
+        },
+        {
+          "type": "URL",
+          "source": "PRESIDIO",
+          "confidence": 0.5,
+          "start": 74,
+          "end": 85
+        },
+        {
+          "type": "EMPLOYEE_ID",
+          "source": "CUSTOM",
+          "confidence": 0.95,
+          "start": 43,
+          "end": 56
+        },
+        {
+          "type": "API_KEY_LIKE",
+          "source": "CUSTOM",
+          "confidence": 0.9,
+          "start": 149,
+          "end": 166
+        }
+      ],
+      "expected_detection": true,
+      "detection_success": true,
+      "true_positive": 5,
+      "false_positive": 2,
+      "false_negative": 0,
+      "precision": 0.7142857142857143,
+      "recall": 1.0,
+      "f1": 0.8333333333333333,
+      "latency_ms": 1070.7403998821974
+    },
+    {
+      "attack_id": "V1-SCAN-001",
+      "category": "MULTIMODAL_OCR",
+      "modality": "IMAGE",
+      "expected_entities": [
+        "EMAIL",
+        "EMPLOYEE_ID",
+        "IP_ADDRESS",
+        "PASSWORD"
+      ],
+      "detected_entities": [
+        "EMAIL",
+        "EMPLOYEE_ID",
+        "IP_ADDRESS",
+        "PASSWORD",
+        "URL"
+      ],
+      "findings": [
+        {
+          "type": "EMAIL",
+          "source": "BASIC+PRESIDIO",
+          "confidence": 1.0,
+          "start": 64,
+          "end": 84
+        },
+        {
+          "type": "IP_ADDRESS",
+          "source": "BASIC+PRESIDIO",
+          "confidence": 1.0,
+          "start": 116,
+          "end": 128
+        },
+        {
+          "type": "PASSWORD",
+          "source": "BASIC+CUSTOM",
+          "confidence": 1.0,
+          "start": 95,
+          "end": 106
+        },
+        {
+          "type": "URL",
+          "source": "PRESIDIO",
+          "confidence": 0.5,
+          "start": 73,
+          "end": 84
+        },
+        {
+          "type": "EMPLOYEE_ID",
+          "source": "CUSTOM",
+          "confidence": 0.95,
+          "start": 42,
+          "end": 55
+        }
+      ],
+      "expected_detection": true,
+      "detection_success": true,
+      "true_positive": 4,
+      "false_positive": 1,
+      "false_negative": 0,
+      "precision": 0.8,
+      "recall": 1.0,
+      "f1": 0.888888888888889,
+      "latency_ms": 1092.4925999715924
+    }
+  ]
+}
