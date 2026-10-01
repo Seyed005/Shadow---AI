@@ -319,3 +319,19 @@ def test_pipeline_detects_base64_employee_id():
         finding["source"].startswith("BASE64")
         for finding in employee_findings
     )
+    # =====================================================
+# V3 RED TEAM — UNICODE ZERO-WIDTH BYPASS
+# =====================================================
+
+def test_pipeline_detects_zero_width_obfuscated_password():
+    text = "pass\u200bword DemoPass123"
+
+    findings = run_detection(text)
+
+    password_findings = [
+        finding
+        for finding in findings
+        if finding["type"] == "PASSWORD"
+    ]
+
+    assert password_findings

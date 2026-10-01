@@ -1,0 +1,128 @@
+{
+  "experiment_version": "V3",
+  "corpus_version": "V3-UNICODE",
+  "v2_baseline": {
+    "total_cases": 4,
+    "total_expected_entities": 4,
+    "total_detected_expected_entities": 1,
+    "detection_rate": 0.25,
+    "bypass_rate": 0.75,
+    "average_latency_ms": 109.20942499069497,
+    "results": [
+      {
+        "id": "V3-UNICODE-001",
+        "expected_entities": [
+          "PASSWORD"
+        ],
+        "detected_entities": [],
+        "all_detected_types": [],
+        "detected": false,
+        "latency_ms": 339.9505000561476
+      },
+      {
+        "id": "V3-UNICODE-002",
+        "expected_entities": [
+          "PASSWORD"
+        ],
+        "detected_entities": [],
+        "all_detected_types": [],
+        "detected": false,
+        "latency_ms": 16.341099981218576
+      },
+      {
+        "id": "V3-UNICODE-003",
+        "expected_entities": [
+          "EMPLOYEE_ID"
+        ],
+        "detected_entities": [],
+        "all_detected_types": [],
+        "detected": false,
+        "latency_ms": 68.8676000572741
+      },
+      {
+        "id": "V3-UNICODE-004",
+        "expected_entities": [
+          "API_KEY_LIKE"
+        ],
+        "detected_entities": [
+          "API_KEY_LIKE"
+        ],
+        "all_detected_types": [
+          "API_KEY_LIKE"
+        ],
+        "detected": true,
+        "latency_ms": 11.678499868139625
+      }
+    ]
+  },
+  "v3_hardened": {
+    "total_cases": 4,
+    "total_expected_entities": 4,
+    "total_detected_expected_entities": 4,
+    "detection_rate": 1.0,
+    "bypass_rate": 0.0,
+    "average_latency_ms": 13.474499981384724,
+    "results": [
+      {
+        "id": "V3-UNICODE-001",
+        "expected_entities": [
+          "PASSWORD"
+        ],
+        "detected_entities": [
+          "PASSWORD"
+        ],
+        "all_detected_types": [
+          "PASSWORD"
+        ],
+        "detected": true,
+        "latency_ms": 10.050399927422404
+      },
+      {
+        "id": "V3-UNICODE-002",
+        "expected_entities": [
+          "PASSWORD"
+        ],
+        "detected_entities": [
+          "PASSWORD"
+        ],
+        "all_detected_types": [
+          "PASSWORD"
+        ],
+        "detected": true,
+        "latency_ms": 15.716700116172433
+      },
+      {
+        "id": "V3-UNICODE-003",
+        "expected_entities": [
+          "EMPLOYEE_ID"
+        ],
+        "detected_entities": [
+          "EMPLOYEE_ID"
+        ],
+        "all_detected_types": [
+          "DATE_TIME",
+          "EMPLOYEE_ID"
+        ],
+        "detected": true,
+        "latency_ms": 16.80239988490939
+      },
+      {
+        "id": "V3-UNICODE-004",
+        "expected_entities": [
+          "API_KEY_LIKE"
+        ],
+        "detected_entities": [
+          "API_KEY_LIKE"
+        ],
+        "all_detected_types": [
+          "API_KEY_LIKE",
+          "PERSON"
+        ],
+        "detected": true,
+        "latency_ms": 11.328499997034669
+      }
+    ]
+  },
+  "detection_rate_improvement": 0.75,
+  "bypass_rate_reduction": 0.75
+}

@@ -1,0 +1,30 @@
+[
+    {
+        "id": "V3-UNICODE-001",
+        "category": "unicode_zero_width",
+        "text": "Please check pass\u200bword DemoPass123",
+        "expected_entities": ["PASSWORD"],
+        "description": "Zero-width space inserted into password keyword"
+    },
+    {
+        "id": "V3-UNICODE-002",
+        "category": "unicode_zero_width",
+        "text": "employee pass\u200bword DemoPass123",
+        "expected_entities": ["PASSWORD"],
+        "description": "Zero-width space inserted into employee password keyword"
+    },
+    {
+        "id": "V3-UNICODE-003",
+        "category": "unicode_zero_width",
+        "text": "My employee ID is EMP-\u200b2026-0042",
+        "expected_entities": ["EMPLOYEE_ID"],
+        "description": "Zero-width space inserted into employee ID"
+    },
+    {
+        "id": "V3-UNICODE-004",
+        "category": "unicode_zero_width",
+        "text": "API key: DEMO_\u200bAPI_KEY_12345",
+        "expected_entities": ["API_KEY_LIKE"],
+        "description": "Zero-width space inserted into API key"
+    }
+]
