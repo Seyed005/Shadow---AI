@@ -271,7 +271,9 @@ def test_full_pipeline_does_not_drop_password():
     ]
 
     assert password_findings
-    # =========================================================
+
+
+# =========================================================
 # V2 BASE64 HARDENING
 # =========================================================
 
@@ -319,14 +321,40 @@ def test_pipeline_detects_base64_employee_id():
         finding["source"].startswith("BASE64")
         for finding in employee_findings
     )
-    # =====================================================
+
+
+# =========================================================
 # V3 RED TEAM — UNICODE ZERO-WIDTH BYPASS
-# =====================================================
+# =========================================================
 
 def test_pipeline_detects_zero_width_obfuscated_password():
+
     text = "pass\u200bword DemoPass123"
 
     findings = run_detection(text)
+
+    password_findings = [
+        finding
+        for finding in findings
+        if finding["type"] == "PASSWORD"
+    ]
+
+    assert password_findings
+
+
+# =========================================================
+# V4 RED TEAM — UNICODE HOMOGLYPH BYPASS
+# =========================================================
+
+def test_pipeline_detects_homoglyph_obfuscated_password():
+
+    text = "passw\u043erd DemoPass123"
+
+    findings = run_detection(
+        text,
+        enable_canonicalization=True,
+        enable_confusables=True
+    )
 
     password_findings = [
         finding

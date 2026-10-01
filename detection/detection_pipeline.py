@@ -5,10 +5,19 @@ from detection.encoding_detector import decode_base64_candidates
 from detection.canonicalizer import canonicalize_text
 
 
-def _canonicalize_with_mapping(text: str):
+def _canonicalize_with_mapping(
+    text: str,
+    enable_confusables: bool = True
+):
     """
     Canonicalize text while preserving a mapping from
     canonical-text positions back to original-text positions.
+
+    V3:
+        enable_confusables=False
+
+    V4:
+        enable_confusables=True
 
     This allows detectors to operate on canonicalized text
     without breaking finding offsets used later by masking.
@@ -20,16 +29,19 @@ def _canonicalize_with_mapping(text: str):
     for index, character in enumerate(text):
 
         canonical_character = canonicalize_text(
-            character
+            character,
+            enable_confusables=enable_confusables
         )
 
         if canonical_character == "":
             continue
 
         for output_character in canonical_character:
+
             canonical_chars.append(
                 output_character
             )
+
             original_indices.append(
                 index
             )
@@ -56,6 +68,7 @@ def _map_span_to_original(
 
     if start >= len(index_map):
         original_start = original_length
+
     else:
         original_start = index_map[start]
 
@@ -78,7 +91,8 @@ def _map_span_to_original(
 
 def run_detection(
     text: str,
-    enable_canonicalization: bool = True
+    enable_canonicalization: bool = True,
+    enable_confusables: bool = True
 ):
     """
     Run the unified Shadow AI detection pipeline.
@@ -89,8 +103,16 @@ def run_detection(
         Original user input.
 
     enable_canonicalization:
-        True  -> V3 hardened pipeline.
+        True  -> canonicalized pipeline.
         False -> V2 baseline pipeline.
+
+    enable_confusables:
+        False -> V3 behavior:
+                 NFKC + zero-width removal.
+
+        True  -> V4 behavior:
+                 V3 canonicalization +
+                 selected Unicode homoglyph mapping.
 
     Returns
     -------
@@ -103,11 +125,16 @@ def run_detection(
     # =====================================================
     # 0. Canonicalization
     #
-    # V2 baseline:
+    # V2:
     #     canonicalization disabled
     #
     # V3:
-    #     conservative Unicode canonicalization enabled
+    #     canonicalization enabled
+    #     confusable mapping disabled
+    #
+    # V4:
+    #     canonicalization enabled
+    #     confusable mapping enabled
     #
     # The index map ensures detector offsets can be
     # converted back to the original user input.
@@ -117,7 +144,8 @@ def run_detection(
 
         canonical_text, index_map = (
             _canonicalize_with_mapping(
-                text
+                text,
+                enable_confusables=enable_confusables
             )
         )
 
@@ -228,7 +256,7 @@ def run_detection(
     # Decode valid Base64 candidates and run the existing
     # detection pipeline against the decoded content.
     #
-    # V3 continues to preserve this capability.
+    # V3 and V4 continue to preserve this capability.
     # =====================================================
 
     base64_candidates = (

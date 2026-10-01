@@ -1,0 +1,132 @@
+{
+    "experiment": "V3_vs_V4_unicode_homoglyph_hardening",
+    "corpus": "benchmark\\attack_corpus_v4.json",
+    "cases": 3,
+    "v3_baseline": {
+        "detection_rate": 0.0,
+        "bypass_rate": 1.0,
+        "average_latency_ms": 62.91383341886103,
+        "results": [
+            {
+                "id": "V4-UNICODE-001",
+                "category": "unicode_homoglyph",
+                "expected_entities": [
+                    "PASSWORD"
+                ],
+                "detected_entities": [],
+                "detected": false,
+                "bypass": true,
+                "latency_ms": 159.92470015771687,
+                "findings": []
+            },
+            {
+                "id": "V4-UNICODE-002",
+                "category": "unicode_homoglyph",
+                "expected_entities": [
+                    "PASSWORD"
+                ],
+                "detected_entities": [],
+                "detected": false,
+                "bypass": true,
+                "latency_ms": 5.176299950107932,
+                "findings": []
+            },
+            {
+                "id": "V4-UNICODE-004",
+                "category": "unicode_homoglyph",
+                "expected_entities": [
+                    "API_KEY_LIKE"
+                ],
+                "detected_entities": [],
+                "detected": false,
+                "bypass": true,
+                "latency_ms": 23.640500148758292,
+                "findings": []
+            }
+        ]
+    },
+    "v4_hardened": {
+        "detection_rate": 1.0,
+        "bypass_rate": 0.0,
+        "average_latency_ms": 4.699133336544037,
+        "results": [
+            {
+                "id": "V4-UNICODE-001",
+                "category": "unicode_homoglyph",
+                "expected_entities": [
+                    "PASSWORD"
+                ],
+                "detected_entities": [
+                    "PASSWORD"
+                ],
+                "detected": true,
+                "bypass": false,
+                "latency_ms": 4.94999997317791,
+                "findings": [
+                    {
+                        "source": "CUSTOM",
+                        "type": "PASSWORD",
+                        "start": 22,
+                        "end": 33,
+                        "score": 0.95,
+                        "confidence": 0.95,
+                        "value": "DemoPass123"
+                    }
+                ]
+            },
+            {
+                "id": "V4-UNICODE-002",
+                "category": "unicode_homoglyph",
+                "expected_entities": [
+                    "PASSWORD"
+                ],
+                "detected_entities": [
+                    "PASSWORD"
+                ],
+                "detected": true,
+                "bypass": false,
+                "latency_ms": 4.251000005751848,
+                "findings": [
+                    {
+                        "source": "CUSTOM",
+                        "type": "PASSWORD",
+                        "start": 18,
+                        "end": 29,
+                        "score": 0.95,
+                        "confidence": 0.95,
+                        "value": "DemoPass123"
+                    }
+                ]
+            },
+            {
+                "id": "V4-UNICODE-004",
+                "category": "unicode_homoglyph",
+                "expected_entities": [
+                    "API_KEY_LIKE"
+                ],
+                "detected_entities": [
+                    "API_KEY_LIKE"
+                ],
+                "detected": true,
+                "bypass": false,
+                "latency_ms": 4.8964000307023525,
+                "findings": [
+                    {
+                        "source": "CUSTOM",
+                        "type": "API_KEY_LIKE",
+                        "start": 9,
+                        "end": 27,
+                        "score": 0.9,
+                        "confidence": 0.9,
+                        "value": "DEMo_API_KEY_12345"
+                    }
+                ]
+            }
+        ]
+    },
+    "comparison": {
+        "detection_rate_improvement": 1.0,
+        "bypass_rate_reduction": 1.0,
+        "average_latency_change_ms": -58.214700082316995
+    }
+}

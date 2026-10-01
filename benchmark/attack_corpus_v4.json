@@ -1,0 +1,23 @@
+[
+    {
+        "id": "V4-UNICODE-001",
+        "category": "unicode_homoglyph",
+        "text": "Please check passw\u043erd DemoPass123",
+        "expected_entities": ["PASSWORD"],
+        "description": "Cyrillic small o substituted for Latin o in password keyword"
+    },
+    {
+        "id": "V4-UNICODE-002",
+        "category": "unicode_homoglyph",
+        "text": "employee passw\u043erd DemoPass123",
+        "expected_entities": ["PASSWORD"],
+        "description": "Cyrillic small o substituted in employee password keyword"
+    },
+    {
+        "id": "V4-UNICODE-004",
+        "category": "unicode_homoglyph",
+        "text": "API key: DEM\u043e_API_KEY_12345",
+        "expected_entities": ["API_KEY_LIKE"],
+        "description": "Cyrillic small o substituted inside API key"
+    }
+]
