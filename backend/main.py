@@ -9,6 +9,8 @@ from fastapi import (
     HTTPException
 )
 
+from fastapi.responses import FileResponse
+
 from backend.gateway import (
     process_text,
     process_pdf,
@@ -26,13 +28,25 @@ app = FastAPI(
 )
 
 
+# ============================================================
+# FRONTEND
+# ============================================================
+
+FRONTEND_DIR = (
+    Path(__file__).resolve().parent.parent / "frontend"
+)
+
+
+# ============================================================
+# ALLOWED FILE TYPES
+# ============================================================
+
 ALLOWED_EXTENSIONS = {
     ".pdf",
     ".docx",
     ".xlsx",
     ".pptx",
     ".txt",
-
     ".png",
     ".jpg",
     ".jpeg",
@@ -54,13 +68,20 @@ IMAGE_EXTENSIONS = {
 }
 
 
-@app.get("/")
-async def root():
-    return {
-        "project": "Shadow AI Security Gateway",
-        "status": "online"
-    }
+# ============================================================
+# FRONTEND ROUTE
+# ============================================================
 
+@app.get("/", include_in_schema=False)
+async def root():
+    return FileResponse(
+        FRONTEND_DIR / "index.html"
+    )
+
+
+# ============================================================
+# HEALTH CHECK
+# ============================================================
 
 @app.get("/health")
 async def health():
@@ -69,11 +90,16 @@ async def health():
     }
 
 
+# ============================================================
+# TEXT SECURITY SCAN
+# ============================================================
+
 @app.post("/gateway/scan")
 async def gateway_scan(
     text: str = Form(...),
     session_id: str = Form(...)
 ):
+
     if not text.strip():
         raise HTTPException(
             status_code=400,
@@ -87,6 +113,7 @@ async def gateway_scan(
         )
 
     try:
+
         result = await process_text(
             text=text,
             session_id=session_id
@@ -95,18 +122,33 @@ async def gateway_scan(
         return result
 
     except Exception as exc:
+
+        import traceback
+
+        error_details = traceback.format_exc()
+
+        print("\n========== SHADOW AI ERROR ==========")
+        print(error_details)
+        print("=====================================\n")
+
         raise HTTPException(
             status_code=500,
-            detail=str(exc)
+            detail=error_details
         )
 
+
+# ============================================================
+# HUMAN-IN-THE-LOOP DECISION
+# ============================================================
 
 @app.post("/gateway/hitl")
 async def gateway_hitl(
     session_id: str = Form(...),
     decision: str = Form(...)
 ):
+
     if not session_id.strip():
+
         raise HTTPException(
             status_code=400,
             detail="Session ID cannot be empty."
@@ -121,6 +163,7 @@ async def gateway_hitl(
     }
 
     if decision not in allowed_decisions:
+
         raise HTTPException(
             status_code=400,
             detail=(
@@ -130,6 +173,7 @@ async def gateway_hitl(
         )
 
     try:
+
         result = await process_hitl_decision(
             session_id=session_id,
             decision=decision
@@ -138,30 +182,39 @@ async def gateway_hitl(
         return result
 
     except ValueError as exc:
+
         raise HTTPException(
             status_code=404,
             detail=str(exc)
         )
 
     except Exception as exc:
+
         raise HTTPException(
             status_code=500,
             detail=str(exc)
         )
 
 
+# ============================================================
+# MULTIMODAL FILE SCAN
+# ============================================================
+
 @app.post("/gateway/scan-file")
 async def gateway_scan_file(
     file: UploadFile = File(...),
     session_id: str = Form(...)
 ):
+
     if not file.filename:
+
         raise HTTPException(
             status_code=400,
             detail="File name is missing."
         )
 
     if not session_id.strip():
+
         raise HTTPException(
             status_code=400,
             detail="Session ID cannot be empty."
@@ -172,6 +225,7 @@ async def gateway_scan_file(
     ).suffix.lower()
 
     if extension not in ALLOWED_EXTENSIONS:
+
         raise HTTPException(
             status_code=400,
             detail=(
@@ -184,6 +238,11 @@ async def gateway_scan_file(
     temporary_file_path = None
 
     try:
+
+        # ----------------------------------------------------
+        # Save uploaded file temporarily
+        # ----------------------------------------------------
+
         with tempfile.NamedTemporaryFile(
             delete=False,
             suffix=extension
@@ -197,6 +256,10 @@ async def gateway_scan_file(
                 temporary_file.name
             )
 
+        # ----------------------------------------------------
+        # PDF
+        # ----------------------------------------------------
+
         if extension == ".pdf":
 
             result = await process_pdf(
@@ -205,6 +268,10 @@ async def gateway_scan_file(
                 ),
                 session_id=session_id
             )
+
+        # ----------------------------------------------------
+        # DOCX
+        # ----------------------------------------------------
 
         elif extension == ".docx":
 
@@ -215,6 +282,10 @@ async def gateway_scan_file(
                 session_id=session_id
             )
 
+        # ----------------------------------------------------
+        # XLSX
+        # ----------------------------------------------------
+
         elif extension == ".xlsx":
 
             result = await process_xlsx(
@@ -224,6 +295,10 @@ async def gateway_scan_file(
                 session_id=session_id
             )
 
+        # ----------------------------------------------------
+        # PPTX
+        # ----------------------------------------------------
+
         elif extension == ".pptx":
 
             result = await process_pptx(
@@ -232,6 +307,10 @@ async def gateway_scan_file(
                 ),
                 session_id=session_id
             )
+
+        # ----------------------------------------------------
+        # TXT
+        # ----------------------------------------------------
 
         elif extension == ".txt":
 
@@ -244,6 +323,10 @@ async def gateway_scan_file(
                 text=text_content,
                 session_id=session_id
             )
+
+        # ----------------------------------------------------
+        # IMAGE
+        # ----------------------------------------------------
 
         elif extension in IMAGE_EXTENSIONS:
 
@@ -264,21 +347,39 @@ async def gateway_scan_file(
         return result
 
     except HTTPException:
+
         raise
 
     except Exception as exc:
+
+        import traceback
+
+        error_details = traceback.format_exc()
+
+        print("\n========== SHADOW AI FILE ERROR ==========")
+        print(error_details)
+        print("==========================================\n")
+
         raise HTTPException(
             status_code=500,
-            detail=str(exc)
+            detail=error_details
         )
 
     finally:
+
+        # ----------------------------------------------------
+        # Delete temporary upload
+        # ----------------------------------------------------
 
         if (
             temporary_file_path
             and temporary_file_path.exists()
         ):
+
             try:
+
                 temporary_file_path.unlink()
+
             except OSError:
+
                 pass

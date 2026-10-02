@@ -363,3 +363,40 @@ def test_pipeline_detects_homoglyph_obfuscated_password():
     ]
 
     assert password_findings
+    # =========================================================
+# V6.1 RED TEAM HARDENING
+# =========================================================
+
+def test_custom_detector_detects_semantic_credential_context():
+
+    text = (
+        "Use the secret credential "
+        "DemoPass123 for the login."
+    )
+
+    findings = detect_custom_entities(text)
+
+    password_findings = [
+        finding
+        for finding in findings
+        if finding["type"] == "PASSWORD"
+    ]
+
+    assert password_findings
+    # =========================================================
+# V6.1 RED TEAM HARDENING — ROT13 CONTEXT
+# =========================================================
+
+def test_pipeline_detects_rot13_obfuscated_password_context():
+
+    text = "cnffjbeq DemoPass123"
+
+    findings = run_detection(text)
+
+    password_findings = [
+        finding
+        for finding in findings
+        if finding["type"] == "PASSWORD"
+    ]
+
+    assert password_findings

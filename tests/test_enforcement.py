@@ -10,14 +10,20 @@ from backend import redis_store
 
 
 # ---------------------------------------------------------
-# TEST 1 — BLOCK
-# Provider must NOT be called when the request is blocked.
+# TEST 1 — CRITICAL REQUEST REQUIRES HITL
+#
+# Critical requests must NOT be automatically blocked.
+# They must wait for a human decision.
+#
+# The provider must not be called before that decision.
 # ---------------------------------------------------------
 
 @pytest.mark.asyncio(loop_scope="session")
-async def test_block_does_not_call_ai_provider():
+async def test_critical_request_requires_hitl():
 
-    session_id = "boundary-block-test"
+    session_id = (
+        f"boundary-critical-hitl-{uuid.uuid4().hex}"
+    )
 
     with patch(
         "backend.gateway.send_to_approved_ai",
@@ -38,24 +44,37 @@ async def test_block_does_not_call_ai_provider():
             session_id=session_id
         )
 
-        if result["policy"]["decision"] == "BLOCK":
-            mock_provider.assert_not_awaited()
+        assert (
+            result["policy"]["risk_level"]
+            == "CRITICAL"
+        )
 
-        else:
-            pytest.skip(
-                "Input did not reach BLOCK policy in current configuration."
-            )
+        assert (
+            result["policy"]["decision"]
+            == "HITL"
+        )
+
+        assert (
+            result["policy"]["requires_human_review"]
+            is True
+        )
+
+        # No external AI request before human decision.
+        mock_provider.assert_not_awaited()
 
 
 # ---------------------------------------------------------
 # TEST 2 — SANITIZE
+#
 # Provider must receive sanitized text only.
 # ---------------------------------------------------------
 
 @pytest.mark.asyncio(loop_scope="session")
 async def test_sanitize_sends_only_sanitized_payload():
 
-    session_id = f"boundary-sanitize-test-{uuid.uuid4().hex}"
+    session_id = (
+        f"boundary-sanitize-test-{uuid.uuid4().hex}"
+    )
 
     original_text = (
         "Please contact security@example.com "
@@ -80,34 +99,67 @@ async def test_sanitize_sends_only_sanitized_payload():
 
         if result["policy"]["decision"] == "HITL":
 
-            decision_result = await process_hitl_decision(
-                session_id=session_id,
-                decision="SANITIZE_AND_SEND"
+            decision_result = (
+                await process_hitl_decision(
+                    session_id=session_id,
+                    decision="SANITIZE_AND_SEND"
+                )
             )
 
-            assert decision_result["status"] == "processed"
+            assert (
+                decision_result["status"]
+                == "processed"
+            )
 
-            sent_payload = mock_provider.await_args.args[0]
+            sent_payload = (
+                mock_provider.await_args.args[0]
+            )
 
-            assert "security@example.com" not in sent_payload
-            assert "analyst@example.com" in sent_payload
-            assert sent_payload != original_text
+            assert (
+                "security@example.com"
+                not in sent_payload
+            )
 
-        elif result["policy"]["decision"] == "SANITIZE_AND_SEND":
+            assert (
+                "analyst@example.com"
+                in sent_payload
+            )
 
-            sent_payload = mock_provider.await_args.args[0]
+            assert (
+                sent_payload
+                != original_text
+            )
 
-            assert sent_payload != original_text
-            assert "security@example.com" not in sent_payload
+        elif (
+            result["policy"]["decision"]
+            == "SANITIZE_AND_SEND"
+        ):
+
+            sent_payload = (
+                mock_provider.await_args.args[0]
+            )
+
+            assert (
+                sent_payload
+                != original_text
+            )
+
+            assert (
+                "security@example.com"
+                not in sent_payload
+            )
 
         else:
-            pytest.skip(
-                "Input did not reach SANITIZE/HITL policy."
+
+            pytest.fail(
+                "Input did not reach "
+                "SANITIZE/HITL policy."
             )
 
 
 # ---------------------------------------------------------
 # TEST 3 — ALLOW
+#
 # Provider must receive original payload unchanged.
 # ---------------------------------------------------------
 
@@ -136,19 +188,28 @@ async def test_allow_sends_original_payload_unchanged():
             session_id=session_id
         )
 
-        assert result["policy"]["decision"] == "ALLOW"
+        assert (
+            result["policy"]["decision"]
+            == "ALLOW"
+        )
 
         mock_provider.assert_awaited_once_with(
             original_text
         )
 
-        sent_payload = mock_provider.await_args.args[0]
+        sent_payload = (
+            mock_provider.await_args.args[0]
+        )
 
-        assert sent_payload == original_text
+        assert (
+            sent_payload
+            == original_text
+        )
 
 
 # ---------------------------------------------------------
 # TEST 4 — REDIS SESSION ISOLATION
+#
 # Session A must not see Session B's HITL request.
 # ---------------------------------------------------------
 
@@ -194,18 +255,32 @@ async def test_redis_session_isolation():
         request_b
     )
 
-    stored_a = await redis_store.get_pending_hitl(
-        session_a
+    stored_a = (
+        await redis_store.get_pending_hitl(
+            session_a
+        )
     )
 
-    stored_b = await redis_store.get_pending_hitl(
-        session_b
+    stored_b = (
+        await redis_store.get_pending_hitl(
+            session_b
+        )
     )
 
-    assert stored_a["text"] == request_a["text"]
-    assert stored_b["text"] == request_b["text"]
+    assert (
+        stored_a["text"]
+        == request_a["text"]
+    )
 
-    assert stored_a["text"] != stored_b["text"]
+    assert (
+        stored_b["text"]
+        == request_b["text"]
+    )
+
+    assert (
+        stored_a["text"]
+        != stored_b["text"]
+    )
 
     await redis_store.delete_pending_hitl(
         session_a
@@ -223,7 +298,7 @@ async def test_redis_session_isolation():
 # pending HITL request. This isolates the enforcement
 # boundary from the risk-policy threshold.
 #
-# The important security property:
+# Security property:
 # SANITIZE_AND_SEND must NEVER send the original secret
 # to the approved AI provider.
 # ---------------------------------------------------------
@@ -248,7 +323,9 @@ async def test_sanitized_provider_payload_contains_no_raw_secret():
                 "type": "PASSWORD",
                 "source": "CUSTOM",
                 "confidence": 0.95,
-                "start": original_text.index(secret),
+                "start": original_text.index(
+                    secret
+                ),
                 "end": (
                     original_text.index(secret)
                     + len(secret)
@@ -265,7 +342,9 @@ async def test_sanitized_provider_payload_contains_no_raw_secret():
                     original_text.index(
                         "security@example.com"
                     )
-                    + len("security@example.com")
+                    + len(
+                        "security@example.com"
+                    )
                 )
             }
         ]
@@ -292,19 +371,38 @@ async def test_sanitized_provider_payload_contains_no_raw_secret():
             decision="SANITIZE_AND_SEND"
         )
 
-        assert result["status"] == "processed"
+        assert (
+            result["status"]
+            == "processed"
+        )
 
         mock_provider.assert_awaited_once()
 
-        sent_payload = mock_provider.await_args.args[0]
+        sent_payload = (
+            mock_provider.await_args.args[0]
+        )
 
-        # Critical security assertions
+        # Critical security assertions.
         assert secret not in sent_payload
-        assert "security@example.com" not in sent_payload
 
-        # Sanitized replacements must exist
-        assert "[SYNTHETIC_PASSWORD]" in sent_payload
-        assert "analyst@example.com" in sent_payload
+        assert (
+            "security@example.com"
+            not in sent_payload
+        )
 
-        # Provider must receive a modified payload
-        assert sent_payload != original_text
+        # Sanitized replacements must exist.
+        assert (
+            "[SYNTHETIC_PASSWORD]"
+            in sent_payload
+        )
+
+        assert (
+            "analyst@example.com"
+            in sent_payload
+        )
+
+        # Provider must receive modified payload.
+        assert (
+            sent_payload
+            != original_text
+        )

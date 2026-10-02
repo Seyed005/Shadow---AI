@@ -185,15 +185,15 @@ def test_high_risk_policy_requires_hitl():
     assert result["requires_human_review"] is True
 
 
-def test_critical_risk_policy_blocks():
+def test_risk_above_high_boundary_enters_critical_hitl():
 
     result = get_policy_decision(
-        {"total_risk": 80}
+        {"total_risk": 61}
     )
 
     assert result["risk_level"] == "CRITICAL"
-    assert result["decision"] == "BLOCK"
-    assert result["requires_human_review"] is False
+    assert result["decision"] == "HITL"
+    assert result["requires_human_review"] is True
 
 
 # =========================================================
@@ -247,11 +247,12 @@ def test_risk_at_high_boundary_is_high_hitl():
     assert result["decision"] == "HITL"
 
 
-def test_risk_above_high_boundary_is_blocked():
+def test_risk_above_high_boundary_enters_critical_hitl():
 
     result = get_policy_decision(
         {"total_risk": 61}
     )
 
     assert result["risk_level"] == "CRITICAL"
-    assert result["decision"] == "BLOCK"
+    assert result["decision"] == "HITL"
+    assert result["requires_human_review"] is True

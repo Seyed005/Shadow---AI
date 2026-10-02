@@ -3,6 +3,7 @@ from detection.presidio_detector import detect_with_presidio
 from detection.custom_recognizers import detect_custom_entities
 from detection.encoding_detector import decode_base64_candidates
 from detection.canonicalizer import canonicalize_text
+from detection.rot13_detector import detect_rot13_password_context
 
 
 def _canonicalize_with_mapping(
@@ -357,6 +358,41 @@ def run_detection(
                 ),
                 "decoded_value": decoded_text
             })
+                # =====================================================
+    # 5. ROT13 context detection
+    #
+    # V6.1 Purple Team hardening:
+    # Detect password context obfuscated using ROT13.
+    #
+    # The detector analyzes the transformed representation
+    # but returns the original credential value and
+    # original-text span.
+    # =====================================================
+
+    rot13_findings = detect_rot13_password_context(
+        canonical_text
+    )
+
+    for finding in rot13_findings:
+
+        start, end = _map_span_to_original(
+            finding["start"],
+            finding["end"],
+            index_map,
+            len(text)
+        )
+
+        findings.append({
+            "source": "ROT13_CUSTOM",
+            "type": finding["type"],
+            "start": start,
+            "end": end,
+            "score": finding["score"],
+            "confidence": finding["confidence"],
+            "value": finding["value"],
+            "decoded_value": finding["decoded_value"]
+        })
+
 
     return findings
 
