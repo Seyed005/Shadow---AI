@@ -1,0 +1,1465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Shadow AI — Secure Access</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+:root{
+    --bg:#050914;
+    --panel:#0b1020;
+    --panel2:#101725;
+    --line:#263147;
+    --text:#f5f7fb;
+    --muted:#8993a8;
+    --purple:#6d35e8;
+    --purple2:#8b5cf6;
+    --green:#39d353;
+    --red:#ff4d4d;
+}
+
+html,
+body{
+    margin:0;
+    width:100%;
+    height:100%;
+    font-family:Inter,Segoe UI,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+}
+
+body{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    background:
+        radial-gradient(
+            circle at 50% 20%,
+            rgba(109,53,232,.18),
+            transparent 38%
+        ),
+        #050914;
+}
+
+.background-grid{
+    position:fixed;
+    inset:0;
+    opacity:.18;
+    pointer-events:none;
+
+    background-image:
+        linear-gradient(#263147 1px,transparent 1px),
+        linear-gradient(90deg,#263147 1px,transparent 1px);
+
+    background-size:50px 50px;
+
+    mask-image:linear-gradient(
+        to bottom,
+        transparent,
+        black 20%,
+        black 80%,
+        transparent
+    );
+}
+
+.auth-container{
+    width:min(440px,92vw);
+    position:relative;
+    z-index:2;
+}
+
+.brand{
+    text-align:center;
+    margin-bottom:24px;
+}
+
+.brand-mark{
+    width:58px;
+    height:64px;
+    margin:0 auto 14px;
+    position:relative;
+    display:grid;
+    place-items:center;
+    color:white;
+}
+
+.brand-mark:before{
+    content:"";
+    position:absolute;
+    inset:1px 4px 5px;
+    border-radius:15px 15px 20px 20px;
+    background:
+        linear-gradient(
+            145deg,
+            #263c8d,
+            #7c3aed 65%,
+            #17113c
+        );
+
+    clip-path:polygon(
+        50% 0,
+        91% 18%,
+        83% 73%,
+        50% 100%,
+        17% 73%,
+        9% 18%
+    );
+
+    box-shadow:
+        0 0 30px rgba(124,58,237,.42);
+}
+
+.brand-mark:after{
+    content:"✦";
+    position:relative;
+    font-size:25px;
+}
+
+.brand-name{
+    font-size:27px;
+    font-weight:800;
+    letter-spacing:.8px;
+}
+
+.brand-name span{
+    color:var(--purple2);
+}
+
+.brand-sub{
+    color:#9b84df;
+    font-size:12px;
+    margin-top:4px;
+    letter-spacing:.4px;
+}
+
+.auth-card{
+    background:
+        linear-gradient(
+            180deg,
+            rgba(16,23,37,.97),
+            rgba(9,14,26,.98)
+        );
+
+    border:1px solid #29344a;
+    border-radius:16px;
+    padding:28px;
+
+    box-shadow:
+        0 30px 80px rgba(0,0,0,.5),
+        0 0 45px rgba(109,53,232,.08);
+}
+
+.screen{
+    display:none;
+}
+
+.screen.active{
+    display:block;
+}
+
+.title{
+    font-size:22px;
+    font-weight:700;
+    margin-bottom:7px;
+}
+
+.subtitle{
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.5;
+    margin-bottom:23px;
+}
+
+.field{
+    margin-bottom:15px;
+}
+
+.field label{
+    display:block;
+    font-size:12px;
+    color:#cbd2df;
+    margin-bottom:7px;
+}
+
+.input-wrap{
+    position:relative;
+}
+
+input{
+    width:100%;
+    height:46px;
+    border:1px solid #2b374d;
+    border-radius:9px;
+    background:#080e1b;
+    color:#f2f4f8;
+    outline:none;
+    padding:0 13px;
+    font-size:13px;
+    transition:.18s;
+}
+
+input:focus{
+    border-color:#7040dc;
+    box-shadow:0 0 0 3px rgba(109,53,232,.12);
+}
+
+.password-toggle{
+    position:absolute;
+    right:10px;
+    top:50%;
+    transform:translateY(-50%);
+    border:0;
+    background:transparent;
+    color:#8d98ac;
+    cursor:pointer;
+    font-size:14px;
+}
+
+.primary-btn{
+    width:100%;
+    height:47px;
+    border:0;
+    border-radius:9px;
+    background:
+        linear-gradient(
+            90deg,
+            #5d28d9,
+            #7137ea
+        );
+    color:white;
+    font-weight:700;
+    font-size:14px;
+    cursor:pointer;
+    margin-top:5px;
+
+    box-shadow:
+        0 10px 25px rgba(99,48,220,.22);
+}
+
+.primary-btn:hover{
+    filter:brightness(1.08);
+}
+
+.primary-btn:disabled{
+    opacity:.55;
+    cursor:not-allowed;
+}
+
+.secondary-link{
+    border:0;
+    background:none;
+    color:#a98bea;
+    cursor:pointer;
+    font-size:12px;
+    padding:0;
+}
+
+.secondary-link:hover{
+    color:#c6b2ff;
+}
+
+.bottom-row{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:6px;
+    margin-top:19px;
+    color:#7f899d;
+    font-size:12px;
+}
+
+.back-row{
+    margin-bottom:18px;
+}
+
+.message{
+    display:none;
+    padding:10px 12px;
+    border-radius:8px;
+    font-size:12px;
+    line-height:1.4;
+    margin-bottom:15px;
+}
+
+.message.show{
+    display:block;
+}
+
+.message.error{
+    background:#32171b;
+    border:1px solid #713039;
+    color:#ff9a9a;
+}
+
+.message.success{
+    background:#102c1b;
+    border:1px solid #285f39;
+    color:#7ee69a;
+}
+
+.security-info{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:7px;
+    margin-top:18px;
+    color:#69758a;
+    font-size:10px;
+}
+
+.security-dot{
+    width:6px;
+    height:6px;
+    background:var(--green);
+    border-radius:50%;
+    box-shadow:0 0 8px var(--green);
+}
+
+.footer{
+    text-align:center;
+    color:#505b70;
+    font-size:10px;
+    margin-top:15px;
+}
+
+.password-rule{
+    color:#68758a;
+    font-size:10px;
+    margin-top:5px;
+}
+
+@media(max-width:500px){
+
+    .auth-card{
+        padding:22px;
+    }
+
+    .brand-name{
+        font-size:24px;
+    }
+
+    .title{
+        font-size:20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="background-grid"></div>
+
+<div class="auth-container">
+
+    <!-- BRAND -->
+    <div class="brand">
+
+        <div class="brand-mark">
+        </div>
+
+        <div class="brand-name">
+            SHADOW <span>AI</span>
+        </div>
+
+        <div class="brand-sub">
+            SECURITY GATEWAY
+        </div>
+
+    </div>
+
+
+    <div class="auth-card">
+
+        <!-- ================================================= -->
+        <!-- SIGN IN -->
+        <!-- ================================================= -->
+
+        <section
+            id="loginScreen"
+            class="screen active"
+        >
+
+            <div class="title">
+                Welcome back
+            </div>
+
+            <div class="subtitle">
+                Sign in to access your Shadow AI
+                Security Gateway workspace.
+            </div>
+
+            <div
+                id="loginMessage"
+                class="message"
+            ></div>
+
+            <form id="loginForm">
+
+                <div class="field">
+
+                    <label>
+                        Username or Email
+                    </label>
+
+                    <input
+                        id="login"
+                        type="text"
+                        autocomplete="username"
+                        placeholder="Enter username or email"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Password
+                    </label>
+
+                    <div class="input-wrap">
+
+                        <input
+                            id="loginPassword"
+                            type="password"
+                            autocomplete="current-password"
+                            placeholder="Enter your password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            onclick="togglePassword('loginPassword',this)"
+                        >
+                            ◉
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    style="
+                        text-align:right;
+                        margin:-3px 0 17px;
+                    "
+                >
+
+                    <button
+                        type="button"
+                        class="secondary-link"
+                        onclick="showScreen('forgotScreen')"
+                    >
+                        Forgot password?
+                    </button>
+
+                </div>
+
+
+                <button
+                    id="loginButton"
+                    class="primary-btn"
+                    type="submit"
+                >
+                    Sign In
+                </button>
+
+            </form>
+
+
+            <div class="bottom-row">
+
+                <span>
+                    Don't have an account?
+                </span>
+
+                <button
+                    class="secondary-link"
+                    type="button"
+                    onclick="showScreen('signupScreen')"
+                >
+                    Create account
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- SIGN UP -->
+        <!-- ================================================= -->
+
+        <section
+            id="signupScreen"
+            class="screen"
+        >
+
+            <div class="back-row">
+
+                <button
+                    class="secondary-link"
+                    type="button"
+                    onclick="showScreen('loginScreen')"
+                >
+                    ← Back to Sign In
+                </button>
+
+            </div>
+
+
+            <div class="title">
+                Create your account
+            </div>
+
+            <div class="subtitle">
+                Create a Shadow AI Analyst account
+                to access the secure gateway.
+            </div>
+
+
+            <div
+                id="signupMessage"
+                class="message"
+            ></div>
+
+
+            <form id="signupForm">
+
+                <div class="field">
+
+                    <label>
+                        Full Name
+                    </label>
+
+                    <input
+                        id="fullName"
+                        type="text"
+                        autocomplete="name"
+                        placeholder="Enter your full name"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Username
+                    </label>
+
+                    <input
+                        id="username"
+                        type="text"
+                        autocomplete="username"
+                        placeholder="Choose a username"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Email
+                    </label>
+
+                    <input
+                        id="email"
+                        type="email"
+                        autocomplete="email"
+                        placeholder="Enter your email"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Password
+                    </label>
+
+                    <div class="input-wrap">
+
+                        <input
+                            id="signupPassword"
+                            type="password"
+                            autocomplete="new-password"
+                            placeholder="Create a password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            onclick="togglePassword('signupPassword',this)"
+                        >
+                            ◉
+                        </button>
+
+                    </div>
+
+                    <div class="password-rule">
+                        Minimum 8 characters
+                    </div>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Confirm Password
+                    </label>
+
+                    <div class="input-wrap">
+
+                        <input
+                            id="confirmPassword"
+                            type="password"
+                            autocomplete="new-password"
+                            placeholder="Confirm your password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            onclick="togglePassword('confirmPassword',this)"
+                        >
+                            ◉
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    id="signupButton"
+                    class="primary-btn"
+                    type="submit"
+                >
+                    Create Account
+                </button>
+
+            </form>
+
+
+            <div class="bottom-row">
+
+                <span>
+                    Already have an account?
+                </span>
+
+                <button
+                    class="secondary-link"
+                    type="button"
+                    onclick="showScreen('loginScreen')"
+                >
+                    Sign In
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- FORGOT PASSWORD -->
+        <!-- ================================================= -->
+
+        <section
+            id="forgotScreen"
+            class="screen"
+        >
+
+            <div class="back-row">
+
+                <button
+                    class="secondary-link"
+                    type="button"
+                    onclick="showScreen('loginScreen')"
+                >
+                    ← Back to Sign In
+                </button>
+
+            </div>
+
+
+            <div class="title">
+                Reset your password
+            </div>
+
+            <div class="subtitle">
+                Enter the email associated with your
+                Shadow AI account.
+            </div>
+
+
+            <div
+                id="forgotMessage"
+                class="message"
+            ></div>
+
+
+            <form id="forgotForm">
+
+                <div class="field">
+
+                    <label>
+                        Email
+                    </label>
+
+                    <input
+                        id="forgotEmail"
+                        type="email"
+                        autocomplete="email"
+                        placeholder="Enter your account email"
+                        required
+                    >
+
+                </div>
+
+
+                <button
+                    id="forgotButton"
+                    class="primary-btn"
+                    type="submit"
+                >
+                    Request Password Reset
+                </button>
+
+            </form>
+
+
+            <div
+                class="bottom-row"
+                style="margin-top:16px"
+            >
+
+                <button
+                    class="secondary-link"
+                    type="button"
+                    onclick="showScreen('resetScreen')"
+                >
+                    I already have a reset token
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- RESET PASSWORD -->
+        <!-- ================================================= -->
+
+        <section
+            id="resetScreen"
+            class="screen"
+        >
+
+            <div class="back-row">
+
+                <button
+                    class="secondary-link"
+                    type="button"
+                    onclick="showScreen('loginScreen')"
+                >
+                    ← Back to Sign In
+                </button>
+
+            </div>
+
+
+            <div class="title">
+                Set a new password
+            </div>
+
+            <div class="subtitle">
+                Enter your temporary reset token
+                and choose a new password.
+            </div>
+
+
+            <div
+                id="resetMessage"
+                class="message"
+            ></div>
+
+
+            <form id="resetForm">
+
+                <div class="field">
+
+                    <label>
+                        Reset Token
+                    </label>
+
+                    <input
+                        id="resetToken"
+                        type="text"
+                        placeholder="Paste reset token"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        New Password
+                    </label>
+
+                    <div class="input-wrap">
+
+                        <input
+                            id="resetPassword"
+                            type="password"
+                            autocomplete="new-password"
+                            placeholder="Enter new password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            onclick="togglePassword('resetPassword',this)"
+                        >
+                            ◉
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Confirm New Password
+                    </label>
+
+                    <input
+                        id="resetConfirmPassword"
+                        type="password"
+                        autocomplete="new-password"
+                        placeholder="Confirm new password"
+                        required
+                    >
+
+                </div>
+
+
+                <button
+                    id="resetButton"
+                    class="primary-btn"
+                    type="submit"
+                >
+                    Reset Password
+                </button>
+
+            </form>
+
+        </section>
+
+    </div>
+
+
+    <div class="security-info">
+
+        <span class="security-dot"></span>
+
+        Shadow AI Gateway Protected Access
+
+    </div>
+
+
+    <div class="footer">
+
+        Authentication • Redis Session Security • Analyst Access
+
+    </div>
+
+</div>
+
+
+<script>
+
+function $(id){
+    return document.getElementById(id);
+}
+
+
+/* ============================================================
+   SCREEN SWITCHING
+   ============================================================ */
+
+function showScreen(screenId){
+
+    document
+        .querySelectorAll(".screen")
+        .forEach(screen => {
+            screen.classList.remove("active");
+        });
+
+    $(screenId).classList.add("active");
+
+    clearMessages();
+}
+
+
+/* ============================================================
+   MESSAGE HANDLING
+   ============================================================ */
+
+function showMessage(elementId,message,type){
+
+    const element=$(elementId);
+
+    element.textContent=message;
+
+    element.className=
+        "message show " + type;
+}
+
+
+function clearMessages(){
+
+    document
+        .querySelectorAll(".message")
+        .forEach(element => {
+
+            element.className="message";
+
+            element.textContent="";
+
+        });
+
+}
+
+
+/* ============================================================
+   PASSWORD VISIBILITY
+   ============================================================ */
+
+function togglePassword(inputId,button){
+
+    const input=$(inputId);
+
+    if(input.type==="password"){
+
+        input.type="text";
+
+        button.textContent="◉";
+
+    }else{
+
+        input.type="password";
+
+        button.textContent="◉";
+
+    }
+
+}
+
+
+/* ============================================================
+   SIGN IN
+   ============================================================ */
+
+$("loginForm").addEventListener(
+    "submit",
+    async function(event){
+
+        event.preventDefault();
+
+        const button=$("loginButton");
+
+        button.disabled=true;
+
+        button.textContent="Signing in...";
+
+        clearMessages();
+
+        try{
+
+            const formData=new URLSearchParams();
+
+            formData.append(
+                "login",
+                $("login").value.trim()
+            );
+
+            formData.append(
+                "password",
+                $("loginPassword").value
+            );
+
+
+            const response=await fetch(
+                "/auth/login",
+                {
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":
+                            "application/x-www-form-urlencoded"
+                    },
+
+                    body:formData.toString(),
+
+                    credentials:"same-origin"
+                }
+            );
+
+
+            const data=await response.json();
+
+
+            if(!response.ok){
+
+                throw new Error(
+                    data.detail ||
+                    "Login failed."
+                );
+
+            }
+
+
+            showMessage(
+                "loginMessage",
+                "Login successful. Opening Shadow AI...",
+                "success"
+            );
+
+
+            setTimeout(
+                () => {
+                    window.location.href="/dashboard";
+                },
+                500
+            );
+
+
+        }catch(error){
+
+            showMessage(
+                "loginMessage",
+                error.message ||
+                "Unable to sign in.",
+                "error"
+            );
+
+        }finally{
+
+            button.disabled=false;
+
+            button.textContent="Sign In";
+
+        }
+
+    }
+);
+
+
+/* ============================================================
+   SIGN UP
+   ============================================================ */
+
+$("signupForm").addEventListener(
+    "submit",
+    async function(event){
+
+        event.preventDefault();
+
+        const button=$("signupButton");
+
+        button.disabled=true;
+
+        button.textContent="Creating account...";
+
+        clearMessages();
+
+
+        const password=
+            $("signupPassword").value;
+
+        const confirmPassword=
+            $("confirmPassword").value;
+
+
+        if(password!==confirmPassword){
+
+            showMessage(
+                "signupMessage",
+                "Passwords do not match.",
+                "error"
+            );
+
+            button.disabled=false;
+
+            button.textContent="Create Account";
+
+            return;
+        }
+
+
+        try{
+
+            const formData=new URLSearchParams();
+
+            formData.append(
+                "full_name",
+                $("fullName").value.trim()
+            );
+
+            formData.append(
+                "username",
+                $("username").value.trim()
+            );
+
+            formData.append(
+                "email",
+                $("email").value.trim()
+            );
+
+            formData.append(
+                "password",
+                password
+            );
+
+            formData.append(
+                "confirm_password",
+                confirmPassword
+            );
+
+
+            const response=await fetch(
+                "/auth/signup",
+                {
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":
+                            "application/x-www-form-urlencoded"
+                    },
+
+                    body:formData.toString()
+                }
+            );
+
+
+            const data=await response.json();
+
+
+            if(!response.ok){
+
+                throw new Error(
+                    data.detail ||
+                    "Account creation failed."
+                );
+
+            }
+
+
+            showMessage(
+                "signupMessage",
+                "Account created successfully. You can now sign in.",
+                "success"
+            );
+
+
+            $("login").value=
+                $("username").value.trim();
+
+            $("loginPassword").value="";
+
+
+            setTimeout(
+                () => {
+                    showScreen("loginScreen");
+                },
+                1000
+            );
+
+
+        }catch(error){
+
+            showMessage(
+                "signupMessage",
+                error.message ||
+                "Unable to create account.",
+                "error"
+            );
+
+        }finally{
+
+            button.disabled=false;
+
+            button.textContent="Create Account";
+
+        }
+
+    }
+);
+
+
+/* ============================================================
+   FORGOT PASSWORD
+   ============================================================ */
+
+$("forgotForm").addEventListener(
+    "submit",
+    async function(event){
+
+        event.preventDefault();
+
+        const button=$("forgotButton");
+
+        button.disabled=true;
+
+        button.textContent="Generating reset request...";
+
+        clearMessages();
+
+
+        try{
+
+            const formData=new URLSearchParams();
+
+            formData.append(
+                "email",
+                $("forgotEmail").value.trim()
+            );
+
+
+            const response=await fetch(
+                "/auth/forgot-password",
+                {
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":
+                            "application/x-www-form-urlencoded"
+                    },
+
+                    body:formData.toString()
+                }
+            );
+
+
+            const data=await response.json();
+
+
+            if(!response.ok){
+
+                throw new Error(
+                    data.detail ||
+                    "Password reset request failed."
+                );
+
+            }
+
+
+            if(data.reset_token){
+
+                $("resetToken").value=
+                    data.reset_token;
+
+                showMessage(
+                    "forgotMessage",
+                    "Reset token generated. Continue to set a new password.",
+                    "success"
+                );
+
+                setTimeout(
+                    () => {
+                        showScreen("resetScreen");
+                    },
+                    700
+                );
+
+            }else{
+
+                showMessage(
+                    "forgotMessage",
+                    data.message ||
+                    "If the account exists, a reset request has been created.",
+                    "success"
+                );
+
+            }
+
+
+        }catch(error){
+
+            showMessage(
+                "forgotMessage",
+                error.message ||
+                "Unable to process password reset.",
+                "error"
+            );
+
+        }finally{
+
+            button.disabled=false;
+
+            button.textContent=
+                "Request Password Reset";
+
+        }
+
+    }
+);
+
+
+/* ============================================================
+   RESET PASSWORD
+   ============================================================ */
+
+$("resetForm").addEventListener(
+    "submit",
+    async function(event){
+
+        event.preventDefault();
+
+        const button=$("resetButton");
+
+        button.disabled=true;
+
+        button.textContent="Resetting password...";
+
+        clearMessages();
+
+
+        const password=
+            $("resetPassword").value;
+
+        const confirmPassword=
+            $("resetConfirmPassword").value;
+
+
+        if(password!==confirmPassword){
+
+            showMessage(
+                "resetMessage",
+                "Passwords do not match.",
+                "error"
+            );
+
+            button.disabled=false;
+
+            button.textContent="Reset Password";
+
+            return;
+        }
+
+
+        try{
+
+            const formData=new URLSearchParams();
+
+            formData.append(
+                "token",
+                $("resetToken").value.trim()
+            );
+
+            formData.append(
+                "password",
+                password
+            );
+
+            formData.append(
+                "confirm_password",
+                confirmPassword
+            );
+
+
+            const response=await fetch(
+                "/auth/reset-password",
+                {
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":
+                            "application/x-www-form-urlencoded"
+                    },
+
+                    body:formData.toString()
+                }
+            );
+
+
+            const data=await response.json();
+
+
+            if(!response.ok){
+
+                throw new Error(
+                    data.detail ||
+                    "Password reset failed."
+                );
+
+            }
+
+
+            showMessage(
+                "resetMessage",
+                "Password reset successfully. You can now sign in.",
+                "success"
+            );
+
+
+            $("login").value="";
+            $("loginPassword").value="";
+
+
+            setTimeout(
+                () => {
+                    showScreen("loginScreen");
+                },
+                1000
+            );
+
+
+        }catch(error){
+
+            showMessage(
+                "resetMessage",
+                error.message ||
+                "Unable to reset password.",
+                "error"
+            );
+
+        }finally{
+
+            button.disabled=false;
+
+            button.textContent="Reset Password";
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
