@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shadow AI — Analyze Server Logs</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #050914;
+      color: #f5f7fb;
+      font-family: Inter, Segoe UI, Arial, sans-serif;
+      padding: 30px;
+    }
+
+    .page {
+      max-width: 1250px;
+      margin: auto;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 28px;
+    }
+
+    .sub {
+      color: #8993a8;
+      margin-top: 6px;
+      font-size: 13px;
+    }
+
+    button {
+      background: #101725;
+      border: 1px solid #263147;
+      color: #fff;
+      padding: 10px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #171f30;
+    }
+
+    .status {
+      display: inline-block;
+      background: #071d12;
+      border: 1px solid #103b21;
+      color: #55e678;
+      padding: 8px 12px;
+      border-radius: 7px;
+      font-size: 12px;
+      margin-bottom: 18px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: linear-gradient(180deg, #101725, #0d1420);
+      border: 1px solid #263147;
+      border-radius: 11px;
+      padding: 19px;
+    }
+
+    h2 {
+      font-size: 14px;
+      margin: 0 0 15px;
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 13px 0;
+      border-bottom: 1px solid #202838;
+      font-size: 13px;
+    }
+
+    .row:last-child {
+      border: 0;
+    }
+
+    .row span {
+      color: #cfd4df;
+    }
+
+    .row strong {
+      color: #55e678;
+      text-align: right;
+    }
+
+    .footer {
+      color: #626d80;
+      text-align: center;
+      font-size: 10px;
+      margin-top: 22px;
+    }
+
+    @media (max-width: 650px) {
+      body {
+        padding: 15px;
+      }
+
+      header {
+        align-items: flex-start;
+        gap: 15px;
+        flex-direction: column;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div>
+        <h1>Analyze Server Logs</h1>
+        <div class="sub">Server-log review workspace</div>
+      </div>
+    <button onclick="window.location.href='/dashboard'">← Back to Gateway</button>
+    </header>
+
+    <div class="status">â— SHADOW AI SECURITY GATEWAY</div>
+
+    <div class="grid">
+      <section class="card">
+        <h2>Purpose</h2>
+        <div class="row">
+          <span>Review suspicious server activity</span>
+          <strong>INFO</strong>
+        </div>
+        <div class="row">
+          <span>Inspect security-relevant log information</span>
+          <strong>INFO</strong>
+        </div>
+        <div class="row">
+          <span>Submit log content through the Shadow AI gateway</span>
+          <strong>INFO</strong>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Security Flow</h2>
+        <div class="row">
+          <span>Input → Detection → Risk → HITL → Approved AI</span>
+          <strong>INFO</strong>
+        </div>
+      </section>
+    </div>
+
+    <div class="footer">Shadow AI Security Gateway • Security analysis precedes AI forwarding.</div>
+  </div>
+</body>
+</html>

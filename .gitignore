@@ -10,3 +10,12 @@ __pycache__/
 *.log
 
 secrets/
+# Shadow AI local data and backups
+data/
+*.db
+*.db-shm
+*.db-wal
+*.bak
+frontend/views_backup_*/
+frontend_backup_before_encoding_fix/
+frontend_backup_encoding_*/

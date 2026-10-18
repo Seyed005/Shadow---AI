@@ -38,6 +38,19 @@ from backend.auth import (
 )
 
 
+
+from backend.conversation_store import (
+    list_conversations,
+    get_conversation,
+    record_gateway_result,
+    complete_pending_hitl,
+)
+
+from backend.masking import mask_sensitive_data
+
+
+
+
 # ============================================================
 # APPLICATION
 # ============================================================
@@ -170,6 +183,24 @@ async def dashboard():
         )
 
     return FileResponse(dashboard_page)
+
+
+@app.get("/views/{view_name}", include_in_schema=False)
+async def frontend_view(view_name: str):
+    """Serve individual HTML pages from frontend/views safely."""
+
+    # Accept only a simple HTML filename, not a path.
+    if not view_name.endswith(".html") or Path(view_name).name != view_name:
+        raise HTTPException(status_code=404, detail="Page not found.")
+
+    views_dir = (FRONTEND_DIR / "views").resolve()
+    view_path = (views_dir / view_name).resolve()
+
+    # Keep requests confined to frontend/views and reject missing files.
+    if view_path.parent != views_dir or not view_path.is_file():
+        raise HTTPException(status_code=404, detail="Page not found.")
+
+    return FileResponse(view_path, media_type="text/html")
 
 
 # ============================================================
@@ -498,6 +529,67 @@ async def reset_password(
 
 
 # ============================================================
+# CONVERSATION HISTORY API
+# ============================================================
+
+@app.get("/conversations")
+async def conversations(user=Depends(get_current_user)):
+    """Return saved conversations belonging to the signed-in user."""
+    try:
+        items = await list_conversations(user["username"])
+        return {
+            "status": "SUCCESS",
+            "conversations": items,
+        }
+    except Exception as exc:
+        print(f"Conversation list error: {type(exc).__name__}")
+        raise HTTPException(
+            status_code=500,
+            detail="Unable to load conversation history.",
+        )
+
+
+@app.get("/conversations/{session_id}")
+async def conversation_detail(
+    session_id: str,
+    user=Depends(get_current_user),
+):
+    """Return one saved conversation owned by the signed-in user."""
+    if not session_id.strip():
+        raise HTTPException(
+            status_code=400,
+            detail="Session ID is required.",
+        )
+
+    try:
+        conversation = await get_conversation(
+            user["username"],
+            session_id,
+        )
+
+        if conversation is None:
+            raise HTTPException(
+                status_code=404,
+                detail="Conversation not found.",
+            )
+
+        return {
+            "status": "SUCCESS",
+            "conversation": conversation,
+        }
+
+    except HTTPException:
+        raise
+    except Exception as exc:
+        print(f"Conversation detail error: {type(exc).__name__}")
+        raise HTTPException(
+            status_code=500,
+            detail="Unable to load conversation.",
+        )
+
+
+
+# ============================================================
 # GATEWAY — TEXT SCAN
 # ============================================================
 
@@ -528,6 +620,22 @@ async def gateway_scan(
             text=text,
             session_id=session_id,
         )
+
+        try:
+            findings = result.get("findings") or []
+            safe_content = mask_sensitive_data(text, findings)
+
+            await record_gateway_result(
+                username=user["username"],
+                session_id=session_id,
+                safe_user_content=safe_content,
+                result=result,
+            )
+        except Exception as storage_exc:
+            print(
+                "Conversation save error: "
+                f"{type(storage_exc).__name__}"
+            )
 
         return result
 
@@ -581,6 +689,20 @@ async def gateway_hitl(
             session_id=session_id,
             decision=decision,
         )
+
+        try:
+            await complete_pending_hitl(
+                username=user["username"],
+                session_id=session_id,
+                decision=decision,
+                safe_sanitized_text=result.get("sanitized_text"),
+                ai_response=result.get("ai_response"),
+            )
+        except Exception as storage_exc:
+            print(
+                "Conversation HITL save error: "
+                f"{type(storage_exc).__name__}"
+            )
 
         return result
 
@@ -702,6 +824,25 @@ async def gateway_scan_file(
             raise HTTPException(
                 status_code=400,
                 detail="Unsupported file type.",
+            )
+
+        try:
+            safe_content = (
+                result.get("sanitized_text")
+                or f"Uploaded file: {Path(file.filename).name}"
+            )
+
+            await record_gateway_result(
+                username=user["username"],
+                session_id=session_id,
+                safe_user_content=safe_content,
+                result=result,
+                file_name=Path(file.filename).name,
+            )
+        except Exception as storage_exc:
+            print(
+                "File conversation save error: "
+                f"{type(storage_exc).__name__}"
             )
 
         return result

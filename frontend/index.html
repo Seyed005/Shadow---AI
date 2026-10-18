@@ -20,6 +20,7 @@ button,input,textarea{font:inherit}button{cursor:pointer}
 .new-chat{width:100%;border:0;border-radius:9px;background:linear-gradient(90deg,#5d28d9,#7137ea);color:white;padding:13px 18px;font-weight:700;font-size:16px;box-shadow:0 10px 25px rgba(99,48,220,.2);margin-bottom:26px}.new-chat:hover{filter:brightness(1.08)}.new-chat .plus{font-size:22px;vertical-align:-2px;margin-right:8px;font-weight:400}
 .nav-title{font-size:13px;color:#929bae;margin:0 12px 10px}.nav-list{display:flex;flex-direction:column;gap:3px}.nav-item{height:42px;border-radius:7px;display:flex;align-items:center;gap:12px;padding:0 12px;color:#d5d9e3;font-size:14px;border:0;background:transparent;text-align:left;width:100%}.nav-item.active,.nav-item:hover{background:#141b2b}.nav-icon{width:18px;text-align:center;color:#b8c0d0;font-size:15px}.nav-time{margin-left:auto;color:#8d96aa;font-size:11px}.online-dot{width:6px;height:6px;border-radius:50%;background:#37d66b;display:inline-block;box-shadow:0 0 8px #37d66b}.nav-separator{height:1px;background:#20283a;margin:20px 12px 18px}
 .user{margin-top:auto;border-top:1px solid #20283a;padding:18px 9px 0;display:flex;gap:11px;align-items:center}.avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:#30206f;font-weight:700}.user-name{font-size:13px;font-weight:700}.user-role{font-size:11px;color:#a1a8b8;margin-top:3px}.user-status{width:7px;height:7px;background:#35d36a;border-radius:50%;display:inline-block;margin-left:4px}
+.user{cursor:pointer;border-radius:8px;transition:background .15s}.user:hover{background:#141b2b}
 /* MAIN */
 .main{min-width:0;min-height:0;display:flex;flex-direction:column;position:relative;background:#050914;overflow:hidden}.topbar{height:76px;flex:0 0 76px;display:flex;align-items:center;gap:9px;padding:14px 14px;border-bottom:1px solid #1d2637;background:rgba(5,9,20,.96);overflow:hidden}.status-pill{height:45px;border-radius:9px;border:1px solid #202a3b;background:#0c1220;padding:0 11px;display:flex;align-items:center;justify-content:center;gap:7px;font-size:12px;white-space:nowrap;flex:1;min-width:0}.status-pill.online{background:#071d12;border-color:#103b21;color:#55e678}.status-pill .icon{font-size:15px}.provider{display:flex;align-items:center;gap:8px;flex:0 0 184px;min-width:0}.provider-shield{width:38px;height:38px;border-radius:50%;border:1px solid #27354b;background:#0c1524;display:grid;place-items:center;color:#55e678;font-size:18px;flex:0 0 auto}.provider-title{font-size:12px;white-space:nowrap}.provider-model{font-size:11px;color:#38e78a;margin-top:3px;white-space:nowrap}.theme-btn{width:38px;height:38px;flex:0 0 38px;border-radius:50%;border:1px solid #273044;background:#0b111e;color:#e8ebf3;font-size:18px}
 .chat-area{flex:1 1 auto;min-height:0;height:0;display:flex;flex-direction:column;overflow:hidden}.main-scroll{flex:1 1 auto;min-height:0;height:0;overflow-y:auto;overflow-x:hidden;padding:22px 28px 18px;overscroll-behavior:contain}.main-scroll{scrollbar-width:thin;scrollbar-color:#3a465d #080d18}.main-scroll::-webkit-scrollbar,.rightbar::-webkit-scrollbar{width:9px}.main-scroll::-webkit-scrollbar-track,.rightbar::-webkit-scrollbar-track{background:#080d18}.main-scroll::-webkit-scrollbar-thumb,.rightbar::-webkit-scrollbar-thumb{background:#3a465d;border-radius:8px;border:2px solid #080d18}.main-scroll::-webkit-scrollbar-thumb:hover,.rightbar::-webkit-scrollbar-thumb:hover{background:#56647d}
@@ -61,7 +62,7 @@ button,input,textarea{font:inherit}button{cursor:pointer}
       <button class="nav-item" data-nav="Settings"><span class="nav-icon">⚙</span><span>Settings</span></button>
       <button class="nav-item" data-nav="Help & Docs"><span class="nav-icon">?</span><span>Help & Docs</span></button>
     </div>
-    <div class="user"><div class="avatar">B</div><div><div class="user-name">Balaji M <span class="user-status"></span></div><div class="user-role">Analyst</div></div></div>
+    <div class="user" id="userBox" role="button" tabindex="0" title="Click to sign out"><div class="avatar" id="userAvatar">?</div><div><div class="user-name"><span id="userName">Loading…</span> <span class="user-status"></span></div><div class="user-role" id="userRole">&nbsp;</div></div></div>
   </aside>
 
   <main class="main">
@@ -111,12 +112,32 @@ button,input,textarea{font:inherit}button{cursor:pointer}
 <div id="toast"></div>
 <script>
 const $=id=>document.getElementById(id);
+const LOGIN_URL='/';
 let currentSessionId=sessionStorage.getItem('shadow_ai_session_id')||null,selectedFile=null;
 const stats={total:0,allowed:0,sanitized:0,blocked:0,pii:0,secrets:0,ocr:0,files:0,images:0};
 const sensitiveTypes=new Set(['PERSON','EMAIL','PHONE','PHONE_NUMBER','IP_ADDRESS','EMPLOYEE_ID','LOCATION','CREDIT_CARD','URL']);
 const secretTypes=new Set(['PASSWORD','API_KEY_LIKE','DATABASE_CREDENTIAL']);
 function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('toast-show');clearTimeout(window.__toast);window.__toast=setTimeout(()=>t.classList.remove('toast-show'),2200)}
 function escapeHtml(s){return String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
+/* AUTH */
+function goToLogin(){sessionStorage.removeItem('shadow_ai_session_id');window.location.replace(LOGIN_URL)}
+async function loadUser(){
+  try{
+    const r=await fetch('/auth/me',{credentials:'same-origin'});
+    if(r.status===401){goToLogin();return}
+    if(!r.ok)throw new Error('Could not load user');
+    const raw=await r.json();
+const u=raw.user||raw;
+    const name=String(u.full_name||u.name||u.username||u.email||'User');
+    $('userName').textContent=name;
+    $('userRole').textContent=u.role||'Analyst';
+    $('userAvatar').textContent=name.trim().charAt(0).toUpperCase()||'?';
+  }catch(e){toast(e.message||'Could not load user')}
+}
+async function logout(){
+  try{await fetch('/auth/logout',{method:'POST',credentials:'same-origin'})}catch(e){}
+  goToLogin();
+}
 function scrollBottom(smooth=true){requestAnimationFrame(()=>{const el=$('mainScroll');el.scrollTo({top:el.scrollHeight,behavior:smooth?'smooth':'auto'});updateScrollButton()})}
 function updateScrollButton(){const el=$('mainScroll');const distance=el.scrollHeight-el.clientHeight-el.scrollTop;const btn=$('scrollDown');if(btn)btn.classList.toggle('show',distance>120)}
 function scrollToLatest(){const el=$('mainScroll');el.scrollTo({top:el.scrollHeight,behavior:'smooth'});setTimeout(updateScrollButton,350)}
@@ -142,10 +163,58 @@ function renderAi(data){const text=data?.ai_response?.response||data?.response||
 function renderBlocked(){const card=document.createElement('div');card.className='warning-wrap';card.innerHTML='<div class="hitl-card critical"><div class="warning-head"><div class="warning-icon">!</div><div><div class="warning-title">🚨 Request Blocked</div><div class="warning-desc">The request was stopped. No AI call was made.</div></div></div></div><div class="security-note">🔒 &nbsp;No content was forwarded to the AI provider.</div>';$('messages').appendChild(card);scrollBottom()}
 function updateStats(data,decision){stats.total++;if(decision==='ALLOW')stats.allowed++;if(decision==='SANITIZE_AND_SEND')stats.sanitized++;if(decision==='BLOCK')stats.blocked++;(data.findings||[]).forEach(f=>{if(sensitiveTypes.has(f.type))stats.pii++;if(secretTypes.has(f.type))stats.secrets++});if(data.input_type==='IMAGE')stats.images++;if(data.input_type&&data.input_type!=='TEXT')stats.files++;$('totalRequests').textContent=stats.total;$('allowedCount').textContent=stats.allowed;$('sanitizedCount').textContent=stats.sanitized;$('blockedCount').textContent=stats.blocked;$('piiCount').textContent=stats.pii;$('secretCount').textContent=stats.secrets;$('ocrCount').textContent=stats.ocr;$('filesCount').textContent=stats.files;$('imagesCount').textContent=stats.images;const recent=$('recentDetections');const fs=(data.findings||[]).slice(0,5);if(fs.length){recent.innerHTML=fs.map(f=>`<div class="recent-row"><span class="recent-dot ${f.type==='EMAIL'?'yellow':''}"></span><span class="recent-name">${escapeHtml(findingLabel(f.type))}</span><span class="recent-time">Now</span></div>`).join('')}}
 function updateDonut(){const total=stats.total||1;const a=stats.allowed/total*100,s=stats.sanitized/total*100;const start2=a,start3=a+s;$('donut').style.background=`conic-gradient(#49c95b 0 ${a}%,#f2a92f ${start2}% ${start3}%,#f14f4f ${start3}% 100%)`}
-async function scanText(){const text=$('message').value.trim();if(!text&&!selectedFile){toast('Enter a message or attach a file');return}const btn=$('sendBtn');btn.disabled=true;currentSessionId='web-ui-'+Date.now();sessionStorage.setItem('shadow_ai_session_id',currentSessionId);appendUserMessage(text||'Analyze this file.',selectedFile?.name,selectedFile?formatBytes(selectedFile.size):'');$('message').value='';try{let response,data;if(selectedFile){const fd=new FormData();fd.append('file',selectedFile);fd.append('session_id',currentSessionId);response=await fetch('/gateway/scan-file',{method:'POST',body:fd})}else{const fd=new URLSearchParams();fd.append('session_id',currentSessionId);fd.append('text',text);response=await fetch('/gateway/scan',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:fd.toString()})}data=await response.json();if(!response.ok)throw new Error(data.detail||'Gateway request failed.');updateStats(data,data.policy.decision);updateDonut();if(data.policy.decision==='HITL'){renderHitl(data);toast(data.policy.risk_level+' risk — human review required')}else if(data.policy.decision==='ALLOW'){toast('Request allowed');renderAi(data)}else if(data.policy.decision==='BLOCK'){toast('Request blocked by security policy');renderBlocked(data)}}catch(err){toast(err.message||'Gateway request failed')}finally{btn.disabled=false;clearAttachment()}}
-async function submitDecision(decision){if(!currentSessionId){toast('No active Shadow AI session. Please send the message again.');return;}document.querySelectorAll('.decision-btn').forEach(b=>b.disabled=true);try{const fd=new URLSearchParams();fd.append('session_id',currentSessionId);fd.append('decision',decision);const response=await fetch('/gateway/hitl',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:fd.toString()});const data=await response.json();if(!response.ok)throw new Error(data.detail||'HITL request failed.');sessionStorage.removeItem('shadow_ai_session_id');document.querySelectorAll('.hitl-card').forEach(x=>x.style.opacity='.62');if(decision==='SANITIZE_AND_SEND'&&data.sanitized_text){const p=document.createElement('div');p.className='warning-wrap';p.innerHTML=`<div class="side-card" style="margin-top:10px"><div class="side-title">WHAT AI WILL RECEIVE</div><pre style="white-space:pre-wrap;color:#d8e0ee;margin:0;font-family:inherit;font-size:13px">${escapeHtml(data.sanitized_text)}</pre></div>`;$('messages').appendChild(p)}if(decision==='BLOCK'){stats.blocked++;$('blockedCount').textContent=stats.blocked;toast('Request blocked — no AI call');renderBlocked()}else if(decision==='SANITIZE_AND_SEND'){stats.sanitized++;$('sanitizedCount').textContent=stats.sanitized;toast('Sanitized request sent to AI');renderAi(data)}else{stats.allowed++;$('allowedCount').textContent=stats.allowed;toast('Original request sent to AI');renderAi(data)}updateDonut();scrollBottom()}catch(err){toast(err.message||'HITL request failed');document.querySelectorAll('.decision-btn').forEach(b=>b.disabled=false)}}
+async function scanText(){const text=$('message').value.trim();if(!text&&!selectedFile){toast('Enter a message or attach a file');return}const btn=$('sendBtn');btn.disabled=true;currentSessionId='web-ui-'+Date.now();sessionStorage.setItem('shadow_ai_session_id',currentSessionId);appendUserMessage(text||'Analyze this file.',selectedFile?.name,selectedFile?formatBytes(selectedFile.size):'');$('message').value='';try{let response,data;if(selectedFile){const fd=new FormData();fd.append('file',selectedFile);fd.append('session_id',currentSessionId);response=await fetch('/gateway/scan-file',{method:'POST',body:fd})}else{const fd=new URLSearchParams();fd.append('session_id',currentSessionId);fd.append('text',text);response=await fetch('/gateway/scan',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:fd.toString()})}if(response.status===401){goToLogin();return}data=await response.json();if(!response.ok)throw new Error(data.detail||'Gateway request failed.');updateStats(data,data.policy.decision);updateDonut();if(data.policy.decision==='HITL'){renderHitl(data);toast(data.policy.risk_level+' risk — human review required')}else if(data.policy.decision==='ALLOW'){toast('Request allowed');renderAi(data)}else if(data.policy.decision==='BLOCK'){toast('Request blocked by security policy');renderBlocked(data)}}catch(err){toast(err.message||'Gateway request failed')}finally{btn.disabled=false;clearAttachment()}}
+async function submitDecision(decision){if(!currentSessionId){toast('No active Shadow AI session. Please send the message again.');return;}document.querySelectorAll('.decision-btn').forEach(b=>b.disabled=true);try{const fd=new URLSearchParams();fd.append('session_id',currentSessionId);fd.append('decision',decision);const response=await fetch('/gateway/hitl',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:fd.toString()});if(response.status===401){goToLogin();return}const data=await response.json();if(!response.ok)throw new Error(data.detail||'HITL request failed.');sessionStorage.removeItem('shadow_ai_session_id');document.querySelectorAll('.hitl-card').forEach(x=>x.style.opacity='.62');if(decision==='SANITIZE_AND_SEND'&&data.sanitized_text){const p=document.createElement('div');p.className='warning-wrap';p.innerHTML=`<div class="side-card" style="margin-top:10px"><div class="side-title">WHAT AI WILL RECEIVE</div><pre style="white-space:pre-wrap;color:#d8e0ee;margin:0;font-family:inherit;font-size:13px">${escapeHtml(data.sanitized_text)}</pre></div>`;$('messages').appendChild(p)}if(decision==='BLOCK'){stats.blocked++;$('blockedCount').textContent=stats.blocked;toast('Request blocked — no AI call');renderBlocked()}else if(decision==='SANITIZE_AND_SEND'){stats.sanitized++;$('sanitizedCount').textContent=stats.sanitized;toast('Sanitized request sent to AI');renderAi(data)}else{stats.allowed++;$('allowedCount').textContent=stats.allowed;toast('Original request sent to AI');renderAi(data)}updateDonut();scrollBottom()}catch(err){toast(err.message||'HITL request failed');document.querySelectorAll('.decision-btn').forEach(b=>b.disabled=false)}}
 function formatBytes(bytes){if(bytes<1024)return bytes+' B';if(bytes<1024*1024)return(bytes/1024).toFixed(1)+' KB';return(bytes/1024/1024).toFixed(2)+' MB'}
-$('sendBtn').addEventListener('click',scanText);$('scrollDown').addEventListener('click',scrollToLatest);$('mainScroll').addEventListener('scroll',updateScrollButton,{passive:true});window.addEventListener('resize',updateScrollButton);$('newChat').addEventListener('click',resetConversation);$('plusBtn').addEventListener('click',()=>$('fileInput').click());$('attachBtn').addEventListener('click',()=>$('fileInput').click());$('clearFile').addEventListener('click',clearAttachment);$('fileInput').addEventListener('change',e=>{selectedFile=e.target.files[0]||null;if(selectedFile){$('composerFileName').textContent=selectedFile.name;$('composerFile').classList.add('show');toast('Attached: '+selectedFile.name)}});$('message').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();scanText()}});$('message').addEventListener('input',e=>{e.target.style.height='42px';e.target.style.height=Math.min(e.target.scrollHeight,120)+'px'});document.querySelectorAll('.nav-item').forEach(item=>item.addEventListener('click',()=>{document.querySelectorAll('.nav-item').forEach(x=>x.classList.remove('active'));item.classList.add('active');toast(item.dataset.nav+' selected')}));$('themeBtn').addEventListener('click',()=>toast('Dark security workspace active'));updateScrollButton();
+$('sendBtn').addEventListener('click',scanText);$('scrollDown').addEventListener('click',scrollToLatest);$('mainScroll').addEventListener('scroll',updateScrollButton,{passive:true});window.addEventListener('resize',updateScrollButton);$('newChat').addEventListener('click',resetConversation);$('plusBtn').addEventListener('click',()=>$('fileInput').click());$('attachBtn').addEventListener('click',()=>$('fileInput').click());$('clearFile').addEventListener('click',clearAttachment);$('fileInput').addEventListener('change',e=>{selectedFile=e.target.files[0]||null;if(selectedFile){$('composerFileName').textContent=selectedFile.name;$('composerFile').classList.add('show');toast('Attached: '+selectedFile.name)}});$('message').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();scanText()}});$('message').addEventListener('input',e=>{e.target.style.height='42px';e.target.style.height=Math.min(e.target.scrollHeight,120)+'px'});/* SHADOW AI PAGE NAVIGATION — routes to real HTML views */
+const shadowRoutes={
+  "Analyze server logs":"views/analyze-server-logs.html",
+  "Review employee data":"views/review-employee-data.html",
+  "Network report":"views/network-report.html",
+  "Security policy summary":"views/security-policy-summary.html",
+  "Suspicious activity":"views/suspicious-activity.html",
+  "Dashboard":"views/dashboard.html",
+  "Red Team Testing":"views/red-team.html",
+  "Data Analyst":"views/data-analyst.html",
+  "Policy Management":"views/policy-management.html",
+  "Audit Logs":"views/audit-logs.html",
+  "Settings":"views/settings.html",
+  "Help & Docs":"views/help-docs.html",
+  "GATEWAY ONLINE":"views/gateway.html",
+  "DLP Active":"views/dlp.html",
+  "OCR Active":"views/ocr.html",
+  "Threat Detection":"views/threat-detection.html",
+  "Risk Engine":"views/risk-engine.html",
+  "Approved AI Provider":"views/ai-provider.html",
+  "SECURITY INSIGHTS":"views/security-insights.html",
+  "RECENT DETECTIONS":"views/recent-detections.html",
+  "GATEWAY STATS":"views/gateway-stats.html",
+  "ACTIVE POLICIES":"views/active-policies.html"
+};
+function navigateShadowPage(label){
+  const route=shadowRoutes[String(label||'').trim()];
+  if(!route){toast(String(label||'This')+' page is not configured');return;}
+  window.location.href=new URL(route,window.location.href).href;
+}
+document.querySelectorAll('.nav-item').forEach(item=>{
+  item.addEventListener('click',()=>navigateShadowPage(item.dataset.nav));
+});
+document.querySelectorAll('.topbar .status-pill').forEach(item=>{
+  item.addEventListener('click',()=>navigateShadowPage(item.textContent.trim()));
+  item.style.cursor='pointer';
+});
+const provider=document.querySelector('.provider');
+if(provider){provider.style.cursor='pointer';provider.addEventListener('click',()=>navigateShadowPage('Approved AI Provider'));}
+document.querySelectorAll('.rightbar .side-card').forEach(card=>{
+  card.style.cursor='pointer';
+  card.addEventListener('click',()=>{
+    const title=card.querySelector('.side-title');
+    if(title)navigateShadowPage(title.textContent.trim());
+  });
+});
+$('themeBtn').addEventListener('click',()=>toast('Dark security workspace active'));
+$('userBox').addEventListener('click',logout);$('userBox').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();logout()}});
+updateScrollButton();loadUser();
 </script>
 </body>
 </html>
