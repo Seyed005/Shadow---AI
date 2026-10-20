@@ -32,6 +32,13 @@ PROMPT_INJECTION_PATTERNS = [
         r"(?:rules|filters|guardrails|restrictions)\b",
         re.IGNORECASE,
     ),
+           re.compile(
+        r"\bpretend\s+(?:you\s+are|to\s+be)\s+"
+        r"(?:an?\s+)?(?:AI|assistant|model)\b"
+        r".{0,120}\b(?:no\s+rules|without\s+restrictions|"
+        r"answer\s+anything)\b",
+        re.IGNORECASE,
+    ),
 ]
 
 
