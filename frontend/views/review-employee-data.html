@@ -1,180 +1,79 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shadow AI — OCR Processing</title>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      background: #050914;
-      color: #f5f7fb;
-      font-family: Inter, Segoe UI, Arial, sans-serif;
-      padding: 30px;
-    }
-
-    .page {
-      max-width: 1250px;
-      margin: auto;
-    }
-
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 24px;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: 28px;
-    }
-
-    .sub {
-      color: #8993a8;
-      margin-top: 6px;
-      font-size: 13px;
-    }
-
-    button {
-      background: #101725;
-      border: 1px solid #263147;
-      color: #fff;
-      padding: 10px 15px;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #171f30;
-    }
-
-    .status {
-      display: inline-block;
-      background: #071d12;
-      border: 1px solid #103b21;
-      color: #55e678;
-      padding: 8px 12px;
-      border-radius: 7px;
-      font-size: 12px;
-      margin-bottom: 18px;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
-      gap: 16px;
-    }
-
-    .card {
-      background: linear-gradient(180deg, #101725, #0d1420);
-      border: 1px solid #263147;
-      border-radius: 11px;
-      padding: 19px;
-    }
-
-    h2 {
-      font-size: 14px;
-      margin: 0 0 15px;
-    }
-
-    .row {
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-      padding: 13px 0;
-      border-bottom: 1px solid #202838;
-      font-size: 13px;
-    }
-
-    .row:last-child {
-      border: 0;
-    }
-
-    .row span {
-      color: #cfd4df;
-    }
-
-    .row strong {
-      color: #55e678;
-      text-align: right;
-    }
-
-    .footer {
-      color: #626d80;
-      text-align: center;
-      font-size: 10px;
-      margin-top: 22px;
-    }
-
-    @media (max-width: 650px) {
-      body {
-        padding: 15px;
-      }
-
-      header {
-        align-items: flex-start;
-        gap: 15px;
-        flex-direction: column;
-      }
-
-      .grid {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shadow AI — Review Employee Data</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b1020;--nav:#0e1527;--card:#111829;--line:#1f2a40;--line2:#2a3855;--text:#e8ecf4;--muted:#8a95ab;--soft:#c4ccdb;--violet:#8b7bff;--green:#3dd68c;--amber:#f5b642;--red:#f26d6d}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:14px/1.45 'IBM Plex Sans','Segoe UI',Arial,sans-serif;-webkit-font-smoothing:antialiased}
+button{font:inherit}
+.top{height:56px;display:flex;align-items:center;gap:24px;padding:0 32px;background:var(--nav);border-bottom:1px solid var(--line)}
+.brand{font-weight:600;letter-spacing:.04em;white-space:nowrap}.brand b{color:var(--violet)}
+.crumb{color:var(--muted);font-size:13px}.crumb b{color:#fff;font-weight:500}
+.btn{height:36px;padding:0 16px;border-radius:8px;border:1px solid var(--line2);background:#141d33;color:var(--text);cursor:pointer;font-size:13px;transition:border-color .15s,background .15s;white-space:nowrap}
+.btn:hover{background:#1a2540;border-color:#4a5d8a}.btn:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
+.back{margin-left:auto}
+.page{max-width:1360px;margin:0 auto;padding:28px 32px 36px;display:flex;flex-direction:column;gap:20px}
+h1{margin:0;font-size:26px;font-weight:600;letter-spacing:-.3px}.sub{margin-top:6px;color:var(--muted);font-size:13px}
+.g{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+.kpis{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px}
+.title{font-weight:600}.tsub{margin:2px 0 8px;font-size:12px;color:var(--muted)}
+.k{font-size:11px;letter-spacing:.07em;color:#7d89a3;text-transform:uppercase}.n{font-size:32px;font-weight:600;margin-top:8px;line-height:1.1}.m{color:var(--muted);font-size:12px;margin-top:4px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:13px 0;border-top:1px solid var(--line);color:var(--soft)}
+.row:first-of-type{border-top:0}.row strong{font-weight:500;color:var(--text);text-align:right}
+.tag{display:inline-block;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:500;background:#1c2742;color:var(--soft);white-space:nowrap}
+.ok{background:#12332f;color:var(--green)}.md{background:#3a2e12;color:var(--amber)}.hi{background:#3a1d24;color:#ff8c8c}
+.tr{display:grid;gap:12px;align-items:center;padding:13px 0;border-top:1px solid var(--line);color:var(--soft)}
+.tr.th{border-top:0;padding:8px 0 10px;color:#7d89a3;font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+.tw{overflow-x:auto}.tw>div{min-width:560px}
+.bar{height:8px;border-radius:99px;background:var(--violet)}.track{background:var(--nav);border-radius:99px;margin-top:8px}
+.foot{text-align:center;color:#6b7690;font-size:11px}
+@media(max-width:1000px){.top{padding:0 16px}.page{padding:20px 16px 28px}}@media(max-width:600px){.crumb{display:none}}
+.tw>div{min-width:760px}.err{color:#ff8c8c}.empty{padding:28px 0 12px;text-align:center;color:var(--muted)}.ob{margin-top:14px}.ob .row{border:0;padding:0}</style>
 </head>
 <body>
-  <div class="page">
-    <header>
-      <div>
-        <h1>OCR Processing</h1>
-        <div class="sub">Multimodal OCR and document analysis</div>
-      </div>
-      <button onclick="window.location.href='/dashboard'">← Back to Gateway</button>
-    </header>
-
-    <div class="status"> SHADOW AI SECURITY GATEWAY</div>
-
-    <div class="grid">
-      <section class="card">
-        <h2>Supported Inputs</h2>
-        <div class="row">
-          <span>PDF</span>
-          <strong>SUPPORTED</strong>
-        </div>
-        <div class="row">
-          <span>DOCX</span>
-          <strong>SUPPORTED</strong>
-        </div>
-        <div class="row">
-          <span>XLSX</span>
-          <strong>SUPPORTED</strong>
-        </div>
-        <div class="row">
-          <span>PPTX</span>
-          <strong>SUPPORTED</strong>
-        </div>
-        <div class="row">
-          <span>PNG / JPG / TIFF / WEBP</span>
-          <strong>SUPPORTED</strong>
-        </div>
-      </section>
-
-      <section class="card">
-        <h2>OCR Pipeline</h2>
-        <div class="row">
-          <span>Image/document ingestion → OCR extraction → canonicalization → threat detection → risk evaluation</span>
-          <strong>INFO</strong>
-        </div>
-      </section>
-    </div>
-
-    <div class="footer">Shadow AI Security Gateway • Security analysis precedes AI forwarding.</div>
-  </div>
+<div class="top"><div class="brand">SHADOW <b>AI</b></div><div class="crumb">Workspace / <b>Review Employee Data</b></div><button class="btn back" onclick="window.location.href='/dashboard'">Back to chat</button></div>
+<main class="page">
+<div><h1>Review Employee Data</h1><div class="sub">Chats where employee personal data was detected</div></div>
+<div class="kpis"><div class="card"><div class="k">Messages with employee data</div><div class="n" id="kAll">0</div><div class="m">Names, IDs, emails, phones or locations</div></div><div class="card"><div class="k">Employee IDs</div><div class="n" id="kId" style="color:var(--amber)">0</div><div class="m">Messages containing an employee ID</div></div><div class="card"><div class="k">Protected</div><div class="n" id="kProt" style="color:var(--green)">0</div><div class="m">Sanitized or blocked</div></div><div class="card"><div class="k">Waiting for review</div><div class="n" id="kRev" style="color:var(--red)">0</div><div class="m">Needs an analyst decision</div></div></div><div class="g" style="grid-template-columns:2fr 1fr"><section class="card"><div class="title">Messages containing employee data</div><div class="tsub" id="note">Loading saved activity…</div><div class="tw"><div><div id="head"></div><div id="rows"></div></div></div><div class="empty" id="empty" style="display:none">No messages with employee data yet.</div></section><section class="card"><div class="title">Data types found</div><div class="tsub">Messages per type</div><div id="types"></div><div class="m" style="margin-top:18px;line-height:1.5">Only the type of data is shown here, never the data itself. Everything is checked before it reaches the approved AI.</div></section></div>
+<div class="foot">Shadow AI Security Gateway &middot; Security analysis precedes AI forwarding.</div>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const EMP={EMPLOYEE_ID:'Employee ID',PERSON:'Person',EMAIL:'Email',PHONE:'Phone',PHONE_NUMBER:'Phone',LOCATION:'Location'};
+const G='grid-template-columns:1.2fr 1.5fr 1.7fr 1fr 60px';
+const types=m=>((m.metadata&&m.metadata.finding_types)||[]).filter(t=>EMP[t]);
+const fmt=ts=>{const d=new Date(Number(ts)*1000);return !ts||Number.isNaN(d.getTime())?'—':d.toLocaleString([], {month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'})};
+const dec=m=>m.decision==='BLOCK'?['Blocked','hi']:m.decision==='HITL'?['Review','md']:m.decision==='SANITIZE_AND_SEND'?['Sanitized','ok']:m.decision==='ALLOW'?['Allowed','']:['Pending',''];
+async function run(){
+  try{
+    const r=await fetch('/conversations',{credentials:'same-origin',cache:'no-store'});
+    if(r.status===401){location.replace('/');return}
+    if(!r.ok)throw new Error('History API returned '+r.status);
+    const d=await r.json(),recs=Array.isArray(d.conversations)?d.conversations:[],list=[];
+    for(const c of recs){try{const x=await fetch('/conversations/'+encodeURIComponent(c.session_id),{credentials:'same-origin',cache:'no-store'});if(!x.ok)continue;const dt=await x.json();for(const m of((dt.conversation||{}).messages||[]))if(m.role==='user'&&types(m).length)list.push({...m,title:c.title,sid:c.session_id})}catch(e){}}
+    list.sort((a,b)=>Number(b.created_at||0)-Number(a.created_at||0));
+    $('kAll').textContent=list.length;
+    $('kId').textContent=list.filter(m=>types(m).includes('EMPLOYEE_ID')).length;
+    $('kProt').textContent=list.filter(m=>m.decision==='SANITIZE_AND_SEND'||m.decision==='BLOCK').length;
+    $('kRev').textContent=list.filter(m=>m.decision==='HITL').length;
+    const rows=list.slice(0,100);
+    $('head').innerHTML=rows.length?'<div class="tr th" style="'+G+'"><span>Time</span><span>Conversation</span><span>Data types</span><span>Decision</span><span>Risk</span></div>':'';
+    $('rows').innerHTML=rows.map(m=>{const dd=dec(m),n=Number(m.risk_score)||0;return '<div class="tr" style="'+G+'"><span>'+esc(fmt(m.created_at))+'</span><span>'+esc(m.title||m.file_name||('Chat '+String(m.sid||'').slice(-8)))+'</span><span>'+esc([...new Set(types(m).map(t=>EMP[t]))].join(', '))+'</span><span><span class="tag '+dd[1]+'">'+dd[0]+'</span></span><span style="color:#e8ecf4">'+(n||'—')+'</span></div>'}).join('');
+    $('empty').style.display=rows.length?'none':'block';
+    $('note').textContent=rows.length+' shown · newest first';
+    const counts={};list.forEach(m=>new Set(types(m).map(t=>EMP[t])).forEach(l=>counts[l]=(counts[l]||0)+1));
+    const ents=Object.entries(counts).sort((a,b)=>b[1]-a[1]),max=Math.max(1,...ents.map(e=>e[1]));
+    $('types').innerHTML=ents.length?ents.map(([l,v])=>'<div class="ob"><div class="row"><span>'+esc(l)+'</span><strong>'+v+'</strong></div><div class="track"><div class="bar" style="width:'+(v/max*100)+'%"></div></div></div>').join(''):'<div class="m" style="margin-top:10px">Nothing found yet.</div>';
+  }catch(e){$('note').innerHTML='<span class="err">'+esc(e.message)+'. Check that the backend is running and you are signed in.</span>'}
+}
+run();
+</script>
 </body>
 </html>

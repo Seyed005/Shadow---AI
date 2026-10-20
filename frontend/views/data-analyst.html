@@ -1,212 +1,48 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shadow AI — Data Analyst</title>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      background: #050914;
-      color: #f5f7fb;
-      font-family: Inter, Segoe UI, Arial, sans-serif;
-      padding: 30px;
-    }
-
-    .page {
-      max-width: 1250px;
-      margin: auto;
-    }
-
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 24px;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: 28px;
-    }
-
-    .sub {
-      color: #8993a8;
-      margin-top: 6px;
-      font-size: 13px;
-    }
-
-    button {
-      background: #101725;
-      border: 1px solid #263147;
-      color: #fff;
-      padding: 10px 15px;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #171f30;
-    }
-
-    .status {
-      display: inline-block;
-      background: #071d12;
-      border: 1px solid #103b21;
-      color: #55e678;
-      padding: 8px 12px;
-      border-radius: 7px;
-      font-size: 12px;
-      margin-bottom: 18px;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
-      gap: 16px;
-    }
-
-    .card {
-      background: linear-gradient(180deg, #101725, #0d1420);
-      border: 1px solid #263147;
-      border-radius: 11px;
-      padding: 19px;
-    }
-
-    h2 {
-      font-size: 14px;
-      margin: 0 0 15px;
-    }
-
-    .row {
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-      padding: 13px 0;
-      border-bottom: 1px solid #202838;
-      font-size: 13px;
-    }
-
-    .row:last-child {
-      border: 0;
-    }
-
-    .row span {
-      color: #cfd4df;
-    }
-
-    .row strong {
-      color: #55e678;
-      text-align: right;
-    }
-
-    .footer {
-      color: #626d80;
-      text-align: center;
-      font-size: 10px;
-      margin-top: 22px;
-    }
-
-    @media (max-width: 650px) {
-      body {
-        padding: 15px;
-      }
-
-      header {
-        align-items: flex-start;
-        gap: 15px;
-        flex-direction: column;
-      }
-
-      .grid {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shadow AI — Data Analyst</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b1020;--nav:#0e1527;--card:#111829;--line:#1f2a40;--line2:#2a3855;--text:#e8ecf4;--muted:#8a95ab;--soft:#c4ccdb;--violet:#8b7bff;--green:#3dd68c;--amber:#f5b642;--red:#f26d6d}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:14px/1.45 'IBM Plex Sans','Segoe UI',Arial,sans-serif;-webkit-font-smoothing:antialiased}
+button{font:inherit}
+.top{height:56px;display:flex;align-items:center;gap:24px;padding:0 32px;background:var(--nav);border-bottom:1px solid var(--line)}
+.brand{font-weight:600;letter-spacing:.04em;white-space:nowrap}.brand b{color:var(--violet)}
+.crumb{color:var(--muted);font-size:13px}.crumb b{color:#fff;font-weight:500}
+.btn{height:36px;padding:0 16px;border-radius:8px;border:1px solid var(--line2);background:#141d33;color:var(--text);cursor:pointer;font-size:13px;transition:border-color .15s,background .15s;white-space:nowrap}
+.btn:hover{background:#1a2540;border-color:#4a5d8a}.btn:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
+.back{margin-left:auto}
+.page{max-width:1360px;margin:0 auto;padding:28px 32px 36px;display:flex;flex-direction:column;gap:20px}
+h1{margin:0;font-size:26px;font-weight:600;letter-spacing:-.3px}.sub{margin-top:6px;color:var(--muted);font-size:13px}
+.g{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+.kpis{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px}
+.title{font-weight:600}.tsub{margin:2px 0 8px;font-size:12px;color:var(--muted)}
+.k{font-size:11px;letter-spacing:.07em;color:#7d89a3;text-transform:uppercase}.n{font-size:32px;font-weight:600;margin-top:8px;line-height:1.1}.m{color:var(--muted);font-size:12px;margin-top:4px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:13px 0;border-top:1px solid var(--line);color:var(--soft)}
+.row:first-of-type{border-top:0}.row strong{font-weight:500;color:var(--text);text-align:right}
+.tag{display:inline-block;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:500;background:#1c2742;color:var(--soft);white-space:nowrap}
+.ok{background:#12332f;color:var(--green)}.md{background:#3a2e12;color:var(--amber)}.hi{background:#3a1d24;color:#ff8c8c}
+.tr{display:grid;gap:12px;align-items:center;padding:13px 0;border-top:1px solid var(--line);color:var(--soft)}
+.tr.th{border-top:0;padding:8px 0 10px;color:#7d89a3;font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+.tw{overflow-x:auto}.tw>div{min-width:560px}
+.bar{height:8px;border-radius:99px;background:var(--violet)}.track{background:var(--nav);border-radius:99px;margin-top:8px}
+.foot{text-align:center;color:#6b7690;font-size:11px}
+@media(max-width:1000px){.top{padding:0 16px}.page{padding:20px 16px 28px}}@media(max-width:600px){.crumb{display:none}}
+</style>
 </head>
 <body>
-  <div class="page">
-    <header>
-      <div>
-        <h1>Data Analyst</h1>
-        <div class="sub">Benchmark and gateway evaluation workspace</div>
-      </div>
-      <button onclick="window.location.href='/dashboard'">← Back to Gateway</button>
-    </header>
+<div class="top"><div class="brand">SHADOW <b>AI</b></div><div class="crumb">Workspace / <b>Data Analyst</b></div><button class="btn back" onclick="window.location.href='/dashboard'">Back to chat</button></div>
+<main class="page">
+<div><h1>Data Analyst</h1><div class="sub">Benchmark and gateway evaluation workspace</div></div>
+<div class="kpis"><div class="card"><div class="k">V2 detection</div><div class="n" style="color:var(--green)">100%</div><div class="m">Up from 92.86% in V1</div></div><div class="card"><div class="k">V2 bypass</div><div class="n" style="color:var(--green)">0%</div><div class="m">Down from 7.14% in V1</div></div><div class="card"><div class="k">V2 F1 score</div><div class="n">0.8527</div><div class="m">V1 baseline 0.8413</div></div><div class="card"><div class="k">Stateful risk increase</div><div class="n" style="color:var(--amber)">+17.97</div><div class="m">Versus stateless average</div></div></div><section class="card"><div class="title">V1 baseline vs V2 benchmark</div><div class="tsub">Higher is better, except bypass</div><div class="tw"><div><div class="tr th" style="grid-template-columns:1.2fr 1fr 1fr 1fr"><span>Metric</span><span>V1 baseline</span><span>V2 benchmark</span><span>Change</span></div><div class="tr" style="grid-template-columns:1.2fr 1fr 1fr 1fr"><span>Precision</span><span>0.7465</span><span style="color:#e8ecf4">0.7432</span><span><span class="tag md">-0.0033</span></span></div><div class="tr" style="grid-template-columns:1.2fr 1fr 1fr 1fr"><span>Recall</span><span>0.9636</span><span style="color:#e8ecf4">1.0000</span><span><span class="tag ok">+0.0364</span></span></div><div class="tr" style="grid-template-columns:1.2fr 1fr 1fr 1fr"><span>F1</span><span>0.8413</span><span style="color:#e8ecf4">0.8527</span><span><span class="tag ok">+0.0114</span></span></div><div class="tr" style="grid-template-columns:1.2fr 1fr 1fr 1fr"><span>Detection</span><span>92.86%</span><span style="color:#e8ecf4">100%</span><span><span class="tag ok">+7.14 pts</span></span></div><div class="tr" style="grid-template-columns:1.2fr 1fr 1fr 1fr"><span>Bypass</span><span>7.14%</span><span style="color:#e8ecf4">0%</span><span><span class="tag ok">-7.14 pts</span></span></div></div></div></section><section class="card"><div class="title">Stateful experiment</div><div class="tsub">Remembering earlier messages raises the final risk score</div><div style="margin-top:6px"><div class="row" style="border:0;padding:0"><span>Stateless average final risk</span><strong>60.67</strong></div><div class="track"><div class="bar" style="width:77%;background:#5b6b8f"></div></div></div><div style="margin-top:18px"><div class="row" style="border:0;padding:0"><span>Stateful average final risk</span><strong>78.63</strong></div><div class="track"><div class="bar" style="width:100%"></div></div></div><div class="row" style="margin-top:14px"><span>Increase with stateful scoring</span><strong><span class="tag md">+17.97</span></strong></div></section>
+<div class="foot">Shadow AI Security Gateway &middot; Security analysis precedes AI forwarding.</div>
+</main>
 
-    <div class="status"> SHADOW AI SECURITY GATEWAY</div>
-
-    <div class="grid">
-      <section class="card">
-        <h2>V1 Baseline</h2>
-        <div class="row">
-          <span>Precision</span>
-          <strong>0.7465</strong>
-        </div>
-        <div class="row">
-          <span>Recall</span>
-          <strong>0.9636</strong>
-        </div>
-        <div class="row">
-          <span>F1</span>
-          <strong>0.8413</strong>
-        </div>
-        <div class="row">
-          <span>Detection</span>
-          <strong>92.86%</strong>
-        </div>
-        <div class="row">
-          <span>Bypass</span>
-          <strong>7.14%</strong>
-        </div>
-      </section>
-
-      <section class="card">
-        <h2>V2 Benchmark</h2>
-        <div class="row">
-          <span>Precision</span>
-          <strong>0.7432</strong>
-        </div>
-        <div class="row">
-          <span>Recall</span>
-          <strong>1.0000</strong>
-        </div>
-        <div class="row">
-          <span>F1</span>
-          <strong>0.8527</strong>
-        </div>
-        <div class="row">
-          <span>Detection</span>
-          <strong>100%</strong>
-        </div>
-        <div class="row">
-          <span>Bypass</span>
-          <strong>0%</strong>
-        </div>
-      </section>
-
-      <section class="card">
-        <h2>Stateful Experiment</h2>
-        <div class="row">
-          <span>Stateless average final risk</span>
-          <strong>60.67</strong>
-        </div>
-        <div class="row">
-          <span>Stateful average final risk</span>
-          <strong>78.63</strong>
-        </div>
-        <div class="row">
-          <span>Increase</span>
-          <strong>17.97</strong>
-        </div>
-      </section>
-    </div>
-
-    <div class="footer">Shadow AI Security Gateway • Security analysis precedes AI forwarding.</div>
-  </div>
 </body>
 </html>

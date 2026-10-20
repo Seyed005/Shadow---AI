@@ -1,176 +1,87 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shadow AI — Network Report</title>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      background: #050914;
-      color: #f5f7fb;
-      font-family: Inter, Segoe UI, Arial, sans-serif;
-      padding: 30px;
-    }
-
-    .page {
-      max-width: 1250px;
-      margin: auto;
-    }
-
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 24px;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: 28px;
-    }
-
-    .sub {
-      color: #8993a8;
-      margin-top: 6px;
-      font-size: 13px;
-    }
-
-    button {
-      background: #101725;
-      border: 1px solid #263147;
-      color: #fff;
-      padding: 10px 15px;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #171f30;
-    }
-
-    .status {
-      display: inline-block;
-      background: #071d12;
-      border: 1px solid #103b21;
-      color: #55e678;
-      padding: 8px 12px;
-      border-radius: 7px;
-      font-size: 12px;
-      margin-bottom: 18px;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
-      gap: 16px;
-    }
-
-    .card {
-      background: linear-gradient(180deg, #101725, #0d1420);
-      border: 1px solid #263147;
-      border-radius: 11px;
-      padding: 19px;
-    }
-
-    h2 {
-      font-size: 14px;
-      margin: 0 0 15px;
-    }
-
-    .row {
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-      padding: 13px 0;
-      border-bottom: 1px solid #202838;
-      font-size: 13px;
-    }
-
-    .row:last-child {
-      border: 0;
-    }
-
-    .row span {
-      color: #cfd4df;
-    }
-
-    .row strong {
-      color: #55e678;
-      text-align: right;
-    }
-
-    .footer {
-      color: #626d80;
-      text-align: center;
-      font-size: 10px;
-      margin-top: 22px;
-    }
-
-    @media (max-width: 650px) {
-      body {
-        padding: 15px;
-      }
-
-      header {
-        align-items: flex-start;
-        gap: 15px;
-        flex-direction: column;
-      }
-
-      .grid {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shadow AI — Network Report</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b1020;--nav:#0e1527;--card:#111829;--line:#1f2a40;--line2:#2a3855;--text:#e8ecf4;--muted:#8a95ab;--soft:#c4ccdb;--violet:#8b7bff;--green:#3dd68c;--amber:#f5b642;--red:#f26d6d}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:14px/1.45 'IBM Plex Sans','Segoe UI',Arial,sans-serif;-webkit-font-smoothing:antialiased}
+button{font:inherit}
+.top{height:56px;display:flex;align-items:center;gap:24px;padding:0 32px;background:var(--nav);border-bottom:1px solid var(--line)}
+.brand{font-weight:600;letter-spacing:.04em;white-space:nowrap}.brand b{color:var(--violet)}
+.crumb{color:var(--muted);font-size:13px}.crumb b{color:#fff;font-weight:500}
+.btn{height:36px;padding:0 16px;border-radius:8px;border:1px solid var(--line2);background:#141d33;color:var(--text);cursor:pointer;font-size:13px;transition:border-color .15s,background .15s;white-space:nowrap}
+.btn:hover{background:#1a2540;border-color:#4a5d8a}.btn:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
+.back{margin-left:auto}
+.page{max-width:1360px;margin:0 auto;padding:28px 32px 36px;display:flex;flex-direction:column;gap:20px}
+h1{margin:0;font-size:26px;font-weight:600;letter-spacing:-.3px}.sub{margin-top:6px;color:var(--muted);font-size:13px}
+.g{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+.kpis{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px}
+.title{font-weight:600}.tsub{margin:2px 0 8px;font-size:12px;color:var(--muted)}
+.k{font-size:11px;letter-spacing:.07em;color:#7d89a3;text-transform:uppercase}.n{font-size:32px;font-weight:600;margin-top:8px;line-height:1.1}.m{color:var(--muted);font-size:12px;margin-top:4px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:13px 0;border-top:1px solid var(--line);color:var(--soft)}
+.row:first-of-type{border-top:0}.row strong{font-weight:500;color:var(--text);text-align:right}
+.tag{display:inline-block;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:500;background:#1c2742;color:var(--soft);white-space:nowrap}
+.ok{background:#12332f;color:var(--green)}.md{background:#3a2e12;color:var(--amber)}.hi{background:#3a1d24;color:#ff8c8c}
+.tr{display:grid;gap:12px;align-items:center;padding:13px 0;border-top:1px solid var(--line);color:var(--soft)}
+.tr.th{border-top:0;padding:8px 0 10px;color:#7d89a3;font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+.tw{overflow-x:auto}.tw>div{min-width:560px}
+.bar{height:8px;border-radius:99px;background:var(--violet)}.track{background:var(--nav);border-radius:99px;margin-top:8px}
+.foot{text-align:center;color:#6b7690;font-size:11px}
+@media(max-width:1000px){.top{padding:0 16px}.page{padding:20px 16px 28px}}@media(max-width:600px){.crumb{display:none}}
+.tw>div{min-width:820px}select{height:36px;padding:0 12px;border-radius:8px;border:1px solid var(--line2);background:#141d33;color:var(--text);font:inherit;font-size:13px}.ch{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.empty{padding:28px 0 12px;text-align:center;color:var(--muted)}.err{color:#ff8c8c}</style>
 </head>
 <body>
-  <div class="page">
-    <header>
-      <div>
-        <h1>Network Report</h1>
-        <div class="sub">Network security analysis workspace</div>
-      </div>
-      <button onclick="window.location.href='/dashboard'">← Back to Gateway</button>
-    </header>
+<div class="top"><div class="brand">SHADOW <b>AI</b></div><div class="crumb">Workspace / <b>Network Report</b></div><button class="btn back" onclick="window.location.href='/dashboard'">Back to chat</button></div>
+<main class="page">
+<div><h1>Network Report</h1><div class="sub">Network security analysis workspace</div></div>
+<div class="kpis"><div class="card"><div class="k">IP address findings</div><div class="n" id="kIp">0</div><div class="m">Messages containing IP addresses</div></div><div class="card"><div class="k">URL findings</div><div class="n" id="kUrl">0</div><div class="m">Messages containing URLs</div></div><div class="card"><div class="k">Network messages flagged</div><div class="n" id="kNf" style="color:var(--amber)">0</div><div class="m">With a review or block decision</div></div><div class="card"><div class="k">All security findings</div><div class="n" id="kAll">0</div><div class="m">Messages with any finding</div></div></div><div class="g"><section class="card"><div class="title">Analysis areas</div><div class="tsub">Live counts from your saved chats</div><div class="row"><span>IP addresses</span><strong id="aIp">—</strong></div><div class="row"><span>Network indicators (URLs)</span><strong id="aUrl">—</strong></div><div class="row"><span>Suspicious activity</span><strong id="aSus">—</strong></div><div class="row"><span>Security findings</span><strong id="aAll">—</strong></div></section><section class="card"><div class="title">Gateway protection</div><div class="tsub">How network data is handled</div><div style="margin-top:6px;color:#c4ccdb;line-height:1.6">Network-related content is scanned before reaching the approved AI.</div><div style="margin-top:14px"><button class="btn" onclick="window.location.href='suspicious-activity.html'">View suspicious activity</button></div></section></div><section class="card"><div class="title">Recent network-related messages</div><div class="tsub" id="note">Loading saved activity…</div><div class="tw"><div><div id="head"></div><div id="rows"></div></div></div><div class="empty" id="empty" style="display:none">No messages with IP addresses or URLs yet.</div></section>
+<div class="foot">Shadow AI Security Gateway &middot; Security analysis precedes AI forwarding.</div>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const LABEL={PASSWORD:'Password',API_KEY_LIKE:'API key',CREDIT_CARD:'Credit card',DATABASE_CREDENTIAL:'Database credential',IP_ADDRESS:'IP address',EMAIL:'Email',PHONE:'Phone',PHONE_NUMBER:'Phone',EMPLOYEE_ID:'Employee ID',PERSON:'Person',LOCATION:'Location',URL:'URL'};
+const types=m=>(m.metadata&&m.metadata.finding_types)||[];
+const label=t=>LABEL[t]||String(t).replace(/_/g,' ');
+const fmt=ts=>{const d=new Date(Number(ts)*1000);return Number.isNaN(d.getTime())||!ts?'—':d.toLocaleString([], {month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'})};
+const flagged=m=>m.role==='user'&&(m.redacted||m.decision==='HITL'||m.decision==='BLOCK'||Number(m.risk_score)>10);
+function level(m){const n=Number(m.risk_score)||0;let l=String(m.risk_level||'').toUpperCase();if(!l)l=n>=61?'CRITICAL':n>=26?'HIGH':n>=11?'MEDIUM':'LOW';return{l,n,c:['CRITICAL','HIGH'].includes(l)?'hi':l==='MEDIUM'?'md':'ok'}}
+function dec(m){const d=m.decision;return d==='BLOCK'?['Blocked','hi']:d==='HITL'?['Review','md']:d==='SANITIZE_AND_SEND'?['Sanitized','ok']:d==='ALLOW'?['Allowed','ok']:['Pending','']}
+async function load(){
+  const r=await fetch('/conversations',{credentials:'same-origin',cache:'no-store'});
+  if(r.status===401){location.replace('/');return null}
+  if(!r.ok)throw new Error('History API returned '+r.status);
+  const d=await r.json(),recs=Array.isArray(d.conversations)?d.conversations:[],msgs=[];
+  for(const c of recs){try{const x=await fetch('/conversations/'+encodeURIComponent(c.session_id),{credentials:'same-origin',cache:'no-store'});if(!x.ok)continue;const dt=await x.json();for(const m of((dt.conversation||{}).messages||[]))msgs.push({...m,session_id:c.session_id,title:c.title})}catch(e){}}
+  return{recs,msgs};
+}
+function rowsHtml(list,recsTitle){
+  return list.map(m=>{const v=level(m),dd=dec(m),f=types(m).map(label).join(', ')||(m.redacted?'Sensitive finding':'—');
+    return '<div class="tr" style="grid-template-columns:90px 1.2fr 1.5fr 1fr 1.6fr 60px"><span><span class="tag '+v.c+'">'+esc(v.l)+'</span></span><span>'+esc(fmt(m.created_at))+'</span><span>'+esc(m.title||m.file_name||('Chat '+String(m.session_id||'').slice(-8)))+'</span><span><span class="tag '+dd[1]+'">'+dd[0]+'</span></span><span>'+esc(f)+'</span><span style="color:#e8ecf4">'+(v.n||'—')+'</span></div>'}).join('');
+}
+const HEAD='<div class="tr th" style="grid-template-columns:90px 1.2fr 1.5fr 1fr 1.6fr 60px"><span>Risk</span><span>Time</span><span>Conversation</span><span>Decision</span><span>Findings</span><span>Score</span></div>';
 
-    <div class="status"> SHADOW AI SECURITY GATEWAY</div>
-
-    <div class="grid">
-      <section class="card">
-        <h2>Analysis Areas</h2>
-        <div class="row">
-          <span>IP addresses</span>
-          <strong>INFO</strong>
-        </div>
-        <div class="row">
-          <span>Network indicators</span>
-          <strong>INFO</strong>
-        </div>
-        <div class="row">
-          <span>Suspicious activity</span>
-          <strong>INFO</strong>
-        </div>
-        <div class="row">
-          <span>Security findings</span>
-          <strong>INFO</strong>
-        </div>
-      </section>
-
-      <section class="card">
-        <h2>Gateway Protection</h2>
-        <div class="row">
-          <span>Network-related content is scanned before reaching the approved AI.</span>
-          <strong>INFO</strong>
-        </div>
-      </section>
-    </div>
-
-    <div class="footer">Shadow AI Security Gateway • Security analysis precedes AI forwarding.</div>
-  </div>
+async function refresh(){
+  try{
+    const d=await load();if(!d)return;
+    const users=d.msgs.filter(m=>m.role==='user'),has=(m,t)=>types(m).includes(t);
+    const ip=users.filter(m=>has(m,'IP_ADDRESS')),url=users.filter(m=>has(m,'URL')),net=users.filter(m=>has(m,'IP_ADDRESS')||has(m,'URL'));
+    const sus=users.filter(flagged),anyf=users.filter(m=>m.redacted||types(m).length);
+    $('kIp').textContent=ip.length;$('kUrl').textContent=url.length;$('kAll').textContent=anyf.length;
+    $('kNf').textContent=net.filter(m=>m.decision==='HITL'||m.decision==='BLOCK').length;
+    $('aIp').textContent=ip.length+' messages';$('aUrl').textContent=url.length+' messages';$('aSus').textContent=sus.length+' requests';$('aAll').textContent=anyf.length+' messages';
+    const list=net.sort((a,b)=>Number(b.created_at||0)-Number(a.created_at||0)).slice(0,50);
+    $('head').innerHTML=list.length?HEAD:'';$('rows').innerHTML=rowsHtml(list);$('empty').style.display=list.length?'none':'block';
+    $('note').textContent=list.length+' shown · newest first';
+  }catch(e){$('note').innerHTML='<span class="err">'+esc(e.message)+'. Check that the backend is running and you are signed in.</span>'}
+}
+refresh();
+</script>
 </body>
 </html>

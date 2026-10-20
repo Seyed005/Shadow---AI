@@ -4,6 +4,7 @@ from detection.custom_recognizers import detect_custom_entities
 from detection.encoding_detector import decode_base64_candidates
 from detection.canonicalizer import canonicalize_text
 from detection.rot13_detector import detect_rot13_password_context
+from detection.prompt_injection_detector import detect_prompt_injection
 
 
 def _canonicalize_with_mapping(
@@ -392,7 +393,9 @@ def run_detection(
             "value": finding["value"],
             "decoded_value": finding["decoded_value"]
         })
-
+    # Prompt-injection detection
+    injection_findings = detect_prompt_injection(text)
+    findings.extend(injection_findings)
 
     return findings
 

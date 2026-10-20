@@ -200,8 +200,12 @@ document.querySelectorAll('.nav-item').forEach(item=>{
   item.addEventListener('click',()=>navigateShadowPage(item.dataset.nav));
 });
 document.querySelectorAll('.topbar .status-pill').forEach(item=>{
-  item.addEventListener('click',()=>navigateShadowPage(item.textContent.trim()));
-  item.style.cursor='pointer';
+  const label = item.cloneNode(true);
+  label.querySelectorAll('.icon').forEach(icon => icon.remove());
+
+  const routeLabel = label.textContent.trim();
+  item.addEventListener('click', () => navigateShadowPage(routeLabel));
+  item.style.cursor = 'pointer';
 });
 const provider=document.querySelector('.provider');
 if(provider){provider.style.cursor='pointer';provider.addEventListener('click',()=>navigateShadowPage('Approved AI Provider'));}

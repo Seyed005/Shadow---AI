@@ -1,43 +1,295 @@
 ﻿<!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Shadow AI — Security Dashboard</title>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Shadow AI — Security Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#17131f;--panel:#272232;--panel2:#302a3d;--line:#41394f;--text:#f4f1fa;--muted:#aaa2b9;--purple:#9b79ef;--red:#ff4966;--yellow:#f2b83f;--cyan:#22d3d5;--green:#55d98a}*{box-sizing:border-box}body{margin:0;background:#0b0910;color:var(--text);font:13px Inter,Segoe UI,Arial,sans-serif}.app{max-width:1600px;margin:auto;background:var(--bg);min-height:100vh}.top{height:54px;background:#100d16;border-bottom:1px solid #342c40;display:flex;align-items:center;gap:26px;padding:0 20px}.brand{font-size:17px;font-weight:800;white-space:nowrap}.brand b{color:#ad8cff}.brand small{font-size:9px;display:block;color:#b9aecb;font-weight:500;letter-spacing:1px;margin-top:2px}.tabs{display:flex;align-items:stretch;height:100%;gap:20px}.tabs button{background:none;border:0;color:#bfb7cb;font-size:12px;border-bottom:2px solid transparent;padding:0 4px}.tabs button.active{color:white;border-color:#df607d}.topright{margin-left:auto;display:flex;align-items:center;gap:12px;color:#c8bfd5}.topright button,.btn{background:#383044;border:1px solid #51465f;color:#f6f2ff;padding:7px 10px;border-radius:5px;cursor:pointer}.page{padding:14px 16px 18px}.pagehead{display:flex;align-items:center;gap:12px;margin-bottom:12px}.pagehead h1{font-size:19px;margin:0}.pagehead .sub{color:var(--muted);font-size:11px;margin-top:4px}.spacer{flex:1}.small-label{font-size:10px;color:#b8afc8}.select{background:#211c2b;color:#eee;border:1px solid #655774;border-radius:4px;padding:7px 9px;font-size:11px}.group{background:var(--panel);border:1px solid #393143;border-radius:8px;margin-bottom:12px;overflow:hidden}.grouphead{display:flex;align-items:center;gap:10px;padding:10px 12px;background:#302a3b;font-weight:700}.grouphead .subtle{color:#b8afc8;font-weight:400;font-size:10px}.grouphead button{margin-left:auto;background:transparent;color:#d5cce1;border:0;cursor:pointer}.metrics{display:grid;grid-template-columns: minmax(160px,1fr) minmax(300px,1.7fr) minmax(100px,.65fr) minmax(280px,1.55fr);gap:8px;padding:8px}.tile{background:#211c2b;border:1px solid #3b3346;border-radius:6px;min-width:0;padding:11px}.tiletitle{font-size:10px;color:#d0c8dc;margin-bottom:10px}.latency{font-size:10px;color:#c6bdcf;margin-bottom:12px}.latency b{font-size:12px;color:#f5f0ff}.gaugewrap{display:flex;justify-content:center;align-items:center;position:relative;margin:2px auto 0;width:126px;height:88px}.gauge{width:126px;height:72px;overflow:hidden;position:relative}.gauge svg{width:126px;height:126px;position:absolute;top:0;left:0}.gaugeval{position:absolute;top:31px;font-size:27px;font-weight:700}.trace{height:5px;background:linear-gradient(90deg,var(--red) 0 28%,var(--yellow) 28% 57%,var(--cyan) 57%);border-radius:5px;margin:7px 0}.legend{display:flex;gap:9px;flex-wrap:wrap;color:#b9b0c7;font-size:9px}.dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:4px}.chart{width:100%;height:150px;display:block}.chart text{font-size:9px;fill:#aaa1b8}.chart .gridline{stroke:#41384d;stroke-width:.7}.chart .line{fill:none;stroke:#d486a4;stroke-width:1.6}.chart .bar{fill:#8c66cb}.chart .bar2{fill:#b14d9c}.chartlegend{display:flex;gap:12px;color:#b9afc6;font-size:9px;margin-top:4px}.kpis{display:flex;flex-direction:column;gap:7px}.kpi{padding:7px 4px;border-bottom:1px solid #3c3348}.kpi:last-child{border:0}.kpi strong{display:block;font-size:21px}.kpi span{color:#b7aec4;font-size:10px;line-height:1.3}.donutrow{display:flex;align-items:center;justify-content:center;gap:12px;min-height:140px}.donut{width:98px;height:98px;border-radius:50%;background:conic-gradient(#a9a0bb 0 16%,#776d8e 16% 33%,#c2b8d0 33% 50%,#6f647e 50% 67%,#8b7da5 67% 84%,#44394f 84%);position:relative;flex:0 0 auto}.donut:after{content:"";position:absolute;inset:15px;background:#211c2b;border-radius:50%}.legendlist{font-size:9px;color:#c3b9d0;line-height:1.8}.activitynums{border-left:1px solid #41384d;padding-left:10px;min-width:76px}.activitynums strong{font-size:17px;display:block}.activitynums span{font-size:9px;color:#b8afc8;display:block;margin-bottom:8px}.tracebox{background:#211c2b;border:1px solid #3d3448;border-radius:7px;padding:11px;margin-top:12px}.tracehead{display:flex;align-items:center;gap:8px;margin-bottom:10px}.tracehead strong{font-size:12px}.tracehead span{color:#b9b0c8;font-size:10px}.tracehead .spacer{flex:1}.tablewrap{overflow:auto}table{border-collapse:collapse;width:100%;min-width:720px;font-size:10px}th{background:#302a3c;color:#c7bfd4;text-align:left;font-weight:500;padding:9px 8px;border:1px solid #443a50;white-space:nowrap}td{padding:8px;border:1px solid #393143;color:#e4deeb;white-space:nowrap}tbody tr:nth-child(even){background:#292333}.badge{display:inline-block;border-radius:4px;padding:3px 5px;font-size:9px}.high{color:#ff8295;background:#4c2331}.medium{color:#ffd36d;background:#4a3920}.low{color:#ffe18c;background:#473d26}.minimal{color:#45e3e4;background:#173c40}.pill{background:#514266;color:#e5d7ff;border-radius:10px;padding:2px 7px}.empty{padding:20px;text-align:center;color:#b9b0c8}.foot{color:#8f869f;text-align:center;font-size:10px;padding:10px}.notice{font-size:10px;color:#a89db8;margin:0 0 10px}.error{color:#ff9aa9}.hidden{display:none!important}@media(max-width:1050px){.metrics{grid-template-columns:minmax(150px,1fr) minmax(260px,1.5fr)}.top{gap:14px}.tabs{gap:12px}.kpis{display:grid;grid-template-columns:repeat(2,1fr)}}@media(max-width:620px){.top{padding:0 10px;gap:10px}.brand{font-size:14px}.tabs{gap:7px}.tabs button{font-size:10px}.topright .hide-mobile{display:none}.page{padding:10px 8px}.pagehead{flex-wrap:wrap}.metrics{grid-template-columns:1fr}.tile{padding:10px}.chart{height:130px}.donutrow{justify-content:flex-start}.grouphead{font-size:11px}}
-</style></head><body><div class="app">
-<nav class="top"><div class="brand">◈ SHADOW <b>AI</b><small>SECURITY GATEWAY</small></div><div class="tabs"><button class="active" id="tabDashboard">Dashboard</button><button id="tabApplications">Applications</button><button id="tabPolicies">Policies</button></div><div class="topright"><span title="Notifications">♧ <span class="pill" id="alerts">0</span></span><button class="hide-mobile" id="refreshBtn">↻ Refresh</button><button id="backBtn" title="Back to gateway">↗</button></div></nav>
-<main class="page"><div class="pagehead"><div><h1>Dashboard</h1><div class="sub">Security posture and gateway activity Â· <span id="updatedAt">Loading saved data…</span></div></div><div class="spacer"></div><button class="btn" id="collapseAll">Collapse All</button><label class="small-label" for="dateRange">Date Range</label><select class="select" id="dateRange"><option value="7">A Week</option><option value="30">30 Days</option><option value="90">90 Days</option><option value="all">All Time</option></select></div>
-<p class="notice" id="sourceNote">Dashboard activity is derived from your saved Shadow AI conversation records. Display preferences are saved in this browser.</p>
-<section class="group"><div class="grouphead"><span>Group - Security Gateway</span><span class="subtle">Live saved activity</span><button data-collapse="group1" aria-label="Collapse group">↗</button></div><div class="metrics" id="group1">
-<div class="tile"><div class="latency">Gateway Status <b id="gatewayStatus">CHECKING</b></div><div class="gaugewrap"><div class="gauge"><svg viewBox="0 0 126 126"><path d="M 13 76 A 50 50 0 0 1 113 76" fill="none" stroke="#51475f" stroke-width="9" stroke-linecap="round"/><path id="gaugeArc" d="M 13 76 A 50 50 0 0 1 113 76" fill="none" stroke="#d7a629" stroke-width="9" stroke-linecap="round" stroke-dasharray="157" stroke-dashoffset="157"/></svg></div><div class="gaugeval" id="riskGauge">—</div></div><div class="small-label">Average recorded risk score</div><div class="trace"></div><div class="legend"><span><i class="dot" style="background:var(--red)"></i>High risk</span><span><i class="dot" style="background:var(--yellow)"></i>Medium</span><span><i class="dot" style="background:var(--cyan)"></i>Low</span></div></div>
-<div class="tile"><div class="tiletitle">Gateway Activity</div><div class="latency">Saved conversation events Â· <b id="eventCount">0</b></div><svg class="chart" id="activityChart" viewBox="0 0 420 150" preserveAspectRatio="none" aria-label="Gateway activity chart"><g class="gridline"><path d="M24 25H410 M24 55H410 M24 85H410 M24 115H410"/></g><text x="6" y="28">3</text><text x="6" y="58">2</text><text x="6" y="88">1</text><text x="6" y="118">0</text></svg><div class="chartlegend"><span>— Saved messages by day</span></div></div>
-<div class="tile kpis"><div class="kpi"><strong id="unsafeCount">0</strong><span>Flagged / HITL requests</span></div><div class="kpi"><strong id="sanitizedCount">0</strong><span>Sanitized requests</span></div><div class="kpi"><strong id="blockedCount">0</strong><span>Blocked requests</span></div></div>
-<div class="tile"><div class="tiletitle">Application Activity</div><div class="donutrow"><div class="donut" id="decisionDonut"></div><div class="legendlist"><div><i class="dot" style="background:#55d98a"></i>Allowed</div><div><i class="dot" style="background:#f2b83f"></i>Sanitized</div><div><i class="dot" style="background:#ff4966"></i>Blocked</div><div><i class="dot" style="background:#9b8bb6"></i>Review / other</div></div><div class="activitynums"><strong id="totalRequests">0</strong><span>Total requests</span><strong id="sessions">0</strong><span>Saved chats</span><strong id="detections">0</strong><span>Flagged events</span></div></div></div>
-</div></section>
-<section class="group"><div class="grouphead"><span>Group - AI Security Monitoring</span><span class="subtle">Based on stored gateway findings</span><button data-collapse="group2" aria-label="Collapse group">↗</button></div><div class="metrics" id="group2">
-<div class="tile"><div class="tiletitle">Threat Level Overview</div><div class="gaugewrap"><div class="gauge"><svg viewBox="0 0 126 126"><path d="M 13 76 A 50 50 0 0 1 113 76" fill="none" stroke="#51475f" stroke-width="9" stroke-linecap="round"/><path id="threatArc" d="M 13 76 A 50 50 0 0 1 113 76" fill="none" stroke="#ff4966" stroke-width="9" stroke-linecap="round" stroke-dasharray="157" stroke-dashoffset="157"/></svg></div><div class="gaugeval" id="threatGauge">0</div></div><div class="small-label">Flagged percentage</div><div class="trace"></div><div class="legend"><span><i class="dot" style="background:var(--red)"></i>High <b id="highCount">0</b></span><span><i class="dot" style="background:var(--yellow)"></i>Medium <b id="mediumCount">0</b></span><span><i class="dot" style="background:var(--cyan)"></i>Low <b id="lowCount">0</b></span></div></div>
-<div class="tile"><div class="tiletitle">Saved Requests Over Time</div><svg class="chart" id="trendChart" viewBox="0 0 420 150" preserveAspectRatio="none" aria-label="Saved requests trend chart"><g class="gridline"><path d="M24 25H410 M24 55H410 M24 85H410 M24 115H410"/></g></svg><div class="chartlegend"><span>— Total saved messages</span><span style="color:#b782e7">— Flagged messages</span></div></div>
-<div class="tile kpis"><div class="kpi"><strong id="piiCount">0</strong><span>Messages with findings</span></div><div class="kpi"><strong id="fileCount">0</strong><span>File / multimodal requests</span></div><div class="kpi"><strong id="avgRisk">—</strong><span>Average recorded risk</span></div></div>
-<div class="tile"><div class="tiletitle">Stored Conversation Status</div><div class="rowline"><span class="small-label">Persistent store</span><strong id="storeStatus">Checking…</strong></div><div class="rowline"><span class="small-label">Last sync</span><strong id="syncTime">—</strong></div><div class="rowline"><span class="small-label">History endpoint</span><strong>/conversations</strong></div><div class="rowline"><span class="small-label">Risk engine</span><strong>V6.1 Â· Stateful</strong></div><div class="rowline"><span class="small-label">AI provider</span><strong>Ollama Â· Gemma 3:4B</strong></div></div>
-</div></section>
-<section class="tracebox"><div class="tracehead"><strong>Security Request Trace</strong><span>Saved events</span><span class="pill" id="traceCount">0</span><div class="spacer"></div><label class="small-label" for="sortOrder">Order by</label><select class="select" id="sortOrder"><option value="newest">Newest first</option><option value="risk">Highest risk</option></select></div><div class="tablewrap"><table><thead><tr><th>Risk</th><th>Time of Request</th><th>Conversation</th><th>Decision</th><th>Finding Categories</th><th>Risk Score</th><th>Input</th></tr></thead><tbody id="traceRows"><tr><td colspan="7" class="empty">Loading saved request history…</td></tr></tbody></table></div><div id="emptyTrace" class="empty hidden">No saved gateway activity for this date range yet. Send a test message through Shadow AI to populate the dashboard.</div></section>
-<div class="foot">Shadow AI Security Gateway Â· Persistent conversation history Â· Metrics reflect stored records, not fabricated live telemetry.</div></main></div>
-<style>.rowline{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid #3c3348;font-size:10px}.rowline:last-child{border:0}.rowline strong{font-weight:600;color:#ddd3ef;text-align:right}</style>
+:root{--bg:#0b1020;--nav:#0e1527;--card:#111829;--card2:#0e1527;--line:#1f2a40;--line2:#2a3855;--text:#e8ecf4;--muted:#8a95ab;--soft:#c4ccdb;--violet:#8b7bff;--red:#f26d6d;--amber:#f5b642;--teal:#2dd4bf;--green:#3dd68c}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:14px/1.45 'IBM Plex Sans','Segoe UI',Arial,sans-serif;-webkit-font-smoothing:antialiased}
+button,select{font:inherit}
+.hidden{display:none!important}
+/* top bar */
+.top{height:60px;display:flex;align-items:center;gap:32px;padding:0 32px;background:var(--nav);border-bottom:1px solid var(--line)}
+.brand{font-weight:600;font-size:17px;letter-spacing:.04em;line-height:1.1;white-space:nowrap}
+.brand b{color:var(--violet)}
+.brand small{display:block;font-size:10px;letter-spacing:.14em;color:#7d89a3;font-weight:500;margin-top:2px}
+.tabs{display:flex;gap:6px;height:100%;flex:1}
+.tabs button{background:none;border:0;border-bottom:2px solid transparent;color:var(--muted);padding:0 14px;cursor:pointer;transition:color .15s}
+.tabs button:hover{color:#fff}
+.tabs button.active{color:#fff;border-color:var(--violet)}
+.topright{display:flex;align-items:center;gap:12px}
+.online{display:flex;align-items:center;gap:8px;color:var(--green);font-size:12px}
+.online i{width:8px;height:8px;border-radius:50%;background:var(--green)}
+.btn{height:36px;padding:0 16px;border-radius:8px;border:1px solid var(--line2);background:#141d33;color:var(--text);cursor:pointer;transition:border-color .15s,background .15s}
+.btn:hover{background:#1a2540;border-color:#4a5d8a}
+.btn:focus-visible,.select:focus-visible,.tabs button:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
+.select{height:36px;padding:0 12px;border-radius:8px;border:1px solid var(--line2);background:#141d33;color:var(--text)}
+.pill{padding:2px 9px;border-radius:99px;background:#1c2742;color:var(--soft);font-size:12px}
+/* page */
+.page{max-width:1440px;margin:0 auto;padding:28px 32px 40px;display:flex;flex-direction:column;gap:20px}
+.pagehead{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap}
+.pagehead h1{margin:0;font-size:26px;font-weight:600;letter-spacing:-.3px}
+.sub{margin-top:6px;color:var(--muted);font-size:13px}
+.spacer{flex:1}
+.small-label{font-size:12px;color:var(--muted)}
+.notice{margin:0;font-size:12px;color:var(--muted)}
+.error{color:#ff8c8c}
+/* KPI row */
+.kpirow{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.kpi{padding:18px 20px;border-radius:12px;background:var(--card);border:1px solid var(--line)}
+.kpi .k{font-size:12px;letter-spacing:.06em;color:var(--muted);text-transform:uppercase}
+.kpi strong{display:block;font-size:32px;font-weight:600;margin-top:8px;line-height:1.1}
+.kpi span.d{display:block;margin-top:4px;font-size:12px;color:var(--muted)}
+/* groups */
+.group{border-radius:12px;background:var(--card);border:1px solid var(--line);overflow:hidden}
+.grouphead{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--line)}
+.grouphead strong{font-weight:600}
+.grouphead .subtle{color:var(--muted);font-size:12px}
+.grouphead button{margin-left:auto;background:none;border:0;color:var(--muted);cursor:pointer;font-size:13px}
+.grouphead button:hover{color:#fff}
+.metrics{display:grid;gap:16px;padding:16px}
+.g3{grid-template-columns:1fr 1.5fr 1fr}
+.g4{grid-template-columns:1fr 1.4fr 1fr 1fr}
+.tile{min-width:0;padding:18px;border-radius:10px;background:var(--card2);border:1px solid var(--line)}
+.tiletitle{font-weight:600}
+.tilesub{font-size:12px;color:var(--muted);margin:2px 0 14px}
+.gaugebox{display:flex;justify-content:center}
+.gaugebox svg{width:200px;height:116px}
+.badgewrap{text-align:center;margin-top:2px}
+.sbadge{display:inline-block;padding:4px 12px;border-radius:99px;font-size:12px;font-weight:500;background:#1c2742;color:var(--soft)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:14px;font-size:12px;color:var(--muted)}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}
+.chart{width:100%;height:auto;display:block}
+.chart text{font-size:11px;fill:var(--muted);font-family:inherit}
+.chart .gl{stroke:var(--line2);stroke-width:.6;opacity:.55}
+.chart .bar{fill:var(--violet)}
+.chart .bar2{fill:var(--amber)}
+.chartlegend{display:flex;gap:16px;margin-top:6px;font-size:12px;color:var(--muted)}
+.donutrow{display:flex;align-items:center;gap:24px}
+.donut{width:120px;height:120px;border-radius:50%;position:relative;flex:0 0 auto;background:var(--line)}
+.donut:after{content:"";position:absolute;inset:22px;border-radius:50%;background:var(--card2)}
+.ll{flex:1;display:flex;flex-direction:column;gap:10px;font-size:13px}
+.ll div{display:flex;justify-content:space-between;color:var(--soft)}
+.ll b{color:var(--text)}
+.rowline{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:13px}
+.rowline:last-child{border:0}
+.rowline strong{font-weight:500;color:var(--text);text-align:right}
+.mini{display:flex;flex-direction:column}
+.mini .m{padding:12px 0;border-bottom:1px solid var(--line)}
+.mini .m:last-child{border:0}
+.mini strong{display:block;font-size:26px;font-weight:600;line-height:1.1}
+.mini span{font-size:12px;color:var(--muted)}
+/* trace */
+.tracebox{border-radius:12px;background:var(--card);border:1px solid var(--line);overflow:hidden}
+.tracehead{display:flex;align-items:center;gap:10px;padding:14px 20px;border-bottom:1px solid var(--line)}
+.tracehead strong{font-weight:600}
+.tracehead>span{font-size:12px;color:var(--muted)}
+.tablewrap{overflow-x:auto}
+table{width:100%;min-width:860px;border-collapse:collapse;font-size:13px}
+th{padding:12px 20px;background:var(--card2);color:var(--muted);text-align:left;font-size:11px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+td{padding:14px 20px;border-top:1px solid var(--line);color:var(--soft);white-space:nowrap}
+tbody tr:hover{background:#151f35}
+.badge{display:inline-block;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:500}
+.high{color:#ff8c8c;background:#3a1d24}
+.medium{color:var(--amber);background:#3a2e12}
+.low{color:#9fe8d6;background:#12332f}
+.minimal{color:var(--teal);background:#0f2f33}
+.empty{padding:28px 20px;text-align:center;color:var(--muted)}
+.foot{text-align:center;color:#6b7690;font-size:11px}
+@media(max-width:1100px){.g3,.g4{grid-template-columns:1fr 1fr}.kpirow{grid-template-columns:1fr 1fr}.top{gap:16px;padding:0 16px}.page{padding:20px 16px 32px}}
+@media(max-width:700px){.g3,.g4,.kpirow{grid-template-columns:1fr}.online,.hide-mobile{display:none}.tabs button{padding:0 8px}.donutrow{flex-direction:column;align-items:flex-start}}
+</style>
+</head>
+<body>
+<nav class="top">
+  <div class="brand">SHADOW <b>AI</b><small>SECURITY GATEWAY</small></div>
+  <div class="tabs"><button class="active" id="tabDashboard">Dashboard</button><button id="tabApplications">Applications</button><button id="tabPolicies">Policies</button></div>
+  <div class="topright">
+    <span class="online"><i></i>Gateway online</span>
+    <span title="Flagged events" class="pill" id="alerts">0</span>
+    <button class="btn hide-mobile" id="refreshBtn">Refresh</button>
+    <button class="btn" id="backBtn" title="Back to gateway">Back to chat</button>
+  </div>
+</nav>
+
+<main class="page">
+  <div class="pagehead">
+    <div><h1>Security Dashboard</h1><div class="sub">Security posture and gateway activity &middot; <span id="updatedAt">Loading saved data…</span></div></div>
+    <div class="spacer"></div>
+    <button class="btn" id="collapseAll">Collapse All</button>
+    <label class="small-label" for="dateRange">Date range</label>
+    <select class="select" id="dateRange"><option value="7">Last 7 days</option><option value="30">Last 30 days</option><option value="90">Last 90 days</option><option value="all">All time</option></select>
+  </div>
+  <p class="notice" id="sourceNote">Dashboard activity is derived from your saved Shadow AI conversation records. Display preferences are saved in this browser.</p>
+
+  <section class="kpirow">
+    <div class="kpi"><div class="k">Total requests</div><strong id="totalRequests">0</strong><span class="d"><span id="sessions">0</span> saved chats</span></div>
+    <div class="kpi"><div class="k">Flagged / HITL</div><strong id="unsafeCount" style="color:var(--amber)">0</strong><span class="d">Needs analyst attention</span></div>
+    <div class="kpi"><div class="k">Sanitized</div><strong id="sanitizedCount" style="color:var(--teal)">0</strong><span class="d">Sensitive data removed</span></div>
+    <div class="kpi"><div class="k">Blocked</div><strong id="blockedCount" style="color:var(--red)">0</strong><span class="d">Stopped before the AI</span></div>
+  </section>
+
+  <section class="group">
+    <div class="grouphead"><strong>Security Gateway</strong><span class="subtle">Live saved activity</span><button data-collapse="group1" aria-label="Collapse group">Collapse</button></div>
+    <div class="metrics g3" id="group1">
+      <div class="tile">
+        <div class="tiletitle">Average risk score</div>
+        <div class="tilesub">Gateway <b id="gatewayStatus">CHECKING</b> &middot; scale 0–150</div>
+        <div class="gaugebox"><svg viewBox="0 0 200 116" role="img" aria-label="Average risk score"><path d="M20 100 A80 80 0 0 1 180 100" fill="none" stroke="#1f2a40" stroke-width="14" stroke-linecap="round"/><path id="gaugeArc" d="M20 100 A80 80 0 0 1 180 100" fill="none" stroke="#f5b642" stroke-width="14" stroke-linecap="round" pathLength="100" stroke-dasharray="0 100"/><text id="riskGauge" x="100" y="90" text-anchor="middle" fill="#e8ecf4" font-size="34" font-weight="600" font-family="IBM Plex Sans, sans-serif">—</text></svg></div>
+        <div class="badgewrap"><span class="sbadge" id="riskBadge">NO DATA</span></div>
+      </div>
+      <div class="tile">
+        <div class="tiletitle">Gateway activity</div>
+        <div class="tilesub"><b id="eventCount">0</b> saved events &middot; messages per day</div>
+        <svg class="chart" id="activityChart" viewBox="0 0 420 170" aria-label="Gateway activity chart"></svg>
+      </div>
+      <div class="tile">
+        <div class="tiletitle">Decision breakdown</div>
+        <div class="tilesub">Share of requests by outcome</div>
+        <div class="donutrow"><div class="donut" id="decisionDonut"></div>
+          <div class="ll">
+            <div><span><i class="dot" style="background:var(--green)"></i>Allowed</span><b id="allowedCount">0</b></div>
+            <div><span><i class="dot" style="background:var(--teal)"></i>Sanitized</span><b id="sanitizedCount2">0</b></div>
+            <div><span><i class="dot" style="background:var(--red)"></i>Blocked</span><b id="blockedCount2">0</b></div>
+            <div><span><i class="dot" style="background:var(--amber)"></i>Review / other</span><b id="reviewCount">0</b></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="group">
+    <div class="grouphead"><strong>AI Security Monitoring</strong><span class="subtle">Based on stored gateway findings</span><button data-collapse="group2" aria-label="Collapse group">Collapse</button></div>
+    <div class="metrics g4" id="group2">
+      <div class="tile">
+        <div class="tiletitle">Threat level overview</div>
+        <div class="tilesub">Flagged percentage of requests</div>
+        <div class="gaugebox"><svg viewBox="0 0 200 116" role="img" aria-label="Flagged percentage"><path d="M20 100 A80 80 0 0 1 180 100" fill="none" stroke="#1f2a40" stroke-width="14" stroke-linecap="round"/><path id="threatArc" d="M20 100 A80 80 0 0 1 180 100" fill="none" stroke="#f26d6d" stroke-width="14" stroke-linecap="round" pathLength="100" stroke-dasharray="0 100"/><text id="threatGauge" x="100" y="90" text-anchor="middle" fill="#e8ecf4" font-size="34" font-weight="600" font-family="IBM Plex Sans, sans-serif">0</text></svg></div>
+        <div class="legend"><span><i class="dot" style="background:var(--red)"></i>High <b id="highCount">0</b></span><span><i class="dot" style="background:var(--amber)"></i>Medium <b id="mediumCount">0</b></span><span><i class="dot" style="background:var(--teal)"></i>Low <b id="lowCount">0</b></span></div>
+      </div>
+      <div class="tile">
+        <div class="tiletitle">Saved requests over time</div>
+        <div class="tilesub">Total vs flagged messages</div>
+        <svg class="chart" id="trendChart" viewBox="0 0 420 170" aria-label="Saved requests trend chart"></svg>
+        <div class="chartlegend"><span><i class="dot" style="background:var(--violet)"></i>Total</span><span><i class="dot" style="background:var(--amber)"></i>Flagged</span></div>
+      </div>
+      <div class="tile">
+        <div class="tiletitle">Findings summary</div>
+        <div class="tilesub">From stored conversations</div>
+        <div class="mini">
+          <div class="m"><strong id="piiCount">0</strong><span>Messages with findings</span></div>
+          <div class="m"><strong id="fileCount">0</strong><span>File / multimodal requests</span></div>
+          <div class="m"><strong id="avgRisk">—</strong><span>Average recorded risk</span></div>
+        </div>
+      </div>
+      <div class="tile">
+        <div class="tiletitle">Stored conversation status</div>
+        <div class="tilesub">System health</div>
+        <div class="rowline"><span class="small-label">Persistent store</span><strong id="storeStatus">Checking…</strong></div>
+        <div class="rowline"><span class="small-label">Last sync</span><strong id="syncTime">—</strong></div>
+        <div class="rowline"><span class="small-label">History endpoint</span><strong>/conversations</strong></div>
+        <div class="rowline"><span class="small-label">Risk engine</span><strong>V6.1 &middot; Stateful</strong></div>
+        <div class="rowline"><span class="small-label">AI provider</span><strong>Ollama &middot; Gemma 3:4B</strong></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tracebox">
+    <div class="tracehead"><strong>Security request trace</strong><span>Saved events</span><span class="pill" id="traceCount">0</span><div class="spacer"></div><label class="small-label" for="sortOrder">Order by</label><select class="select" id="sortOrder"><option value="newest">Newest first</option><option value="risk">Highest risk</option></select></div>
+    <div class="tablewrap"><table><thead><tr><th>Risk</th><th>Time of request</th><th>Conversation</th><th>Decision</th><th>Finding categories</th><th>Risk score</th><th>Input</th></tr></thead><tbody id="traceRows"><tr><td colspan="7" class="empty">Loading saved request history…</td></tr></tbody></table></div>
+    <div id="emptyTrace" class="empty hidden">No saved gateway activity for this date range yet. Send a test message through Shadow AI to populate the dashboard.</div>
+  </section>
+
+  <div class="foot">Shadow AI Security Gateway &middot; Persistent conversation history &middot; Metrics reflect stored records, not fabricated live telemetry.</div>
+</main>
+
 <script>
-const $=id=>document.getElementById(id);let records=[],allMessages=[],collapsed=false;
+const $=id=>document.getElementById(id);
+const set=(id,v)=>{const e=$(id);if(e)e.textContent=v};
+let records=[],allMessages=[],collapsed=false;
 const escapeHtml=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function dateLabel(ts){if(!ts)return '—';const d=new Date(Number(ts)*1000);return Number.isNaN(d.getTime())?'—':d.toLocaleString()}
-function shortDate(ts){const d=new Date(Number(ts)*1000);return Number.isNaN(d.getTime())?'':d.toLocaleDateString(undefined,{month:'short',day:'numeric'})}
-function riskLabel(m){let n=Number(m.risk_score);if(!Number.isFinite(n))n=0;let level=String(m.risk_level||'').toUpperCase();if(!level)level=n>=61?'CRITICAL':n>=26?'HIGH':n>=11?'MEDIUM':'LOW';return {level,score:n,cls:['CRITICAL','HIGH'].includes(level)?'high':['MEDIUM'].includes(level)?'medium':level==='MINIMAL'?'minimal':'low'}}
+function riskLabel(m){let n=Number(m.risk_score);if(!Number.isFinite(n))n=0;let level=String(m.risk_level||'').toUpperCase();if(!level)level=n>=61?'CRITICAL':n>=26?'HIGH':n>=11?'MEDIUM':'LOW';return{level,score:n,cls:['CRITICAL','HIGH'].includes(level)?'high':level==='MEDIUM'?'medium':level==='MINIMAL'?'minimal':'low'}}
 function selectedMessages(){const days=$('dateRange').value;if(days==='all')return allMessages;const cutoff=Date.now()/1000-Number(days)*86400;return allMessages.filter(m=>Number(m.created_at||0)>=cutoff)}
-function setGauge(arcId,numId,value,color){const v=Math.max(0,Math.min(100,Number(value)||0));$(numId).textContent=Math.round(v);$(arcId).style.strokeDashoffset=String(157-(157*v/100));$(arcId).style.stroke=color}
-function chartSvg(elId,items,flagged=false){const el=$(elId),old=el.querySelectorAll('.dynamic');old.forEach(n=>n.remove());const max=Math.max(1,...items.map(x=>x.count),...(flagged?items.map(x=>x.flagged):[]));const w=386,base=119,step=w/Math.max(items.length,1),bars=[];items.forEach((x,i)=>{const h=x.count/max*86,xp=26+i*step+step*.22,bw=Math.max(5,step*.38);bars.push(`<rect class="dynamic bar" x="${xp}" y="${base-h}" width="${bw}" height="${h}" rx="1"/><text class="dynamic" x="${xp+bw/2}" y="137" text-anchor="middle">${escapeHtml(x.label)}</text>`);if(flagged){const fh=x.flagged/max*86;bars.push(`<rect class="dynamic bar2" x="${xp+bw+2}" y="${base-fh}" width="${Math.max(4,bw*.65)}" height="${fh}" rx="1"/>`)}});el.insertAdjacentHTML('beforeend',bars.join(''));}
-function render(){const msgs=selectedMessages(),users=msgs.filter(m=>m.role==='user'),flagged=users.filter(m=>m.redacted||m.decision==='HITL'||m.decision==='BLOCK'||Number(m.risk_score)>10),sanitized=users.filter(m=>m.decision==='SANITIZE_AND_SEND'),blocked=users.filter(m=>m.decision==='BLOCK'),allowed=users.filter(m=>m.decision==='ALLOW'),high=users.filter(m=>['HIGH','CRITICAL'].includes(riskLabel(m).level)),medium=users.filter(m=>riskLabel(m).level==='MEDIUM'),low=users.filter(m=>['LOW','MINIMAL'].includes(riskLabel(m).level)),risks=users.map(m=>Number(m.risk_score)).filter(Number.isFinite),avg=risks.length?risks.reduce((a,b)=>a+b,0)/risks.length:0,files=users.filter(m=>m.file_name||m.input_type&&m.input_type!=='TEXT');
-$('eventCount').textContent=msgs.length;$('unsafeCount').textContent=flagged.length;$('sanitizedCount').textContent=sanitized.length;$('blockedCount').textContent=blocked.length;$('totalRequests').textContent=users.length;$('sessions').textContent=records.filter(r=>Number(r.updated_at||0)>= ( $('dateRange').value==='all'?0:Date.now()/1000-Number($('dateRange').value)*86400)).length;$('detections').textContent=flagged.length;$('highCount').textContent=high.length;$('mediumCount').textContent=medium.length;$('lowCount').textContent=low.length;$('piiCount').textContent=users.filter(m=>m.redacted).length;$('fileCount').textContent=files.length;$('avgRisk').textContent=risks.length?avg.toFixed(1):'—';setGauge('gaugeArc','riskGauge',avg,avg>=61?'#ff4966':avg>=26?'#f2b83f':'#55d98a');setGauge('threatArc','threatGauge',users.length?flagged.length/users.length*100:0,'#ff4966');$('decisionDonut').style.background=`conic-gradient(#55d98a 0 ${users.length?allowed.length/users.length*100:0}%,#f2b83f ${users.length?allowed.length/users.length*100:0}% ${users.length?(allowed.length+sanitized.length)/users.length*100:0}%,#ff4966 ${users.length?(allowed.length+sanitized.length)/users.length*100:0}% ${users.length?(allowed.length+sanitized.length+blocked.length)/users.length*100:0}%,#9b8bb6 0 100%)`;
-const days=[];const range=$('dateRange').value==='all'?30:Number($('dateRange').value);for(let i=Math.min(range,7)-1;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);const key=d.toLocaleDateString();const dayMsgs=msgs.filter(m=>new Date(Number(m.created_at||0)*1000).toLocaleDateString()===key);days.push({label:d.toLocaleDateString(undefined,{weekday:'short'}),count:dayMsgs.length,flagged:dayMsgs.filter(m=>m.role==='user'&&(m.redacted||Number(m.risk_score)>10)).length})}chartSvg('activityChart',days);chartSvg('trendChart',days,true);
-let rows=[...users];if($('sortOrder').value==='risk')rows.sort((a,b)=>Number(b.risk_score||0)-Number(a.risk_score||0));else rows.sort((a,b)=>Number(b.created_at||0)-Number(a.created_at||0));rows=rows.slice(0,80);$('traceCount').textContent=rows.length;$('traceRows').innerHTML=rows.map(m=>{const r=riskLabel(m),cats=(m.metadata&&m.metadata.finding_types||[]).join(', ')|| (m.redacted?'Sensitive finding':'—');const conv=records.find(c=>c.session_id===m.session_id);return `<tr><td><span class="badge ${r.cls}">${escapeHtml(r.level)}</span></td><td>${escapeHtml(dateLabel(m.created_at))}</td><td title="${escapeHtml(m.session_id||'')}">${escapeHtml((conv&&conv.title)||m.file_name||('Chat '+String(m.session_id||'').slice(-8)))}</td><td>${escapeHtml(m.decision||'PENDING')}</td><td>${escapeHtml(cats)}</td><td>${r.score||'—'}</td><td>${escapeHtml(m.input_type||'TEXT')}</td></tr>`}).join('');$('emptyTrace').classList.toggle('hidden',rows.length>0);if(!rows.length)$('traceRows').innerHTML='';$('updatedAt').textContent='Updated '+new Date().toLocaleTimeString();$('syncTime').textContent=new Date().toLocaleTimeString();}
-async function refresh(){ $('storeStatus').textContent='Loading…';try{const response=await fetch('/conversations',{credentials:'same-origin',cache:'no-store'});if(response.status===401){window.location.replace('/');return}if(!response.ok)throw new Error('History API returned '+response.status);const data=await response.json();records=Array.isArray(data.conversations)?data.conversations:[];allMessages=[];for(const c of records){try{const r=await fetch('/conversations/'+encodeURIComponent(c.session_id),{credentials:'same-origin',cache:'no-store'});if(!r.ok)continue;const detail=await r.json(),conv=detail.conversation||{};for(const m of (conv.messages||[]))allMessages.push({...m,session_id:c.session_id,conversation_title:c.title})}catch(e){}}$('storeStatus').textContent='CONNECTED';$('storeStatus').style.color='#55d98a';$('alerts').textContent=allMessages.filter(m=>m.role==='user'&&(m.redacted||m.decision==='HITL'||m.decision==='BLOCK')).length;render()}catch(e){$('storeStatus').textContent='UNAVAILABLE';$('storeStatus').style.color='#ff8295';$('gatewayStatus').textContent='API ERROR';$('sourceNote').innerHTML='<span class="error">Cannot load persistent history. Confirm the updated FastAPI backend is running and /conversations is available. Dashboard will not invent metrics.</span>'; $('traceRows').innerHTML=`<tr><td colspan="7" class="empty">${escapeHtml(e.message)}. Check backend integration and login session.</td></tr>`}}
-$('dateRange').value=localStorage.getItem('shadow_dashboard_range')||'7';$('dateRange').addEventListener('change',()=>{localStorage.setItem('shadow_dashboard_range',$('dateRange').value);render()});$('sortOrder').value=localStorage.getItem('shadow_dashboard_sort')||'newest';$('sortOrder').addEventListener('change',()=>{localStorage.setItem('shadow_dashboard_sort',$('sortOrder').value);render()});$('refreshBtn').addEventListener('click',refresh);$('backBtn').addEventListener('click',()=>location.href='/dashboard');$('tabDashboard').addEventListener('click',()=>location.reload());$('tabApplications').addEventListener('click',()=>location.href='ai-provider.html');$('tabPolicies').addEventListener('click',()=>location.href='policy-management.html');$('collapseAll').addEventListener('click',()=>{collapsed=!collapsed;document.querySelectorAll('.metrics').forEach(el=>el.classList.toggle('hidden',collapsed));$('collapseAll').textContent=collapsed?'Expand All':'Collapse All'});document.querySelectorAll('[data-collapse]').forEach(b=>b.addEventListener('click',()=>$(b.dataset.collapse).classList.toggle('hidden')));refresh();
-</script></body></html>
+function setGauge(arcId,numId,pct,color,shown){const v=Math.max(0,Math.min(100,Number(pct)||0));$(arcId).style.strokeDasharray=v+' 100';$(arcId).style.stroke=color;set(numId,Math.round(Number(shown)||0))}
+function chartSvg(elId,items,flagged){
+  const el=$(elId);el.querySelectorAll('.dyn').forEach(n=>n.remove());
+  const max=Math.max(1,...items.map(x=>x.count));const top=20,base=130,h=base-top,left=30,w=380,step=w/Math.max(items.length,1),out=[];
+  for(let i=0;i<=3;i++){const y=base-h*i/3;out.push(`<path class="dyn gl" d="M${left} ${y}H410"/><text class="dyn" x="${left-8}" y="${y+4}" text-anchor="end">${Math.round(max*i/3*10)/10}</text>`)}
+  items.forEach((x,i)=>{const bw=Math.max(8,step*.5),xp=left+i*step+(step-bw)/2,bh=x.count/max*h;
+    out.push(`<rect class="dyn bar" x="${xp}" y="${base-Math.max(bh,x.count?2:1)}" width="${bw}" height="${Math.max(bh,x.count?2:1)}" rx="3" ${x.count?'':'opacity=".25"'}/><text class="dyn" x="${xp+bw/2}" y="152" text-anchor="middle">${escapeHtml(x.label)}</text>`);
+    if(flagged&&x.flagged){const fh=x.flagged/max*h;out.push(`<rect class="dyn bar2" x="${xp}" y="${base-fh}" width="${bw}" height="${fh}" rx="3"/>`)}});
+  el.insertAdjacentHTML('beforeend',out.join(''));
+}
+function render(){
+  const msgs=selectedMessages(),users=msgs.filter(m=>m.role==='user');
+  const flagged=users.filter(m=>m.redacted||m.decision==='HITL'||m.decision==='BLOCK'||Number(m.risk_score)>10);
+  const sanitized=users.filter(m=>m.decision==='SANITIZE_AND_SEND'),blocked=users.filter(m=>m.decision==='BLOCK'),allowed=users.filter(m=>m.decision==='ALLOW');
+  const high=users.filter(m=>['HIGH','CRITICAL'].includes(riskLabel(m).level)),medium=users.filter(m=>riskLabel(m).level==='MEDIUM'),low=users.filter(m=>['LOW','MINIMAL'].includes(riskLabel(m).level));
+  const risks=users.map(m=>Number(m.risk_score)).filter(Number.isFinite),avg=risks.length?risks.reduce((a,b)=>a+b,0)/risks.length:0;
+  const files=users.filter(m=>m.file_name||(m.input_type&&m.input_type!=='TEXT'));
+  const review=Math.max(0,users.length-allowed.length-sanitized.length-blocked.length);
+  const cutoff=$('dateRange').value==='all'?0:Date.now()/1000-Number($('dateRange').value)*86400;
+  set('eventCount',msgs.length);set('unsafeCount',flagged.length);set('sanitizedCount',sanitized.length);set('blockedCount',blocked.length);
+  set('sanitizedCount2',sanitized.length);set('blockedCount2',blocked.length);set('allowedCount',allowed.length);set('reviewCount',review);
+  set('totalRequests',users.length);set('sessions',records.filter(r=>Number(r.updated_at||0)>=cutoff).length);
+  set('highCount',high.length);set('mediumCount',medium.length);set('lowCount',low.length);
+  set('piiCount',users.filter(m=>m.redacted).length);set('fileCount',files.length);set('avgRisk',risks.length?avg.toFixed(1):'—');
+  const col=avg>=61?'#f26d6d':avg>=26?'#f5b642':'#3dd68c';
+  setGauge('gaugeArc','riskGauge',avg/150*100,col,avg);
+  const rb=$('riskBadge');rb.textContent=!risks.length?'NO DATA':avg>=61?'CRITICAL':avg>=26?'HIGH':avg>=11?'MEDIUM':'LOW';
+  rb.style.background=avg>=61?'#3a1d24':avg>=26?'#3a2e12':'#12332f';rb.style.color=col;
+  setGauge('threatArc','threatGauge',users.length?flagged.length/users.length*100:0,'#f26d6d',users.length?flagged.length/users.length*100:0);
+  const n=users.length||1,a=allowed.length/n*100,s=a+sanitized.length/n*100,b=s+blocked.length/n*100;
+  $('decisionDonut').style.background=users.length?`conic-gradient(#3dd68c 0 ${a}%,#2dd4bf ${a}% ${s}%,#f26d6d ${s}% ${b}%,#f5b642 ${b}% 100%)`:'#1f2a40';
+  const days=[],range=$('dateRange').value==='all'?30:Number($('dateRange').value);
+  for(let i=Math.min(range,7)-1;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);const key=d.toLocaleDateString();
+    const dm=msgs.filter(m=>new Date(Number(m.created_at||0)*1000).toLocaleDateString()===key);
+    days.push({label:d.toLocaleDateString(undefined,{weekday:'short'}),count:dm.length,flagged:dm.filter(m=>m.role==='user'&&(m.redacted||Number(m.risk_score)>10)).length})}
+  chartSvg('activityChart',days,false);chartSvg('trendChart',days,true);
+  let rows=[...users];
+  if($('sortOrder').value==='risk')rows.sort((a,b)=>Number(b.risk_score||0)-Number(a.risk_score||0));else rows.sort((a,b)=>Number(b.created_at||0)-Number(a.created_at||0));
+  rows=rows.slice(0,80);set('traceCount',rows.length);
+  $('traceRows').innerHTML=rows.map(m=>{const r=riskLabel(m),cats=(m.metadata&&m.metadata.finding_types||[]).join(', ')||(m.redacted?'Sensitive finding':'—'),conv=records.find(c=>c.session_id===m.session_id);
+    return `<tr><td><span class="badge ${r.cls}">${escapeHtml(r.level)}</span></td><td>${escapeHtml(dateLabel(m.created_at))}</td><td title="${escapeHtml(m.session_id||'')}">${escapeHtml((conv&&conv.title)||m.file_name||('Chat '+String(m.session_id||'').slice(-8)))}</td><td>${escapeHtml(m.decision||'PENDING')}</td><td>${escapeHtml(cats)}</td><td>${r.score||'—'}</td><td>${escapeHtml(m.input_type||'TEXT')}</td></tr>`}).join('');
+  $('emptyTrace').classList.toggle('hidden',rows.length>0);if(!rows.length)$('traceRows').innerHTML='';
+  set('updatedAt','Updated '+new Date().toLocaleTimeString());set('syncTime',new Date().toLocaleTimeString());
+}
+async function refresh(){
+  set('storeStatus','Loading…');
+  try{
+    const response=await fetch('/conversations',{credentials:'same-origin',cache:'no-store'});
+    if(response.status===401){window.location.replace('/');return}
+    if(!response.ok)throw new Error('History API returned '+response.status);
+    const data=await response.json();records=Array.isArray(data.conversations)?data.conversations:[];allMessages=[];
+    for(const c of records){try{const r=await fetch('/conversations/'+encodeURIComponent(c.session_id),{credentials:'same-origin',cache:'no-store'});if(!r.ok)continue;const detail=await r.json(),conv=detail.conversation||{};for(const m of(conv.messages||[]))allMessages.push({...m,session_id:c.session_id,conversation_title:c.title})}catch(e){}}
+    set('storeStatus','CONNECTED');$('storeStatus').style.color='#3dd68c';
+    set('gatewayStatus','ONLINE');$('gatewayStatus').style.color='#3dd68c';
+    set('alerts',allMessages.filter(m=>m.role==='user'&&(m.redacted||m.decision==='HITL'||m.decision==='BLOCK')).length);
+    render();
+  }catch(e){
+    set('storeStatus','UNAVAILABLE');$('storeStatus').style.color='#ff8c8c';
+    set('gatewayStatus','API ERROR');$('gatewayStatus').style.color='#ff8c8c';
+    $('sourceNote').innerHTML='<span class="error">Cannot load persistent history. Confirm the FastAPI backend is running and /conversations is available. The dashboard will not invent metrics.</span>';
+    $('traceRows').innerHTML=`<tr><td colspan="7" class="empty">${escapeHtml(e.message)}. Check backend integration and login session.</td></tr>`;
+  }
+}
+$('dateRange').value=localStorage.getItem('shadow_dashboard_range')||'7';
+$('dateRange').addEventListener('change',()=>{localStorage.setItem('shadow_dashboard_range',$('dateRange').value);render()});
+$('sortOrder').value=localStorage.getItem('shadow_dashboard_sort')||'newest';
+$('sortOrder').addEventListener('change',()=>{localStorage.setItem('shadow_dashboard_sort',$('sortOrder').value);render()});
+$('refreshBtn').addEventListener('click',refresh);
+$('backBtn').addEventListener('click',()=>location.href='/dashboard');
+$('tabDashboard').addEventListener('click',()=>location.reload());
+$('tabApplications').addEventListener('click',()=>location.href='ai-provider.html');
+$('tabPolicies').addEventListener('click',()=>location.href='policy-management.html');
+$('collapseAll').addEventListener('click',()=>{collapsed=!collapsed;document.querySelectorAll('.metrics').forEach(el=>el.classList.toggle('hidden',collapsed));$('collapseAll').textContent=collapsed?'Expand All':'Collapse All'});
+document.querySelectorAll('[data-collapse]').forEach(b=>b.addEventListener('click',()=>$(b.dataset.collapse).classList.toggle('hidden')));
+refresh();
+</script>
+</body>
+</html>

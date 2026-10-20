@@ -1,188 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shadow AI — Audit Logs</title>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      background: #050914;
-      color: #f5f7fb;
-      font-family: Inter, Segoe UI, Arial, sans-serif;
-      padding: 30px;
-    }
-
-    .page {
-      max-width: 1250px;
-      margin: auto;
-    }
-
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 24px;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: 28px;
-    }
-
-    .sub {
-      color: #8993a8;
-      margin-top: 6px;
-      font-size: 13px;
-    }
-
-    button {
-      background: #101725;
-      border: 1px solid #263147;
-      color: #fff;
-      padding: 10px 15px;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #171f30;
-    }
-
-    .status {
-      display: inline-block;
-      background: #071d12;
-      border: 1px solid #103b21;
-      color: #55e678;
-      padding: 8px 12px;
-      border-radius: 7px;
-      font-size: 12px;
-      margin-bottom: 18px;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
-      gap: 16px;
-    }
-
-    .card {
-      background: linear-gradient(180deg, #101725, #0d1420);
-      border: 1px solid #263147;
-      border-radius: 11px;
-      padding: 19px;
-    }
-
-    h2 {
-      font-size: 14px;
-      margin: 0 0 15px;
-    }
-
-    .row {
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-      padding: 13px 0;
-      border-bottom: 1px solid #202838;
-      font-size: 13px;
-    }
-
-    .row:last-child {
-      border: 0;
-    }
-
-    .row span {
-      color: #cfd4df;
-    }
-
-    .row strong {
-      color: #55e678;
-      text-align: right;
-    }
-
-    .footer {
-      color: #626d80;
-      text-align: center;
-      font-size: 10px;
-      margin-top: 22px;
-    }
-
-    @media (max-width: 650px) {
-      body {
-        padding: 15px;
-      }
-
-      header {
-        align-items: flex-start;
-        gap: 15px;
-        flex-direction: column;
-      }
-
-      .grid {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shadow AI — Audit Logs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b1020;--nav:#0e1527;--card:#111829;--line:#1f2a40;--line2:#2a3855;--text:#e8ecf4;--muted:#8a95ab;--soft:#c4ccdb;--violet:#8b7bff;--green:#3dd68c;--amber:#f5b642;--red:#f26d6d}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:14px/1.45 'IBM Plex Sans','Segoe UI',Arial,sans-serif;-webkit-font-smoothing:antialiased}
+button{font:inherit}
+.top{height:56px;display:flex;align-items:center;gap:24px;padding:0 32px;background:var(--nav);border-bottom:1px solid var(--line)}
+.brand{font-weight:600;letter-spacing:.04em;white-space:nowrap}.brand b{color:var(--violet)}
+.crumb{color:var(--muted);font-size:13px}.crumb b{color:#fff;font-weight:500}
+.btn{height:36px;padding:0 16px;border-radius:8px;border:1px solid var(--line2);background:#141d33;color:var(--text);cursor:pointer;font-size:13px;transition:border-color .15s,background .15s;white-space:nowrap}
+.btn:hover{background:#1a2540;border-color:#4a5d8a}.btn:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
+.back{margin-left:auto}
+.page{max-width:1360px;margin:0 auto;padding:28px 32px 36px;display:flex;flex-direction:column;gap:20px}
+h1{margin:0;font-size:26px;font-weight:600;letter-spacing:-.3px}.sub{margin-top:6px;color:var(--muted);font-size:13px}
+.g{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+.kpis{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px}
+.title{font-weight:600}.tsub{margin:2px 0 8px;font-size:12px;color:var(--muted)}
+.k{font-size:11px;letter-spacing:.07em;color:#7d89a3;text-transform:uppercase}.n{font-size:32px;font-weight:600;margin-top:8px;line-height:1.1}.m{color:var(--muted);font-size:12px;margin-top:4px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:13px 0;border-top:1px solid var(--line);color:var(--soft)}
+.row:first-of-type{border-top:0}.row strong{font-weight:500;color:var(--text);text-align:right}
+.tag{display:inline-block;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:500;background:#1c2742;color:var(--soft);white-space:nowrap}
+.ok{background:#12332f;color:var(--green)}.md{background:#3a2e12;color:var(--amber)}.hi{background:#3a1d24;color:#ff8c8c}
+.tr{display:grid;gap:12px;align-items:center;padding:13px 0;border-top:1px solid var(--line);color:var(--soft)}
+.tr.th{border-top:0;padding:8px 0 10px;color:#7d89a3;font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+.tw{overflow-x:auto}.tw>div{min-width:560px}
+.bar{height:8px;border-radius:99px;background:var(--violet)}.track{background:var(--nav);border-radius:99px;margin-top:8px}
+.foot{text-align:center;color:#6b7690;font-size:11px}
+@media(max-width:1000px){.top{padding:0 16px}.page{padding:20px 16px 28px}}@media(max-width:600px){.crumb{display:none}}
+.tw>div{min-width:780px}.err{color:#ff8c8c}.empty{padding:26px 0 10px;text-align:center;color:var(--muted)}.ob{margin-top:14px}.ob .row{border:0;padding:0}select,input.s{height:36px;padding:0 12px;border-radius:8px;border:1px solid var(--line2);background:#141d33;color:var(--text);font:inherit;font-size:13px}.ch{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.fl{display:flex;gap:10px;flex-wrap:wrap}textarea{width:100%;min-height:200px;resize:vertical;padding:12px 14px;border-radius:8px;border:1px solid var(--line2);background:var(--nav);color:var(--text);font:12px/1.5 ui-monospace,Menlo,Consolas,monospace}.pr{background:#6d4df2;border-color:#6d4df2;font-weight:600}.pr:disabled,.btn:disabled{opacity:.5;cursor:not-allowed}.code{font:12px/1.5 ui-monospace,Menlo,Consolas,monospace;color:#c4ccdb;padding:8px 0;border-top:1px solid var(--line);word-break:break-all}.res{margin-top:14px;padding:14px 16px;border-radius:10px;background:var(--nav);border:1px solid var(--line);color:var(--soft);line-height:1.6;white-space:pre-wrap}</style>
 </head>
 <body>
-  <div class="page">
-    <header>
-      <div>
-        <h1>Audit Logs</h1>
-        <div class="sub">Security gateway event history</div>
-      </div>
-      <button onclick="window.location.href='/dashboard'">← Back to Gateway</button>
-    </header>
+<div class="top"><div class="brand">SHADOW <b>AI</b></div><div class="crumb">Workspace / <b>Audit Logs</b></div><button class="btn back" onclick="window.location.href='/dashboard'">Back to chat</button></div>
+<main class="page">
+<div><h1>Audit Logs</h1><div class="sub">A record of every request the gateway scanned</div></div>
+<div class="kpis"><div class="card"><div class="k">Events</div><div class="n" id="kEv">0</div><div class="m">Matching the filters</div></div><div class="card"><div class="k">Allowed</div><div class="n" id="kAl" style="color:var(--green)">0</div><div class="m">Sent as they were</div></div><div class="card"><div class="k">Sanitized</div><div class="n" id="kSa" style="color:var(--amber)">0</div><div class="m">Data removed before sending</div></div><div class="card"><div class="k">Blocked or review</div><div class="n" id="kBl" style="color:var(--red)">0</div><div class="m">Not sent to the AI</div></div></div><section class="card"><div class="ch"><div><div class="title">Request log</div><div class="tsub" id="note">Loading saved activity…</div></div><div class="fl"><select id="fRange" aria-label="Date range"><option value="7">Last 7 days</option><option value="30">Last 30 days</option><option value="90">Last 90 days</option><option value="all">All time</option></select><select id="fDec" aria-label="Decision"><option value="">All decisions</option><option value="ALLOW">Allowed</option><option value="SANITIZE_AND_SEND">Sanitized</option><option value="BLOCK">Blocked</option><option value="HITL">Review</option></select><input class="s" id="fQ" placeholder="Search chat or finding" aria-label="Search"><button class="btn" id="exp">Export CSV</button></div></div><div class="tw"><div><div id="head"></div><div id="rows"></div></div></div><div class="empty" id="empty" style="display:none">No events match these filters.</div></section><div class="m">Each row is one request scanned by the gateway. The log shows the type of data found, never the data itself.</div>
+<div class="foot">Shadow AI Security Gateway &middot; Security analysis precedes AI forwarding.</div>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const set=(id,v)=>{const e=$(id);if(e)e.textContent=v};
+const LABEL={PASSWORD:'Password',API_KEY_LIKE:'API key',CREDIT_CARD:'Credit card',DATABASE_CREDENTIAL:'Database credential',IP_ADDRESS:'IP address',EMAIL:'Email',PHONE:'Phone',PHONE_NUMBER:'Phone',EMPLOYEE_ID:'Employee ID',PERSON:'Person',LOCATION:'Location',URL:'URL'};
+const label=t=>LABEL[t]||String(t).replace(/_/g,' ');
 
-    <div class="status"> SHADOW AI SECURITY GATEWAY</div>
-
-    <div class="grid">
-      <section class="card">
-        <h2>Tracked Events</h2>
-        <div class="row">
-          <span>Request received</span>
-          <strong>INFO</strong>
-        </div>
-        <div class="row">
-          <span>File processed</span>
-          <strong>INFO</strong>
-        </div>
-        <div class="row">
-          <span>Detection generated</span>
-          <strong>INFO</strong>
-        </div>
-        <div class="row">
-          <span>Risk calculated</span>
-          <strong>INFO</strong>
-        </div>
-        <div class="row">
-          <span>HITL decision</span>
-          <strong>INFO</strong>
-        </div>
-        <div class="row">
-          <span>Sanitization performed</span>
-          <strong>INFO</strong>
-        </div>
-        <div class="row">
-          <span>AI forwarding decision</span>
-          <strong>INFO</strong>
-        </div>
-      </section>
-
-      <section class="card">
-        <h2>Privacy</h2>
-        <div class="row">
-          <span>Audit views should contain security metadata rather than exposing protected raw content unnecessarily.</span>
-          <strong>INFO</strong>
-        </div>
-      </section>
-    </div>
-
-    <div class="footer">Shadow AI Security Gateway • Security analysis precedes AI forwarding.</div>
-  </div>
+const GA='grid-template-columns:1.1fr 1.6fr 1fr 1fr 70px 1.8fr';
+let all=[],view=[];
+const types=m=>(m.metadata&&m.metadata.finding_types)||[];
+const fmt=ts=>{const d=new Date(Number(ts)*1000);return !ts||Number.isNaN(d.getTime())?'—':d.toLocaleString([], {month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'})};
+const decOf=m=>m.decision==='BLOCK'?['Blocked','hi']:m.decision==='HITL'?['Review','md']:m.decision==='SANITIZE_AND_SEND'?['Sanitized','ok']:m.decision==='ALLOW'?['Allowed','']:['Pending',''];
+const lvl=m=>{const n=Number(m.risk_score)||0;return String(m.risk_level||'').toUpperCase()||(n>=61?'CRITICAL':n>=26?'HIGH':n>=11?'MEDIUM':'LOW')};
+const find=m=>types(m).map(label).join(', ')||(m.redacted?'Sensitive finding':'—');
+const title=m=>m.title||m.file_name||('Chat '+String(m.session_id||'').slice(-8));
+function filtered(){
+  const r=$('fRange').value,d=$('fDec').value,q=$('fQ').value.trim().toLowerCase(),cut=r==='all'?0:Date.now()/1000-Number(r)*86400;
+  return all.filter(m=>Number(m.created_at||0)>=cut&&(!d||m.decision===d)&&(!q||(title(m)+' '+find(m)).toLowerCase().includes(q))).sort((a,b)=>Number(b.created_at||0)-Number(a.created_at||0));
+}
+function render(){
+  view=filtered();
+  set('kEv',view.length);set('kAl',view.filter(m=>m.decision==='ALLOW').length);set('kSa',view.filter(m=>m.decision==='SANITIZE_AND_SEND').length);set('kBl',view.filter(m=>m.decision==='BLOCK'||m.decision==='HITL').length);
+  const l=view.slice(0,200);
+  $('head').innerHTML=l.length?'<div class="tr th" style="'+GA+'"><span>Time</span><span>Conversation</span><span>Event</span><span>Decision</span><span>Risk</span><span>Findings</span></div>':'';
+  $('rows').innerHTML=l.map(m=>{const dd=decOf(m);return '<div class="tr" style="'+GA+'"><span>'+esc(fmt(m.created_at))+'</span><span>'+esc(title(m))+'</span><span>'+(m.input_type&&m.input_type!=='TEXT'?'File scanned':'Message scanned')+'</span><span><span class="tag '+dd[1]+'">'+dd[0]+'</span></span><span style="color:#e8ecf4">'+(Number(m.risk_score)||'—')+'</span><span>'+esc(find(m))+'</span></div>'}).join('');
+  $('empty').style.display=l.length?'none':'block';
+  set('note',(view.length>200?'Showing 200 of '+view.length:view.length+' events')+' · newest first');
+}
+async function run(){
+  try{
+    const r=await fetch('/conversations',{credentials:'same-origin',cache:'no-store'});
+    if(r.status===401){location.replace('/');return}
+    if(!r.ok)throw new Error('History API returned '+r.status);
+    const d=await r.json(),recs=Array.isArray(d.conversations)?d.conversations:[];all=[];
+    for(const c of recs){try{const x=await fetch('/conversations/'+encodeURIComponent(c.session_id),{credentials:'same-origin',cache:'no-store'});if(!x.ok)continue;const dt=await x.json();for(const m of((dt.conversation||{}).messages||[]))if(m.role==='user')all.push({...m,session_id:c.session_id,title:c.title})}catch(e){}}
+    render();
+  }catch(e){$('note').innerHTML='<span class="err">'+esc(e.message)+'. Check that the backend is running and you are signed in.</span>'}
+}
+const safe=v=>{v=String(v??'');if(/^[=+\-@\t\r]/.test(v))v="'"+v;return '"'+v.replace(/"/g,'""')+'"'};
+function exportCsv(){
+  const rows=[['time','conversation','session_id','event','decision','risk_level','risk_score','findings','input_type']];
+  view.forEach(m=>rows.push([new Date(Number(m.created_at||0)*1000).toISOString(),title(m),m.session_id||'',m.input_type&&m.input_type!=='TEXT'?'File scanned':'Message scanned',decOf(m)[0],lvl(m),Number(m.risk_score)||0,find(m),m.input_type||'TEXT']));
+  const blob=new Blob([rows.map(r=>r.map(safe).join(',')).join('\n')],{type:'text/csv'}),a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);a.download='shadow-ai-audit-log.csv';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+}
+['fRange','fDec'].forEach(id=>$(id).addEventListener('change',render));$('fQ').addEventListener('input',render);$('exp').addEventListener('click',exportCsv);
+run();
+</script>
 </body>
 </html>

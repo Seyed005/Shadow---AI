@@ -1,4 +1,7 @@
+
 import os
+from datetime import datetime
+from zoneinfo import ZoneInfo
 
 import ollama
 from dotenv import load_dotenv
@@ -12,9 +15,8 @@ async def send_to_approved_ai(text: str):
     """
     Send approved content to the configured local Ollama model.
 
-    This function is intentionally kept behind the same interface
-    used by the Shadow AI gateway so the gateway logic does not
-    depend directly on the AI provider.
+    Provides the current India date as trusted system context
+    without changing the Shadow AI gateway interface.
     """
 
     if not text or not text.strip():
@@ -26,9 +28,27 @@ async def send_to_approved_ai(text: str):
         }
 
     try:
+        current_date = datetime.now(
+            ZoneInfo("Asia/Kolkata")
+        ).strftime("%d %B %Y")
+
         response = await ollama.AsyncClient().chat(
             model=OLLAMA_MODEL,
             messages=[
+                {
+                    "role": "system",
+                    "content": (
+                        "You are the approved local AI assistant "
+                        "behind the Shadow AI Security Gateway. "
+                        f"The current date in India is {current_date}. "
+                        "Use this date when answering questions about "
+                        "today's date. Never invent live weather, news, "
+                        "or other current facts that have not been "
+                        "provided by an approved live data source. "
+                        "Follow the user's request while respecting "
+                        "applicable safety and security requirements."
+                    )
+                },
                 {
                     "role": "user",
                     "content": text
