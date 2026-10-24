@@ -16,7 +16,7 @@ button,input,textarea{font:inherit}button{cursor:pointer}
 .app{height:100vh;display:grid;grid-template-columns:278px minmax(620px,1fr) 326px;background:radial-gradient(circle at 50% 5%,rgba(89,50,180,.09),transparent 35%),#050914}
 /* LEFT NAV */
 .sidebar{border-right:1px solid #1e2636;background:linear-gradient(180deg,#080d18,#070b15);padding:22px 16px;display:flex;flex-direction:column;min-width:0;overflow:hidden}
-.brand{display:flex;align-items:center;gap:12px;padding:4px 9px 22px}.brand-mark{width:42px;height:48px;position:relative;display:grid;place-items:center;color:#fff}.brand-mark:before{content:"";position:absolute;inset:1px 3px 5px;border-radius:13px 13px 17px 17px;background:linear-gradient(145deg,#263c8d,#7c3aed 65%,#17113c);clip-path:polygon(50% 0,91% 18%,83% 73%,50% 100%,17% 73%,9% 18%);box-shadow:0 0 22px rgba(124,58,237,.35)}.brand-mark:after{content:"✦";position:relative;font-size:20px;color:#dbe7ff}.brand-name{font-size:23px;font-weight:800;letter-spacing:.5px}.brand-name span{color:#8b5cf6}.brand-sub{font-size:12px;color:#8f78d8;margin-top:1px}
+.brand{display:flex;align-items:center;gap:12px;padding:4px 9px 22px}.brand-mark{width:42px;height:48px;position:relative;display:grid;place-items:center;color:#fff}.brand-mark:before{content:"";position:absolute;inset:1px 3px 5px;border-radius:13px 13px 17px 17px;background:linear-gradient(145deg,#263c8d,#7c3aed 65%,#17113c);clip-path:polygon(50% 0,91% 18%,83% 73%,50% 100%,17% 73%,9% 18%);box-shadow:0 0 22px rgba(124,58,237,.35)}.brand-mark:after{content:"✦";position:relative;font-size:20px;color:#dbe7ff}.brand-name{font-size:23px;font-weight:800;letter-spacing:.5px}.brand-name span{color:#4ade80 !important;}.brand-sub{font-size:12px;color:#8f78d8;margin-top:1px}
 .new-chat{width:100%;border:0;border-radius:9px;background:linear-gradient(90deg,#5d28d9,#7137ea);color:white;padding:13px 18px;font-weight:700;font-size:16px;box-shadow:0 10px 25px rgba(99,48,220,.2);margin-bottom:26px}.new-chat:hover{filter:brightness(1.08)}.new-chat .plus{font-size:22px;vertical-align:-2px;margin-right:8px;font-weight:400}
 .nav-title{font-size:13px;color:#929bae;margin:0 12px 10px}.nav-list{display:flex;flex-direction:column;gap:3px}.nav-item{height:42px;border-radius:7px;display:flex;align-items:center;gap:12px;padding:0 12px;color:#d5d9e3;font-size:14px;border:0;background:transparent;text-align:left;width:100%}.nav-item.active,.nav-item:hover{background:#141b2b}.nav-icon{width:18px;text-align:center;color:#b8c0d0;font-size:15px}.nav-time{margin-left:auto;color:#8d96aa;font-size:11px}.online-dot{width:6px;height:6px;border-radius:50%;background:#37d66b;display:inline-block;box-shadow:0 0 8px #37d66b}.nav-separator{height:1px;background:#20283a;margin:20px 12px 18px}
 .user{margin-top:auto;border-top:1px solid #20283a;padding:18px 9px 0;display:flex;gap:11px;align-items:center}.avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:#30206f;font-weight:700}.user-name{font-size:13px;font-weight:700}.user-role{font-size:11px;color:#a1a8b8;margin-top:3px}.user-status{width:7px;height:7px;background:#35d36a;border-radius:50%;display:inline-block;margin-left:4px}
@@ -418,11 +418,233 @@ textarea:focus-visible {
 }
 </style>
   <link rel="stylesheet" href="/aurora-motion.css">
+<style>
+
+/* SHADOW SIGNATURE — shared login/dashboard logo */
+.brand-mark {
+    width: 46px;
+    height: 48px;
+    flex: 0 0 46px;
+    display: grid;
+    place-items: center;
+    position: relative;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+
+.brand-mark::before,
+.brand-mark::after {
+    content: none !important;
+    display: none !important;
+}
+
+.brand-mark .shadow-signature {
+    display: block;
+    width: 46px;
+    height: 46px;
+    filter: drop-shadow(0 0 5px rgba(52, 211, 153, .14));
+    transition: filter .25s ease, transform .25s ease;
+}
+
+.brand:hover .shadow-signature {
+    filter: drop-shadow(0 0 9px rgba(52, 211, 153, .3));
+    transform: translateY(-1px);
+}
+
+</style>
+
+<style id="shadow-dashboard-login-effects">
+/* SHADOW_DASHBOARD_LOGIN_EFFECTS */
+
+/* Effects stay behind the existing dashboard UI */
+#shadow-constellation {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    opacity: .42;
+}
+
+#shadow-cursor-glow {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    width: 360px;
+    height: 360px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(
+        circle,
+        rgba(48, 220, 130, .09) 0%,
+        rgba(30, 175, 105, .045) 36%,
+        transparent 72%
+    );
+    opacity: 0;
+    transition: opacity .3s ease;
+    will-change: left, top;
+}
+
+body.cursor-glow-active #shadow-cursor-glow {
+    opacity: 1;
+}
+
+/* Keep the dashboard content interactive and above the effects */
+body > *:not(#shadow-constellation):not(#shadow-cursor-glow) {
+    position: relative;
+    z-index: 2;
+}
+
+/* Subtle aurora without replacing the dashboard's existing background */
+body::before {
+    content: "";
+    position: fixed;
+    inset: -12%;
+    z-index: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(ellipse at 15% 20%,
+            rgba(35, 155, 105, .13), transparent 42%),
+        radial-gradient(ellipse at 82% 25%,
+            rgba(35, 110, 155, .10), transparent 43%),
+        radial-gradient(ellipse at 52% 88%,
+            rgba(75, 100, 110, .08), transparent 45%);
+    filter: blur(42px);
+    animation: shadowDashboardAurora 20s ease-in-out infinite alternate;
+}
+
+@keyframes shadowDashboardAurora {
+    0% { transform: translate3d(-1%, -1%, 0) scale(1); }
+    100% { transform: translate3d(1%, 1%, 0) scale(1.04); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #shadow-constellation,
+    #shadow-cursor-glow {
+        display: none;
+    }
+    body::before {
+        animation: none;
+    }
+}
+</style>
+
+<style id="shadow-dashboard-effects-layer-fix">
+/* Keep effects visible without covering dashboard controls */
+html, body {
+    background-color: #202326;
+}
+
+/* Put the animated canvas and aurora behind the UI */
+#shadow-constellation {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 3 !important;
+    pointer-events: none !important;
+    opacity: .62 !important;
+}
+
+body::before {
+    z-index: 0 !important;
+    pointer-events: none !important;
+}
+
+/* Cursor glow sits above the page background */
+#shadow-cursor-glow {
+    z-index: 4 !important;
+    pointer-events: none !important;
+}
+
+/* Keep the actual app layout above the effects */
+.app {
+    position: relative;
+    z-index: 2;
+    background: transparent !important;
+}
+
+/* Let the background show through the main chat area */
+.main,
+.main-scroll {
+    background-color: rgba(32, 35, 38, .84) !important;
+}
+
+/* Avoid opaque sidebar and right-panel backgrounds hiding everything */
+.sidebar,
+.right-panel,
+.insights-panel {
+    background-color: rgba(32, 35, 38, .90);
+}
+
+/* Green accent on interactive elements */
+.brand-name span {
+    color: #4ade80 !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #shadow-constellation,
+    #shadow-cursor-glow {
+        display: none !important;
+    }
+}
+</style>
+
+<style>
+
+/* Shadow AI Operative avatar */
+.assistant-avatar {
+    width: 48px;
+    height: 48px;
+    flex: 0 0 48px;
+    overflow: hidden;
+    border-radius: 50%;
+    border: 1px solid rgba(74, 222, 128, .7);
+    box-shadow: 0 0 14px rgba(16, 185, 129, .22);
+}
+.assistant-avatar img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: inherit;
+}
+
+</style>
 </head>
 <body>
+<canvas id="shadow-constellation" aria-hidden="true"></canvas>
+<div id="shadow-cursor-glow" aria-hidden="true"></div>
 <div class="app">
   <aside class="sidebar">
-    <div class="brand"><div class="brand-mark"></div><div><div class="brand-name">SHADOW <span>AI</span></div><div class="brand-sub">Security Gateway</div></div></div>
+    <div class="brand"><div class="brand-mark">
+  <svg class="shadow-signature"
+       viewBox="0 0 64 64"
+       xmlns="http://www.w3.org/2000/svg"
+       role="img"
+       aria-label="Shadow AI monogram">
+    <defs>
+      <linearGradient id="shadowSilver" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#e2e8f0"/>
+        <stop offset="100%" stop-color="#687581"/>
+      </linearGradient>
+      <linearGradient id="shadowEmerald" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#a7f3d0"/>
+        <stop offset="100%" stop-color="#34d399"/>
+      </linearGradient>
+    </defs>
+    <path d="M39 12H23L13 22L23 32H40L50 42L40 52H22"
+          fill="none" stroke="url(#shadowSilver)" stroke-width="5"
+          stroke-linecap="square" stroke-linejoin="miter"/>
+    <path d="M25 51L39 17L54 51M31 38H47"
+          fill="none" stroke="url(#shadowEmerald)" stroke-width="4"
+          stroke-linecap="square" stroke-linejoin="miter"/>
+    <path d="M10 39L17 46" stroke="#8a98a5" stroke-width="2"
+          stroke-linecap="square"/>
+  </svg>
+</div><div><div class="brand-name">SHADOW <span>AI</span></div><div class="brand-sub">Security Gateway</div></div></div>
     <button class="new-chat" id="newChat"><span class="plus">＋</span>New Chat</button>
     <div class="nav-title">Chats</div>
     <div class="nav-list">
@@ -460,7 +682,7 @@ textarea:focus-visible {
     <section class="chat-area">
       <div class="main-scroll" id="mainScroll">
         <button class="scroll-down" id="scrollDown" aria-label="Scroll to latest message" title="Scroll to latest message">↓</button>
-        <div class="assistant-head"><div class="assistant-avatar">🤖</div><div class="assistant-name">Shadow AI Assistant</div></div>
+        <div class="assistant-head"><div class="assistant-avatar"><img src="/assets/shadow-ai-avatar.png" alt="Shadow AI Assistant"></div><div class="assistant-name">Shadow AI Assistant</div></div>
         <div class="welcome">Hello! I am your secure AI assistant.<br>You can ask questions or upload text, documents or images.<br>Everything is checked by the Shadow AI Security Gateway before reaching the AI.</div>
         <div class="messages" id="messages"></div><div style="height:18px;flex:0 0 18px"></div>
       </div>
@@ -540,7 +762,7 @@ function renderHitl(data){
  const card=document.createElement('div');card.className='warning-wrap';card.innerHTML=`<div class="hitl-card ${cls}"><div class="warning-head"><div class="warning-icon">${warningIcon}</div><div><div class="warning-title">${warningTitle}</div><div class="warning-desc">${warningDesc}</div></div></div><div class="hitl-inner"><div class="findings">${rows||'<div class="finding"><span class="finding-name">Sensitive content detected</span><span class="finding-detected">Detected</span></div>'}</div><div class="risk-box"><div class="risk-label">RISK SCORE</div><div class="risk-gauge" style="--risk-angle:${angle}deg"><div class="risk-number">${escapeHtml(score)}</div></div><div class="risk-level">${escapeHtml(level)} Risk</div></div></div><div class="action-question">What would you like to do?</div><div class="decision-row"><button class="decision-btn allow-button" onclick="submitDecision('ALLOW')">✓ &nbsp; ALLOW<small>Send as it is</small></button><button class="decision-btn sanitize-button" onclick="submitDecision('SANITIZE_AND_SEND')">⬡ &nbsp; SANITIZE &amp; SEND<small>Remove sensitive data<br>and send</small></button><button class="decision-btn block-button" onclick="submitDecision('BLOCK')">× &nbsp; BLOCK<small>Do not send<br>anything</small></button></div></div><div class="security-note">🔒 &nbsp;Nothing will be sent to the AI until you choose an option.</div>`;
  $('messages').appendChild(card);scrollBottom();
 }
-function renderAi(data){const text=data?.ai_response?.response||data?.response||'';if(!text)return;const wrap=document.createElement('div');wrap.className='assistant-head';wrap.style.marginTop='12px';wrap.innerHTML='<div class="assistant-avatar">🤖</div><div class="assistant-name">Shadow AI Assistant</div>';const bubble=document.createElement('div');bubble.className='welcome';bubble.style.marginTop='0';bubble.innerHTML=escapeHtml(text).replace(/\n/g,'<br>');$('messages').appendChild(wrap);$('messages').appendChild(bubble);scrollBottom()}
+function renderAi(data){const text=data?.ai_response?.response||data?.response||'';if(!text)return;const wrap=document.createElement('div');wrap.className='assistant-head';wrap.style.marginTop='12px';wrap.innerHTML='<div class="assistant-avatar"><img src="/assets/shadow-ai-avatar.png" alt="Shadow AI Assistant"></div><div class="assistant-name">Shadow AI Assistant</div>';const bubble=document.createElement('div');bubble.className='welcome';bubble.style.marginTop='0';bubble.innerHTML=escapeHtml(text).replace(/\n/g,'<br>');$('messages').appendChild(wrap);$('messages').appendChild(bubble);scrollBottom()}
 function renderBlocked(){const card=document.createElement('div');card.className='warning-wrap';card.innerHTML='<div class="hitl-card critical"><div class="warning-head"><div class="warning-icon">!</div><div><div class="warning-title">🚨 Request Blocked</div><div class="warning-desc">The request was stopped. No AI call was made.</div></div></div></div><div class="security-note">🔒 &nbsp;No content was forwarded to the AI provider.</div>';$('messages').appendChild(card);scrollBottom()}
 function updateStats(data,decision){stats.total++;if(decision==='ALLOW')stats.allowed++;if(decision==='SANITIZE_AND_SEND')stats.sanitized++;if(decision==='BLOCK')stats.blocked++;(data.findings||[]).forEach(f=>{if(sensitiveTypes.has(f.type))stats.pii++;if(secretTypes.has(f.type))stats.secrets++});if(data.input_type==='IMAGE')stats.images++;if(data.input_type&&data.input_type!=='TEXT')stats.files++;$('totalRequests').textContent=stats.total;$('allowedCount').textContent=stats.allowed;$('sanitizedCount').textContent=stats.sanitized;$('blockedCount').textContent=stats.blocked;$('piiCount').textContent=stats.pii;$('secretCount').textContent=stats.secrets;$('ocrCount').textContent=stats.ocr;$('filesCount').textContent=stats.files;$('imagesCount').textContent=stats.images;const recent=$('recentDetections');const fs=(data.findings||[]).slice(0,5);if(fs.length){recent.innerHTML=fs.map(f=>`<div class="recent-row"><span class="recent-dot ${f.type==='EMAIL'?'yellow':''}"></span><span class="recent-name">${escapeHtml(findingLabel(f.type))}</span><span class="recent-time">Now</span></div>`).join('')}}
 function updateDonut(){const total=stats.total||1;const a=stats.allowed/total*100,s=stats.sanitized/total*100;const start2=a,start3=a+s;$('donut').style.background=`conic-gradient(#49c95b 0 ${a}%,#f2a92f ${start2}% ${start3}%,#f14f4f ${start3}% 100%)`}
@@ -651,5 +873,142 @@ updateScrollButton();loadUser();
 })();
 </script>
 
+<script>
+/* SHADOW_CONSTELLATION_SCRIPT */
+(() => {
+    const canvas = document.getElementById("shadow-constellation");
+    if (!canvas || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let w = 0, h = 0, stars = [], raf = 0;
+    const spacing = 125;
+    const colors = ["80,255,170", "110,230,190", "180,255,220"];
+
+    function resize() {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        w = window.innerWidth;
+        h = window.innerHeight;
+        canvas.width = Math.round(w * dpr);
+        canvas.height = Math.round(h * dpr);
+        canvas.style.width = w + "px";
+        canvas.style.height = h + "px";
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+        const count = Math.max(35, Math.min(100, Math.floor(w * h / 15000)));
+        stars = Array.from({ length: count }, () => ({
+            x: Math.random() * w,
+            y: Math.random() * h,
+            vx: (Math.random() - .5) * .34,
+            vy: (Math.random() - .5) * .34,
+            r: Math.random() * 1.35 + .55,
+            phase: Math.random() * Math.PI * 2,
+            color: colors[Math.floor(Math.random() * colors.length)]
+        }));
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, w, h);
+
+        for (const s of stars) {
+            s.x += s.vx;
+            s.y += s.vy;
+
+            if (s.x < -5) s.x = w + 5;
+            if (s.x > w + 5) s.x = -5;
+            if (s.y < -5) s.y = h + 5;
+            if (s.y > h + 5) s.y = -5;
+
+            s.phase += .018;
+        }
+
+        // Lines appear only between nearby stars, naturally joining and separating.
+        for (let i = 0; i < stars.length; i++) {
+            for (let j = i + 1; j < stars.length; j++) {
+                const a = stars[i], b = stars[j];
+                const dx = a.x - b.x, dy = a.y - b.y;
+                const d = Math.sqrt(dx * dx + dy * dy);
+
+                if (d < spacing) {
+                    const alpha = (1 - d / spacing) * .32;
+                    ctx.strokeStyle = `rgba(100,255,175,${alpha})`;
+                    ctx.lineWidth = .65;
+                    ctx.beginPath();
+                    ctx.moveTo(a.x, a.y);
+                    ctx.lineTo(b.x, b.y);
+                    ctx.stroke();
+                }
+            }
+        }
+
+        for (const s of stars) {
+            const pulse = .65 + (Math.sin(s.phase) + 1) * .24;
+            ctx.beginPath();
+            ctx.arc(s.x, s.y, s.r * pulse, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${s.color},${.72 + pulse * .25})`;
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = "rgba(80,255,170,.7)";
+            ctx.fill();
+        }
+
+        ctx.shadowBlur = 0;
+        raf = requestAnimationFrame(draw);
+    }
+
+    window.addEventListener("resize", resize, { passive: true });
+    resize();
+    draw();
+})();
+</script>
+<script>
+/* SHADOW_AI_MOUSE_TRACKING */
+(() => {
+    const glow = document.getElementById("shadow-cursor-glow");
+    const canvas = document.getElementById("shadow-constellation");
+    if (!glow) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    let targetX = innerWidth / 2;
+    let targetY = innerHeight / 2;
+    let currentX = targetX;
+    let currentY = targetY;
+    let frame = 0;
+
+    function moveGlow() {
+        currentX += (targetX - currentX) * 0.13;
+        currentY += (targetY - currentY) * 0.13;
+        glow.style.left = currentX + "px";
+        glow.style.top = currentY + "px";
+        frame = requestAnimationFrame(moveGlow);
+    }
+
+    window.addEventListener("pointermove", event => {
+        if (event.pointerType === "touch") return;
+        targetX = event.clientX;
+        targetY = event.clientY;
+        document.body.classList.add("cursor-glow-active");
+
+        // Gently encourage nearby constellation stars toward the cursor.
+        if (canvas) {
+            const rect = canvas.getBoundingClientRect();
+            canvas.style.setProperty("--pointer-x", (event.clientX - rect.left) + "px");
+            canvas.style.setProperty("--pointer-y", (event.clientY - rect.top) + "px");
+        }
+    }, { passive: true });
+
+    document.addEventListener("pointerleave", event => {
+        if (!event.relatedTarget) {
+            document.body.classList.remove("cursor-glow-active");
+        }
+    });
+
+    window.addEventListener("blur", () => {
+        document.body.classList.remove("cursor-glow-active");
+    });
+
+    moveGlow();
+})();
+</script>
 </body>
 </html>

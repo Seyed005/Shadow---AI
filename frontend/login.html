@@ -350,11 +350,263 @@ input:focus{
     }
 }
 </style>
+
+<style id="shadow-auth-graphite-theme">
+:root {
+    --bg: #101214;
+    --panel: #191d20;
+    --panel2: #202629;
+    --line: #343d3d;
+    --text: #f0f5f1;
+    --muted: #a0ada5;
+    --purple: #22c55e;
+    --purple2: #4ade80;
+    --green: #4ade80;
+    --red: #fb7185;
+}
+
+html,
+body {
+    min-height: 100%;
+}
+
+body {
+    min-height: 100vh;
+    height: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 36px 0;
+    background:
+        radial-gradient(ellipse at 15% 15%, rgba(74,222,128,.10), transparent 35%),
+        radial-gradient(ellipse at 85% 85%, rgba(74,222,128,.06), transparent 35%),
+        #101214;
+}
+
+.background-grid {
+    opacity: .14;
+    background-image:
+        linear-gradient(rgba(148,163,156,.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(148,163,156,.12) 1px, transparent 1px);
+    background-size: 42px 42px;
+    animation: shadowGridDrift 28s linear infinite;
+}
+
+.auth-container {
+    width: min(440px, calc(100% - 32px));
+    margin: auto;
+}
+
+.brand-mark:before {
+    background: linear-gradient(145deg, #86efac, #16a34a 60%, #14532d);
+    box-shadow: 0 0 32px rgba(74,222,128,.24);
+}
+
+.brand-name span {
+    color: #4ade80;
+}
+
+.brand-sub {
+    color: #86efac;
+    letter-spacing: 2px;
+}
+
+.auth-card {
+    background: linear-gradient(
+        145deg,
+        rgba(32,38,41,.96),
+        rgba(20,24,26,.98)
+    );
+    border: 1px solid rgba(134,239,172,.19);
+    border-radius: 18px;
+    padding: 30px;
+    box-shadow:
+        0 28px 80px rgba(0,0,0,.40),
+        inset 0 1px 0 rgba(255,255,255,.035),
+        0 0 32px rgba(74,222,128,.035);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+.title {
+    color: #f0fdf4;
+    letter-spacing: -.4px;
+}
+
+.subtitle {
+    color: #a5b1a9;
+}
+
+.field label {
+    color: #d1ddd4;
+    font-weight: 600;
+}
+
+input {
+    background: rgba(10,14,12,.75);
+    border: 1px solid #38433c;
+    border-radius: 10px;
+    color: #f0fdf4;
+    transition: border-color .2s, box-shadow .2s, background .2s;
+}
+
+input::placeholder {
+    color: #738078;
+}
+
+input:focus {
+    border-color: #4ade80;
+    background: rgba(12,20,15,.95);
+    box-shadow: 0 0 0 3px rgba(74,222,128,.12);
+}
+
+.password-toggle {
+    color: #9eafa2;
+}
+
+.password-toggle:hover {
+    color: #4ade80;
+}
+
+.primary-btn {
+    background: linear-gradient(110deg, #15803d, #22c55e);
+    color: #07140a;
+    border: 1px solid rgba(134,239,172,.45);
+    border-radius: 10px;
+    font-weight: 800;
+    box-shadow: 0 8px 24px rgba(34,197,94,.15);
+    transition: transform .2s, filter .2s, box-shadow .2s;
+}
+
+.primary-btn:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+    box-shadow: 0 12px 28px rgba(34,197,94,.22);
+}
+
+.primary-btn:focus-visible,
+.secondary-link:focus-visible {
+    outline: 2px solid #86efac;
+    outline-offset: 4px;
+}
+
+.secondary-link {
+    color: #4ade80;
+}
+
+.secondary-link:hover {
+    color: #bbf7d0;
+}
+
+.bottom-row {
+    flex-wrap: wrap;
+    color: #a0ada5;
+}
+
+.message.error {
+    background: rgba(127,29,29,.22);
+    border-color: #9f4545;
+    color: #fecaca;
+}
+
+.message.success {
+    background: rgba(20,83,45,.25);
+    border-color: #328553;
+    color: #bbf7d0;
+}
+
+.security-info {
+    color: #a0ada5;
+}
+
+.security-dot {
+    background: #4ade80;
+    box-shadow: 0 0 10px rgba(74,222,128,.65);
+}
+
+.footer {
+    color: #7f8b82;
+}
+
+.password-rule {
+    color: #9ba99e;
+}
+
+@keyframes shadowGridDrift {
+    from { background-position: 0 0; }
+    to   { background-position: 42px 42px; }
+}
+
+@media (max-width: 500px) {
+    body {
+        padding: 24px 0;
+    }
+
+    .auth-card {
+        padding: 23px 20px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .background-grid {
+        animation: none;
+    }
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+    }
+}
+</style>
+    <link rel="stylesheet" href="/auth-aurora.css">
+<style>
+
+/* SHADOW SIGNATURE — custom SA monogram */
+.brand-mark {
+    width: 64px !important;
+    height: 64px !important;
+    margin: 0 auto 14px !important;
+    display: grid !important;
+    place-items: center !important;
+    position: relative !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+}
+
+.brand-mark::before,
+.brand-mark::after {
+    content: none !important;
+    display: none !important;
+}
+
+.brand-mark .shadow-signature {
+    width: 64px;
+    height: 64px;
+    overflow: visible;
+    filter: drop-shadow(0 0 7px rgba(52, 211, 153, .16));
+    transition: filter .25s ease, transform .25s ease;
+}
+
+.brand-mark:hover .shadow-signature {
+    filter: drop-shadow(0 0 12px rgba(52, 211, 153, .34));
+    transform: translateY(-2px);
+}
+
+</style>
 </head>
 
 <body>
+<canvas id="shadow-constellation" aria-hidden="true"></canvas>
+<div id="shadow-cursor-glow" aria-hidden="true"></div>
+
 
 <div class="background-grid"></div>
+<div class="aurora-sprinkles" id="aurora-sprinkle-layer"
+     aria-hidden="true"></div>
 
 <div class="auth-container">
 
@@ -362,7 +614,40 @@ input:focus{
     <div class="brand">
 
         <div class="brand-mark">
-        </div>
+    <svg class="shadow-signature"
+         viewBox="0 0 64 64"
+         xmlns="http://www.w3.org/2000/svg"
+         role="img"
+         aria-label="Shadow AI monogram">
+      <defs>
+        <linearGradient id="shadowSilver" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#e2e8f0"/>
+          <stop offset="100%" stop-color="#687581"/>
+        </linearGradient>
+        <linearGradient id="shadowEmerald" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#a7f3d0"/>
+          <stop offset="100%" stop-color="#34d399"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Angular S: broken strokes create a custom shadow-like glyph -->
+      <path d="M39 12H23L13 22L23 32H40L50 42L40 52H22"
+            fill="none" stroke="url(#shadowSilver)"
+            stroke-width="5" stroke-linecap="square"
+            stroke-linejoin="miter"/>
+
+      <!-- A: interlocks with the S through negative space -->
+      <path d="M25 51L39 17L54 51M31 38H47"
+            fill="none" stroke="url(#shadowEmerald)"
+            stroke-width="4" stroke-linecap="square"
+            stroke-linejoin="miter"/>
+
+      <!-- Small cut/gap detail -->
+      <path d="M10 39L17 46"
+            stroke="#8a98a5" stroke-width="2"
+            stroke-linecap="square"/>
+    </svg>
+</div>
 
         <div class="brand-name">
             SHADOW <span>AI</span>
@@ -901,6 +1186,33 @@ input:focus{
 
 
 <script>
+
+/* Decorative aurora particles — no interaction with authentication */
+(() => {
+    const layer = document.getElementById("aurora-sprinkle-layer");
+    if (!layer || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const colors = ["#4ade80", "#86efac", "#22c55e", "#bbf7d0"];
+    const count = 42;
+    const fragment = document.createDocumentFragment();
+
+    for (let i = 0; i < count; i++) {
+        const particle = document.createElement("span");
+        particle.style.setProperty("--x", `${Math.random() * 100}%`);
+        particle.style.setProperty("--y", `${Math.random() * 100}%`);
+        particle.style.setProperty("--size", `${2 + Math.random() * 3}px`);
+        particle.style.setProperty("--duration", `${5 + Math.random() * 9}s`);
+        particle.style.setProperty("--delay", `${-Math.random() * 12}s`);
+        particle.style.setProperty(
+            "--particle-color",
+            colors[Math.floor(Math.random() * colors.length)]
+        );
+        fragment.appendChild(particle);
+    }
+
+    layer.appendChild(fragment);
+})();
+
 
 function $(id){
     return document.getElementById(id);
@@ -1459,6 +1771,147 @@ $("resetForm").addEventListener(
     }
 );
 
+</script>
+
+
+<script>
+/* SHADOW_CONSTELLATION_SCRIPT */
+(() => {
+    const canvas = document.getElementById("shadow-constellation");
+    if (!canvas || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let w = 0, h = 0, stars = [], raf = 0;
+    const spacing = 125;
+    const colors = ["80,255,170", "110,230,190", "180,255,220"];
+
+    function resize() {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        w = window.innerWidth;
+        h = window.innerHeight;
+        canvas.width = Math.round(w * dpr);
+        canvas.height = Math.round(h * dpr);
+        canvas.style.width = w + "px";
+        canvas.style.height = h + "px";
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+        const count = Math.max(35, Math.min(100, Math.floor(w * h / 15000)));
+        stars = Array.from({ length: count }, () => ({
+            x: Math.random() * w,
+            y: Math.random() * h,
+            vx: (Math.random() - .5) * .34,
+            vy: (Math.random() - .5) * .34,
+            r: Math.random() * 1.35 + .55,
+            phase: Math.random() * Math.PI * 2,
+            color: colors[Math.floor(Math.random() * colors.length)]
+        }));
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, w, h);
+
+        for (const s of stars) {
+            s.x += s.vx;
+            s.y += s.vy;
+
+            if (s.x < -5) s.x = w + 5;
+            if (s.x > w + 5) s.x = -5;
+            if (s.y < -5) s.y = h + 5;
+            if (s.y > h + 5) s.y = -5;
+
+            s.phase += .018;
+        }
+
+        // Lines appear only between nearby stars, naturally joining and separating.
+        for (let i = 0; i < stars.length; i++) {
+            for (let j = i + 1; j < stars.length; j++) {
+                const a = stars[i], b = stars[j];
+                const dx = a.x - b.x, dy = a.y - b.y;
+                const d = Math.sqrt(dx * dx + dy * dy);
+
+                if (d < spacing) {
+                    const alpha = (1 - d / spacing) * .32;
+                    ctx.strokeStyle = `rgba(100,255,175,${alpha})`;
+                    ctx.lineWidth = .65;
+                    ctx.beginPath();
+                    ctx.moveTo(a.x, a.y);
+                    ctx.lineTo(b.x, b.y);
+                    ctx.stroke();
+                }
+            }
+        }
+
+        for (const s of stars) {
+            const pulse = .65 + (Math.sin(s.phase) + 1) * .24;
+            ctx.beginPath();
+            ctx.arc(s.x, s.y, s.r * pulse, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${s.color},${.72 + pulse * .25})`;
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = "rgba(80,255,170,.7)";
+            ctx.fill();
+        }
+
+        ctx.shadowBlur = 0;
+        raf = requestAnimationFrame(draw);
+    }
+
+    window.addEventListener("resize", resize, { passive: true });
+    resize();
+    draw();
+})();
+</script>
+
+
+<script>
+/* SHADOW_AI_MOUSE_TRACKING */
+(() => {
+    const glow = document.getElementById("shadow-cursor-glow");
+    const canvas = document.getElementById("shadow-constellation");
+    if (!glow) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    let targetX = innerWidth / 2;
+    let targetY = innerHeight / 2;
+    let currentX = targetX;
+    let currentY = targetY;
+    let frame = 0;
+
+    function moveGlow() {
+        currentX += (targetX - currentX) * 0.13;
+        currentY += (targetY - currentY) * 0.13;
+        glow.style.left = currentX + "px";
+        glow.style.top = currentY + "px";
+        frame = requestAnimationFrame(moveGlow);
+    }
+
+    window.addEventListener("pointermove", event => {
+        if (event.pointerType === "touch") return;
+        targetX = event.clientX;
+        targetY = event.clientY;
+        document.body.classList.add("cursor-glow-active");
+
+        // Gently encourage nearby constellation stars toward the cursor.
+        if (canvas) {
+            const rect = canvas.getBoundingClientRect();
+            canvas.style.setProperty("--pointer-x", (event.clientX - rect.left) + "px");
+            canvas.style.setProperty("--pointer-y", (event.clientY - rect.top) + "px");
+        }
+    }, { passive: true });
+
+    document.addEventListener("pointerleave", event => {
+        if (!event.relatedTarget) {
+            document.body.classList.remove("cursor-glow-active");
+        }
+    });
+
+    window.addEventListener("blur", () => {
+        document.body.classList.remove("cursor-glow-active");
+    });
+
+    moveGlow();
+})();
 </script>
 
 </body>

@@ -1,0 +1,368 @@
+/* SHADOW AI — GRAPHITE AURORA */
+body {
+    isolation: isolate;
+    background: #101412;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: -35%;
+    z-index: -2;
+    pointer-events: none;
+    background:
+        radial-gradient(ellipse at 18% 35%,
+            rgba(34,197,94,.25), transparent 34%),
+        radial-gradient(ellipse at 72% 28%,
+            rgba(134,239,172,.17), transparent 31%),
+        radial-gradient(ellipse at 55% 78%,
+            rgba(22,163,74,.20), transparent 38%),
+        radial-gradient(ellipse at 90% 75%,
+            rgba(74,222,128,.10), transparent 28%);
+    filter: blur(38px);
+    animation: shadowAuroraFlow 18s ease-in-out infinite alternate;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: .24;
+    background:
+        linear-gradient(115deg,
+            transparent 15%,
+            rgba(74,222,128,.07) 38%,
+            rgba(187,247,208,.10) 43%,
+            rgba(34,197,94,.06) 49%,
+            transparent 72%);
+    background-size: 220% 100%;
+    animation: shadowAuroraSweep 22s ease-in-out infinite;
+}
+
+.auth-card {
+    border-color: rgba(134,239,172,.25);
+    box-shadow:
+        0 28px 80px rgba(0,0,0,.45),
+        0 0 28px rgba(34,197,94,.08),
+        inset 0 1px 0 rgba(220,252,231,.06);
+}
+
+.brand-mark:before {
+    box-shadow:
+        0 0 24px rgba(74,222,128,.35),
+        0 0 55px rgba(34,197,94,.15);
+}
+
+.primary-btn {
+    box-shadow:
+        0 8px 25px rgba(34,197,94,.18),
+        0 0 18px rgba(74,222,128,.07);
+}
+
+.primary-btn:hover {
+    box-shadow:
+        0 12px 30px rgba(34,197,94,.25),
+        0 0 24px rgba(74,222,128,.13);
+}
+
+@keyframes shadowAuroraFlow {
+    0% {
+        transform: translate3d(-2%, -1%, 0) rotate(0deg) scale(1);
+    }
+    50% {
+        transform: translate3d(2%, 2%, 0) rotate(5deg) scale(1.06);
+    }
+    100% {
+        transform: translate3d(-1%, 3%, 0) rotate(-4deg) scale(1.02);
+    }
+}
+
+@keyframes shadowAuroraSweep {
+    0%, 100% {
+        background-position: 100% 50%;
+        opacity: .12;
+    }
+    50% {
+        background-position: 0% 50%;
+        opacity: .30;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body::before,
+    body::after {
+        animation: none;
+    }
+}
+
+/* SHADOW AI — AURORA SPRINKLE PARTICLES */
+.aurora-sprinkles {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+    contain: strict;
+}
+
+.aurora-sprinkles span {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    width: var(--size);
+    height: var(--size);
+    border-radius: 50%;
+    opacity: 0;
+    background: var(--particle-color);
+    box-shadow:
+        0 0 6px var(--particle-color),
+        0 0 14px rgba(74, 222, 128, .20);
+    animation: auroraSprinkle var(--duration) var(--delay)
+        ease-in-out infinite;
+}
+
+.aurora-sprinkles span:nth-child(4n) {
+    border-radius: 2px;
+    transform: rotate(45deg);
+}
+
+@keyframes auroraSprinkle {
+    0%, 100% {
+        opacity: 0;
+        translate: 0 12px;
+        scale: .55;
+    }
+    25% {
+        opacity: .7;
+    }
+    50% {
+        opacity: .35;
+        translate: 8px -18px;
+        scale: 1;
+    }
+    75% {
+        opacity: .8;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .aurora-sprinkles span {
+        animation: none;
+        opacity: .25;
+    }
+}
+
+/* SHADOW AI — SPACE CONSTELLATION BACKGROUND */
+.background-grid {
+    display: none !important;
+}
+
+.aurora-sprinkles {
+    display: none !important;
+}
+
+#shadow-constellation {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.82;
+}
+
+.auth-container {
+    position: relative;
+    z-index: 2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #shadow-constellation {
+        display: none;
+    }
+}
+
+/* SHADOW AI — BALANCED AURORA SPACE THEME */
+
+/* Deep graphite base, not a green-filled screen */
+html,
+body {
+    background-color: #080b10 !important;
+}
+
+/* Restrained aurora ribbons */
+body::before {
+    background:
+        radial-gradient(ellipse at 16% 24%,
+            rgba(25, 125, 100, 0.17) 0%,
+            transparent 43%),
+        radial-gradient(ellipse at 82% 22%,
+            rgba(30, 90, 125, 0.13) 0%,
+            transparent 42%),
+        radial-gradient(ellipse at 54% 88%,
+            rgba(35, 120, 85, 0.12) 0%,
+            transparent 44%) !important;
+    filter: blur(38px);
+    opacity: 0.85 !important;
+    animation: shadowAuroraDrift 18s ease-in-out infinite alternate !important;
+}
+
+/* Keep any existing second background layer subtle */
+body::after {
+    opacity: 0.16 !important;
+}
+
+/* Softer stars and constellation connections */
+#shadow-constellation {
+    opacity: 0.52 !important;
+}
+
+/* Preserve the graphite glass login card */
+.auth-container {
+    background: rgba(13, 17, 23, 0.78) !important;
+    border-color: rgba(112, 220, 170, 0.20) !important;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+/* Gentle movement rather than an intense green glow */
+@keyframes shadowAuroraDrift {
+    0% {
+        transform: translate3d(-1%, -1%, 0) scale(1);
+    }
+    50% {
+        transform: translate3d(1%, 1%, 0) scale(1.04);
+    }
+    100% {
+        transform: translate3d(-0.5%, 1%, 0) scale(1.02);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body::before {
+        animation: none !important;
+    }
+}
+
+/* GRAPHITE GREY RESTORATION */
+html,
+body {
+    background: #171a20 !important;
+    color: #d1d5db;
+}
+
+/* Grey base with restrained aurora */
+body::before {
+    background:
+        radial-gradient(ellipse at 15% 20%,
+            rgba(35, 115, 92, 0.16), transparent 42%),
+        radial-gradient(ellipse at 82% 25%,
+            rgba(55, 91, 120, 0.13), transparent 42%),
+        radial-gradient(ellipse at 55% 90%,
+            rgba(80, 90, 105, 0.10), transparent 45%) !important;
+    filter: blur(45px) !important;
+    opacity: 0.7 !important;
+}
+
+body::after {
+    opacity: 0.08 !important;
+}
+
+/* Graphite glass login card */
+.auth-container {
+    background: rgba(29, 33, 40, 0.91) !important;
+    border: 1px solid rgba(165, 175, 185, 0.20) !important;
+    box-shadow: 0 20px 65px rgba(0, 0, 0, 0.38) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+/* Subtle constellation */
+#shadow-constellation {
+    opacity: 0.38 !important;
+}
+
+/* FIX: Remove outer rectangle around SHADOW AI branding + login */
+.auth-container {
+    background: transparent !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+}
+
+/* Keep the actual login form as the single visible card */
+.auth-card {
+    background: rgba(29, 33, 40, 0.91) !important;
+    border: 1px solid rgba(165, 175, 185, 0.20) !important;
+    border-radius: 18px !important;
+    box-shadow: 0 20px 65px rgba(0, 0, 0, 0.38) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+/* SHADOW AI — INTERACTIVE AURORA */
+body::before {
+    background:
+        radial-gradient(ellipse at 18% 22%,
+            rgba(35, 190, 125, .19), transparent 43%),
+        radial-gradient(ellipse at 82% 28%,
+            rgba(35, 125, 170, .15), transparent 42%),
+        radial-gradient(ellipse at 52% 85%,
+            rgba(50, 155, 105, .14), transparent 46%) !important;
+    filter: blur(42px) !important;
+    opacity: .9 !important;
+}
+
+/* Cursor-following emerald light */
+#shadow-cursor-glow {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 360px;
+    height: 360px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(
+        circle,
+        rgba(48, 220, 130, .105) 0%,
+        rgba(30, 175, 105, .055) 34%,
+        rgba(25, 130, 90, .018) 58%,
+        transparent 72%
+    );
+    opacity: 0;
+    transition: opacity .35s ease;
+    will-change: left, top;
+}
+
+/* Make the glow visible when the pointer enters */
+body.cursor-glow-active #shadow-cursor-glow {
+    opacity: 1;
+}
+
+/* Subtle highlight when the cursor passes over the login card */
+.auth-card {
+    transition: border-color .3s ease, box-shadow .3s ease;
+}
+
+.auth-card:hover {
+    border-color: rgba(90, 220, 155, .38) !important;
+    box-shadow:
+        0 18px 55px rgba(0, 0, 0, .32),
+        0 0 24px rgba(40, 190, 115, .055) !important;
+}
+
+/* Preserve reduced-motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+    #shadow-cursor-glow {
+        display: none;
+    }
+
+    .auth-card {
+        transition: none;
+    }
+}

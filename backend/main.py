@@ -1,6 +1,7 @@
 from pathlib import Path
 from tempfile import NamedTemporaryFile
 
+from fastapi.staticfiles import StaticFiles
 from fastapi import (
     Depends,
     FastAPI,
@@ -67,6 +68,12 @@ app = FastAPI(
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 FRONTEND_DIR = BASE_DIR / "frontend"
+
+app.mount(
+    "/assets",
+    StaticFiles(directory=str(FRONTEND_DIR / "assets")),
+    name="assets",
+)
 
 
 # ============================================================
@@ -183,6 +190,17 @@ async def dashboard():
         )
 
     return FileResponse(dashboard_page)
+
+@app.get("/auth-aurora.css", include_in_schema=False)
+async def auth_aurora_css():
+    css_file = FRONTEND_DIR / "auth-aurora.css"
+    if not css_file.is_file():
+        raise HTTPException(
+            status_code=404,
+            detail="Authentication aurora stylesheet not found.",
+        )
+    return FileResponse(css_file, media_type="text/css")
+
 
 @app.get("/aurora-motion.css", include_in_schema=False)
 async def aurora_motion_css():
