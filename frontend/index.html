@@ -416,197 +416,8 @@ textarea:focus-visible {
     scroll-behavior: auto !important;
   }
 }
-
-python3 - <<'PY'
-from pathlib import Path
-
-path = Path("frontend/index.html")
-html = path.read_text()
-marker = "/* === SHADOW AI · MOTION POLISH === */"
-
-if marker in html:
-    print("Motion polish already exists. No changes made.")
-elif "</style>" not in html:
-    raise SystemExit("ERROR: </style> not found. File unchanged.")
-else:
-    css = r"""
-/* === SHADOW AI · MOTION POLISH === */
-
-/* Slow, subtle aurora ambience */
-.app {
-  background-size: 150% 150%;
-  animation: aurora-drift 22s ease-in-out infinite alternate;
-}
-
-@keyframes aurora-drift {
-  0% {
-    background-position: 0% 0%;
-  }
-  50% {
-    background-position: 75% 35%;
-  }
-  100% {
-    background-position: 100% 80%;
-  }
-}
-
-/* Smooth entrance with a gentle stagger */
-.sidebar {
-  animation: motion-enter .55s cubic-bezier(.2,.7,.2,1) both;
-}
-
-.main {
-  animation: motion-enter .6s .06s cubic-bezier(.2,.7,.2,1) both;
-}
-
-.rightbar {
-  animation: motion-enter .6s .12s cubic-bezier(.2,.7,.2,1) both;
-}
-
-.welcome {
-  animation: motion-enter .5s .12s cubic-bezier(.2,.7,.2,1) both;
-}
-
-.side-card:nth-child(1) {
-  animation: motion-enter .45s .08s ease both;
-}
-
-.side-card:nth-child(2) {
-  animation: motion-enter .45s .16s ease both;
-}
-
-.side-card:nth-child(3) {
-  animation: motion-enter .45s .24s ease both;
-}
-
-@keyframes motion-enter {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Responsive, restrained hover feedback */
-.nav-item {
-  transition:
-    background-color .22s ease,
-    color .22s ease,
-    transform .22s ease,
-    box-shadow .22s ease;
-}
-
-.nav-item:hover {
-  transform: translateX(3px);
-}
-
-.new-chat,
-.send-btn,
-.attach-plus,
-.theme-btn,
-.icon-btn,
-.decision-btn {
-  transition:
-    transform .2s ease,
-    box-shadow .2s ease,
-    background-color .2s ease,
-    border-color .2s ease;
-}
-
-.new-chat:hover,
-.send-btn:hover,
-.attach-plus:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 9px 24px rgba(104, 82, 232, .23);
-}
-
-.theme-btn:hover,
-.icon-btn:hover {
-  transform: translateY(-1px);
-}
-
-.new-chat:active,
-.send-btn:active,
-.attach-plus:active,
-.decision-btn:active {
-  transform: scale(.98);
-}
-
-.side-card {
-  transition:
-    transform .24s ease,
-    box-shadow .24s ease,
-    border-color .24s ease;
-}
-
-.side-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 28px rgba(43, 59, 95, .09);
-  border-color: #d2d8f4;
-}
-
-/* Human-in-the-loop review: visible, calm arrival */
-.hitl-card {
-  animation: review-enter .4s cubic-bezier(.2,.7,.2,1) both;
-}
-
-@keyframes review-enter {
-  from {
-    opacity: 0;
-    transform: translateY(8px) scale(.99);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-.risk-gauge {
-  animation: gauge-enter .8s .15s ease-out both;
-}
-
-@keyframes gauge-enter {
-  from {
-    opacity: .35;
-    transform: rotate(-12deg) scale(.94);
-  }
-  to {
-    opacity: 1;
-    transform: rotate(0) scale(1);
-  }
-}
-
-/* Keep keyboard focus obvious */
-.nav-item:focus-visible,
-.new-chat:focus-visible,
-.send-btn:focus-visible,
-.attach-plus:focus-visible,
-.theme-btn:focus-visible,
-.decision-btn:focus-visible {
-  outline: 2px solid #8b75f5;
-  outline-offset: 3px;
-}
-
-/* Respect the user's motion preference */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation: none !important;
-    transition: none !important;
-    scroll-behavior: auto !important;
-  }
-}
-"""
-    path.write_text(html.replace("</style>", css + "\n</style>", 1))
-    print("Aurora motion polish added successfully.")
-PY
-
-
 </style>
+  <link rel="stylesheet" href="/aurora-motion.css">
 </head>
 <body>
 <div class="app">
@@ -799,5 +610,46 @@ $('themeBtn').addEventListener('click',()=>toast('Dark security workspace active
 $('userBox').addEventListener('click',logout);$('userBox').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();logout()}});
 updateScrollButton();loadUser();
 </script>
+
+<script>
+/* SHADOW AI — CHAT MOTION ENHANCEMENT */
+(() => {
+  const installChatMotion = () => {
+    const messages = document.querySelector(".messages");
+    if (!messages || messages.dataset.auroraMotionReady === "true") {
+      return;
+    }
+
+    messages.dataset.auroraMotionReady = "true";
+
+    const animateMessage = (node) => {
+      if (!(node instanceof Element)) return;
+
+      node.classList.remove("aurora-message-enter");
+      void node.offsetWidth;
+      node.classList.add("aurora-message-enter");
+    };
+
+    const observer = new MutationObserver((records) => {
+      for (const record of records) {
+        for (const node of record.addedNodes) {
+          animateMessage(node);
+        }
+      }
+    });
+
+    observer.observe(messages, { childList: true });
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", installChatMotion, {
+      once: true
+    });
+  } else {
+    installChatMotion();
+  }
+})();
+</script>
+
 </body>
 </html>

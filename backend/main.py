@@ -184,6 +184,17 @@ async def dashboard():
 
     return FileResponse(dashboard_page)
 
+@app.get("/aurora-motion.css", include_in_schema=False)
+async def aurora_motion_css():
+    css_file = FRONTEND_DIR / "aurora-motion.css"
+
+    if not css_file.is_file():
+        raise HTTPException(
+            status_code=404,
+            detail="Animation stylesheet not found.",
+        )
+
+    return FileResponse(css_file, media_type="text/css")
 
 @app.get("/views/{view_name}", include_in_schema=False)
 async def frontend_view(view_name: str):
