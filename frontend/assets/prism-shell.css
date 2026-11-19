@@ -1,0 +1,338 @@
+/* =====================================================
+   SHADOW AI — HOLOGRAPHIC PRISM
+   Shared shell foundation | Phase 1
+   Presentation only — no application logic
+===================================================== */
+
+:root {
+  color-scheme: light;
+
+  --prism-ink: #11152c;
+  --prism-ink-soft: #1c2140;
+  --prism-pearl: #f5f4ff;
+  --prism-white: #ffffff;
+  --prism-glass: rgba(255,255,255,.76);
+  --prism-border: rgba(129,119,190,.17);
+  --prism-text: #272642;
+  --prism-muted: #85839f;
+  --prism-violet: #8868f5;
+  --prism-cyan: #56cce8;
+  --prism-pink: #e9a0db;
+  --prism-green: #28a77d;
+
+  --bg: var(--prism-pearl);
+  --panel: #ffffff;
+  --panel2: #f5f3ff;
+  --panel3: #eeebff;
+  --line: var(--prism-border);
+  --text: var(--prism-text);
+  --muted: var(--prism-muted);
+  --purple: var(--prism-violet);
+  --purple2: #a38cff;
+  --green: var(--prism-green);
+  --cyan: var(--prism-cyan);
+}
+
+html,
+body {
+  background: var(--prism-pearl) !important;
+  color: var(--prism-text);
+}
+
+body {
+  background:
+    radial-gradient(ellipse at 48% 0%,
+      rgba(164,143,255,.18), transparent 38%),
+    radial-gradient(ellipse at 80% 70%,
+      rgba(105,210,238,.13), transparent 35%),
+    #f5f4ff !important;
+}
+
+/* Ambient prism lighting */
+body::before {
+  content: "";
+  position: fixed;
+  inset: -30%;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse at 20% 25%,
+      rgba(177,151,255,.16), transparent 35%),
+    radial-gradient(ellipse at 75% 35%,
+      rgba(91,204,238,.13), transparent 35%),
+    radial-gradient(ellipse at 55% 85%,
+      rgba(238,160,219,.10), transparent 40%);
+  filter: blur(65px);
+  animation: prism-ambient 18s ease-in-out infinite alternate;
+}
+
+@keyframes prism-ambient {
+  from { transform: translate3d(-2%, -1%, 0) rotate(-3deg); }
+  to   { transform: translate3d(2%, 2%, 0) rotate(3deg); }
+}
+
+/* Application layout */
+.app {
+  position: relative;
+  z-index: 2;
+  background: transparent !important;
+  grid-template-columns: 258px minmax(0, 1fr) 300px;
+}
+
+/* Midnight glass sidebar */
+.sidebar {
+  background:
+    linear-gradient(160deg,
+      rgba(32,35,72,.98),
+      rgba(15,18,43,.98)) !important;
+  border-right: 1px solid rgba(255,255,255,.09) !important;
+  color: #f3f2ff;
+  box-shadow: 12px 0 45px rgba(24,22,66,.08);
+}
+
+.brand-name { color: #fff; }
+.brand-name span {
+  color: #b9a7ff !important;
+}
+
+.brand-sub,
+.nav-title,
+.user-role {
+  color: #aaa9ca !important;
+}
+
+.brand-mark:before {
+  background: linear-gradient(145deg,
+    #bba8ff, #7759e9 55%, #52d2eb) !important;
+  box-shadow: 0 0 28px rgba(154,122,255,.36);
+}
+
+.nav-item {
+  color: #d2d2eb !important;
+  border: 1px solid transparent;
+  transition: background .25s, border-color .25s,
+              transform .25s, color .25s;
+}
+
+.nav-item:hover {
+  color: #fff !important;
+  background: rgba(174,157,255,.12) !important;
+  border-color: rgba(174,157,255,.16);
+  transform: translateX(3px);
+}
+
+.nav-item.active {
+  color: #fff !important;
+  background: linear-gradient(100deg,
+    rgba(133,103,245,.30),
+    rgba(87,198,230,.10)) !important;
+  border-color: rgba(175,157,255,.27);
+  box-shadow: inset 3px 0 #a58cff;
+}
+
+.nav-icon { color: #b9a7ff !important; }
+
+.nav-separator,
+.user {
+  border-color: rgba(255,255,255,.10) !important;
+}
+
+.avatar {
+  background: linear-gradient(135deg,#a98aff,#62cde7) !important;
+  color: #fff !important;
+}
+
+/* Main pearl workspace */
+.main {
+  background: transparent !important;
+}
+
+.topbar {
+  background: rgba(255,255,255,.74) !important;
+  border-color: var(--prism-border) !important;
+  backdrop-filter: blur(24px) saturate(155%);
+  -webkit-backdrop-filter: blur(24px) saturate(155%);
+}
+
+.status-pill {
+  background: rgba(255,255,255,.82) !important;
+  border: 1px solid var(--prism-border) !important;
+  color: #65617f !important;
+  box-shadow: 0 4px 18px rgba(57,49,105,.035);
+  transition: transform .25s, box-shadow .25s;
+}
+
+.status-pill:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(119,100,208,.12);
+}
+
+.status-pill.online {
+  background: rgba(228,250,242,.92) !important;
+  border-color: rgba(54,174,132,.25) !important;
+  color: #218a69 !important;
+}
+
+.provider-title { color: #45415f !important; }
+.provider-model { color: #8069d9 !important; }
+
+.provider-shield {
+  background: linear-gradient(135deg,#eee8ff,#e1f8ff) !important;
+  color: #8068dd !important;
+  border-color: rgba(142,119,224,.25) !important;
+  box-shadow: 0 0 22px rgba(132,108,228,.12);
+}
+
+.theme-btn {
+  background: rgba(255,255,255,.9) !important;
+  color: #8069d9 !important;
+  border-color: var(--prism-border) !important;
+}
+
+/* Chat content */
+.main-scroll {
+  background: transparent !important;
+  scrollbar-color: #c5b9f4 transparent;
+}
+
+.assistant-name { color: #302d4b !important; }
+
+.assistant-avatar {
+  background: linear-gradient(135deg,#a88bff,#56cce8) !important;
+  border-color: rgba(145,119,232,.4) !important;
+  box-shadow: 0 0 25px rgba(143,112,245,.25);
+}
+
+.welcome {
+  color: #45415f !important;
+  background: rgba(255,255,255,.79) !important;
+  border: 1px solid rgba(135,118,194,.19) !important;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 12px 36px rgba(69,54,128,.075);
+  border-radius: 4px 18px 18px 18px;
+}
+
+.user-message {
+  background: linear-gradient(135deg,#8666ed,#aa82f4) !important;
+  border: 1px solid rgba(255,255,255,.4) !important;
+  color: #fff !important;
+  box-shadow: 0 12px 30px rgba(116,91,211,.18);
+}
+
+.message-meta { color: rgba(255,255,255,.8) !important; }
+
+/* Floating composer */
+.composer {
+  background: linear-gradient(180deg,
+    rgba(245,244,255,.45),
+    rgba(245,244,255,.95)) !important;
+  border-color: rgba(130,113,190,.16) !important;
+  backdrop-filter: blur(20px);
+}
+
+.composer-box {
+  background: rgba(255,255,255,.91) !important;
+  border: 1px solid rgba(132,114,201,.23) !important;
+  border-radius: 18px !important;
+  box-shadow: 0 9px 32px rgba(70,56,135,.09);
+  transition: border-color .25s, box-shadow .25s;
+}
+
+.composer-box:focus-within {
+  border-color: rgba(136,104,245,.55) !important;
+  box-shadow: 0 0 0 4px rgba(136,104,245,.08),
+              0 12px 35px rgba(70,56,135,.12);
+}
+
+.composer textarea {
+  color: #302d4b !important;
+}
+
+.composer textarea::placeholder {
+  color: #a19bb8 !important;
+}
+
+.icon-btn { color: #8271c5 !important; }
+
+.new-chat,
+.attach-plus,
+.send-btn {
+  background: linear-gradient(125deg,#8665ed,#a17cf5) !important;
+  box-shadow: 0 7px 22px rgba(122,94,220,.22) !important;
+}
+
+/* Pearl glass insights */
+.rightbar {
+  background: rgba(247,246,255,.82) !important;
+  border-color: var(--prism-border) !important;
+  backdrop-filter: blur(24px);
+}
+
+.side-card {
+  background: rgba(255,255,255,.78) !important;
+  border: 1px solid rgba(132,114,201,.16) !important;
+  border-radius: 15px !important;
+  box-shadow: 0 7px 24px rgba(69,54,128,.045);
+  color: #383550;
+  transition: transform .25s, box-shadow .25s;
+}
+
+.side-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(69,54,128,.09);
+}
+
+.side-title { color: #55516e !important; }
+.legend-row,
+.stat-row,
+.policy-row { color: #77738e !important; }
+.stat-row strong { color: #37334f !important; }
+.recent-name { color: #56516e !important; }
+.recent-time { color: #9993ad !important; }
+
+.donut:after { background: #fff !important; }
+
+.active-badge {
+  background: #e4f7ef !important;
+  color: #218a69 !important;
+}
+
+.footer-note { color: #928ca8 !important; }
+
+/* Existing security-review components */
+.hitl-card {
+  background: rgba(255,255,255,.96) !important;
+  color: #37334f !important;
+  border-color: rgba(132,114,201,.24) !important;
+  box-shadow: 0 12px 34px rgba(69,54,128,.09);
+}
+
+.finding { color: #4c4765 !important; }
+.risk-box { background: #faf9ff; }
+.security-note { color: #817b99 !important; }
+
+#toast {
+  background: #252344 !important;
+  color: #fff !important;
+}
+
+/* Accessible motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+@media(max-width:980px) {
+  .app { grid-template-columns: 235px minmax(0,1fr); }
+}
+
+@media(max-width:700px) {
+  .app { display: block; }
+  .main { background: transparent !important; }
+}

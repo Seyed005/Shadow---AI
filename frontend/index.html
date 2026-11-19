@@ -3,421 +3,41 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="/assets/prism-theme-init.js"></script>
+  <link rel="stylesheet" href="/assets/prism-tokens.css">
 <title>Shadow AI — Security Gateway</title>
 <style>
+/* Pastel Aura chat structure — colors via tokens; surfaces refined by prism-chat-final.css */
 *{box-sizing:border-box}
 :root{
- --bg:#050914;--panel:#0b1020;--panel2:#101725;--panel3:#151c2b;--line:#263147;
- --muted:#8993a8;--text:#f5f7fb;--purple:#6d35e8;--purple2:#8b5cf6;
- --green:#39d353;--yellow:#f5b72f;--red:#ff4d4d;--cyan:#31d7c7;
+ /* Compatibility aliases only — do not redeclare token names (--line/--ink/etc). */
+ --yellow:var(--warning);--cyan:var(--taupe);
 }
-html,body{margin:0;width:100%;height:100%;background:var(--bg);color:var(--text);font-family:Inter,Segoe UI,Arial,sans-serif;overflow:hidden}
+html,body{margin:0;width:100%;height:100%;background:var(--page);color:var(--ink);font-family:var(--font);overflow:hidden}
 button,input,textarea{font:inherit}button{cursor:pointer}
-.app{height:100vh;display:grid;grid-template-columns:278px minmax(620px,1fr) 326px;background:radial-gradient(circle at 50% 5%,rgba(89,50,180,.09),transparent 35%),#050914}
+.app{width:100%;min-width:0;height:100vh;height:100dvh;min-height:0;display:grid;grid-template-columns:250px minmax(0,1fr) 318px;overflow:hidden;background:var(--page)}
 /* LEFT NAV */
-.sidebar{border-right:1px solid #1e2636;background:linear-gradient(180deg,#080d18,#070b15);padding:22px 16px;display:flex;flex-direction:column;min-width:0;overflow:hidden}
-.brand{display:flex;align-items:center;gap:12px;padding:4px 9px 22px}.brand-mark{width:42px;height:48px;position:relative;display:grid;place-items:center;color:#fff}.brand-mark:before{content:"";position:absolute;inset:1px 3px 5px;border-radius:13px 13px 17px 17px;background:linear-gradient(145deg,#263c8d,#7c3aed 65%,#17113c);clip-path:polygon(50% 0,91% 18%,83% 73%,50% 100%,17% 73%,9% 18%);box-shadow:0 0 22px rgba(124,58,237,.35)}.brand-mark:after{content:"✦";position:relative;font-size:20px;color:#dbe7ff}.brand-name{font-size:23px;font-weight:800;letter-spacing:.5px}.brand-name span{color:#4ade80 !important;}.brand-sub{font-size:12px;color:#8f78d8;margin-top:1px}
-.new-chat{width:100%;border:0;border-radius:9px;background:linear-gradient(90deg,#5d28d9,#7137ea);color:white;padding:13px 18px;font-weight:700;font-size:16px;box-shadow:0 10px 25px rgba(99,48,220,.2);margin-bottom:26px}.new-chat:hover{filter:brightness(1.08)}.new-chat .plus{font-size:22px;vertical-align:-2px;margin-right:8px;font-weight:400}
-.nav-title{font-size:13px;color:#929bae;margin:0 12px 10px}.nav-list{display:flex;flex-direction:column;gap:3px}.nav-item{height:42px;border-radius:7px;display:flex;align-items:center;gap:12px;padding:0 12px;color:#d5d9e3;font-size:14px;border:0;background:transparent;text-align:left;width:100%}.nav-item.active,.nav-item:hover{background:#141b2b}.nav-icon{width:18px;text-align:center;color:#b8c0d0;font-size:15px}.nav-time{margin-left:auto;color:#8d96aa;font-size:11px}.online-dot{width:6px;height:6px;border-radius:50%;background:#37d66b;display:inline-block;box-shadow:0 0 8px #37d66b}.nav-separator{height:1px;background:#20283a;margin:20px 12px 18px}
-.user{margin-top:auto;border-top:1px solid #20283a;padding:18px 9px 0;display:flex;gap:11px;align-items:center}.avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:#30206f;font-weight:700}.user-name{font-size:13px;font-weight:700}.user-role{font-size:11px;color:#a1a8b8;margin-top:3px}.user-status{width:7px;height:7px;background:#35d36a;border-radius:50%;display:inline-block;margin-left:4px}
-.user{cursor:pointer;border-radius:8px;transition:background .15s}.user:hover{background:#141b2b}
+.sidebar{border-right:1px solid var(--line);background:linear-gradient(180deg,var(--taupe),var(--pale-taupe) 72%,var(--soft-cream));padding:22px 16px;display:flex;flex-direction:column;min-width:0;overflow:hidden;color:var(--nav-text)}
+.brand{display:flex;align-items:center;gap:12px;padding:4px 9px 22px}.brand-mark{width:42px;height:48px;position:relative;display:grid;place-items:center;color:#fff}.brand-mark:before{content:"";position:absolute;inset:1px 3px 5px;border-radius:13px 13px 17px 17px;background:linear-gradient(145deg,var(--muted-taupe),var(--accent) 65%,var(--graphite));clip-path:polygon(50% 0,91% 18%,83% 73%,50% 100%,17% 73%,9% 18%);box-shadow:0 0 22px rgba(var(--accent-rgb),.28)}.brand-mark:after{content:"✦";position:relative;font-size:20px;color:var(--ink)}.brand-name{font-size:23px;font-weight:800;letter-spacing:.5px;color:var(--nav-text)}.brand-name span{color:var(--deep-rose)!important}.brand-sub{font-size:12px;color:var(--nav-muted);margin-top:1px}
+.new-chat{width:100%;border:0;border-radius:9px;background:linear-gradient(90deg,var(--deep-rose),var(--rose-dust));color:var(--charcoal);padding:13px 18px;font-weight:700;font-size:16px;box-shadow:0 10px 25px rgba(var(--accent-rgb),.28);margin-bottom:26px}.new-chat:hover{filter:brightness(1.06)}.new-chat .plus{font-size:22px;vertical-align:-2px;margin-right:8px;font-weight:400}
+.nav-title{font-size:13px;color:var(--nav-muted);margin:0 12px 10px}.nav-list{display:flex;flex-direction:column;gap:3px}.nav-item{height:42px;border-radius:7px;display:flex;align-items:center;gap:12px;padding:0 12px;color:var(--nav-text);font-size:14px;border:0;background:transparent;text-align:left;width:100%}.nav-item.active,.nav-item:hover{background:rgba(255,255,255,.42)}.nav-icon{width:18px;text-align:center;color:var(--accent-text);font-size:15px}.nav-time{margin-left:auto;color:var(--nav-muted);font-size:11px}.online-dot{width:6px;height:6px;border-radius:50%;background:var(--success);display:inline-block;box-shadow:0 0 8px var(--success)}.nav-separator{height:1px;background:var(--line);margin:20px 12px 18px}
+.user{margin-top:auto;border-top:1px solid rgba(48,43,42,.2);padding:18px 9px 0;display:flex;gap:11px;align-items:center;cursor:pointer;border-radius:8px;transition:background .15s}.avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--soft-rose),var(--deep-rose));color:var(--charcoal);font-weight:700}.user-name{font-size:13px;font-weight:700}.user-role{font-size:11px;color:var(--nav-muted);margin-top:3px}.user-status{width:7px;height:7px;background:var(--success);display:inline-block;border-radius:50%;margin-left:4px}.user:hover{background:rgba(255,255,255,.35)}
 /* MAIN */
-.main{min-width:0;min-height:0;display:flex;flex-direction:column;position:relative;background:#050914;overflow:hidden}.topbar{height:76px;flex:0 0 76px;display:flex;align-items:center;gap:9px;padding:14px 14px;border-bottom:1px solid #1d2637;background:rgba(5,9,20,.96);overflow:hidden}.status-pill{height:45px;border-radius:9px;border:1px solid #202a3b;background:#0c1220;padding:0 11px;display:flex;align-items:center;justify-content:center;gap:7px;font-size:12px;white-space:nowrap;flex:1;min-width:0}.status-pill.online{background:#071d12;border-color:#103b21;color:#55e678}.status-pill .icon{font-size:15px}.provider{display:flex;align-items:center;gap:8px;flex:0 0 184px;min-width:0}.provider-shield{width:38px;height:38px;border-radius:50%;border:1px solid #27354b;background:#0c1524;display:grid;place-items:center;color:#55e678;font-size:18px;flex:0 0 auto}.provider-title{font-size:12px;white-space:nowrap}.provider-model{font-size:11px;color:#38e78a;margin-top:3px;white-space:nowrap}.theme-btn{width:38px;height:38px;flex:0 0 38px;border-radius:50%;border:1px solid #273044;background:#0b111e;color:#e8ebf3;font-size:18px}
-.chat-area{flex:1 1 auto;min-height:0;height:0;display:flex;flex-direction:column;overflow:hidden}.main-scroll{flex:1 1 auto;min-height:0;height:0;overflow-y:auto;overflow-x:hidden;padding:22px 28px 18px;overscroll-behavior:contain}.main-scroll{scrollbar-width:thin;scrollbar-color:#3a465d #080d18}.main-scroll::-webkit-scrollbar,.rightbar::-webkit-scrollbar{width:9px}.main-scroll::-webkit-scrollbar-track,.rightbar::-webkit-scrollbar-track{background:#080d18}.main-scroll::-webkit-scrollbar-thumb,.rightbar::-webkit-scrollbar-thumb{background:#3a465d;border-radius:8px;border:2px solid #080d18}.main-scroll::-webkit-scrollbar-thumb:hover,.rightbar::-webkit-scrollbar-thumb:hover{background:#56647d}
-.assistant-head{display:flex;align-items:center;gap:11px;margin:0 0 11px 14px}.assistant-avatar{width:45px;height:45px;border-radius:50%;border:1px solid #3354a0;background:radial-gradient(circle at 35% 30%,#2e75c7,#101d3b);display:grid;place-items:center;font-size:21px}.assistant-name{font-size:17px;font-weight:600}.welcome{width:min(72%,560px);margin-left:59px;background:linear-gradient(180deg,#151c2a,#121826);border:1px solid #202a3a;border-radius:0 13px 13px 13px;padding:15px 17px;line-height:1.55;color:#f0f2f7;font-size:14px;box-shadow:0 12px 30px rgba(0,0,0,.15)}
-.messages{display:flex;flex-direction:column;gap:18px;margin-top:16px}.user-message{align-self:flex-end;max-width:72%;background:linear-gradient(145deg,#37206e,#48278b);border:1px solid #6441a5;border-radius:14px 14px 4px 14px;padding:14px 15px;box-shadow:0 12px 28px rgba(49,20,94,.22)}.message-text{line-height:1.45;font-size:14px}.attachment{margin-top:10px;background:rgba(5,9,20,.28);border:1px solid rgba(255,255,255,.08);border-radius:7px;padding:8px 10px;display:flex;align-items:center;gap:9px;min-width:190px}.file-icon{width:28px;height:32px;border-radius:5px;background:#dc4242;display:grid;place-items:center}.file-name{font-size:12px}.file-size{font-size:10px;color:#b7bdd0;margin-top:3px}.message-meta{margin-top:7px;text-align:right;font-size:10px;color:#c0b6dd}
-/* HITL */
-.warning-wrap{max-width:700px;margin:0 auto;width:94%}.hitl-card{border:1px solid #44516a;background:linear-gradient(180deg,#111827,#0f1624);border-radius:12px;padding:15px 16px;box-shadow:0 14px 35px rgba(0,0,0,.22)}.hitl-card.medium{border-color:#44516a;background:linear-gradient(180deg,#111827,#0f1624)}.medium .warning-icon{background:#56647d}.medium .warning-title{color:#e7ebf4}.medium .warning-desc{color:#aeb7c8}.medium .findings{border-color:#2c384d}.medium .finding{border-color:#253044}.medium .finding-detected{color:#ffc53d}.medium .risk-box{border-color:#2c384d}.medium .risk-label{color:#c5cedd}.medium .risk-level{color:#c5cedd}.medium .risk-gauge{background:conic-gradient(#f2b233 var(--risk-angle,180deg),#273142 0)}.medium .risk-gauge:after{background:#111827}.warning-head{display:flex;gap:12px;align-items:flex-start}.warning-icon{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:#ff4d4d;color:white;font-size:17px;flex:0 0 auto}.warning-title{font-size:16px;font-weight:700;letter-spacing:.2px}.warning-desc{font-size:13px;color:#d7c8cc;margin-top:3px;line-height:1.4}.critical .warning-title{color:#ff7777}.high .warning-icon{background:#d99012}.high{border-color:#8c651f;background:linear-gradient(180deg,#251c11,#211812)}.high .warning-title{color:#ffd66a}.hitl-inner{margin-top:13px;display:grid;grid-template-columns:minmax(0,1.25fr) 185px;gap:10px}.findings{border:1px solid #4b2830;border-radius:9px;overflow:hidden}.finding{min-height:38px;display:flex;align-items:center;padding:0 12px;border-bottom:1px solid #3a252b;font-size:12px}.finding:last-child{border-bottom:0}.finding-icon{width:24px;color:#ff6262}.finding-name{flex:1}.finding-detected{font-weight:600;color:#ff5d5d}.finding.medium .finding-detected{color:#ffc53d}.risk-box{border:1px solid #4b2830;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:155px}.risk-label{font-size:11px;color:#ff7777;font-weight:700}.risk-gauge{width:88px;height:88px;border-radius:50%;background:conic-gradient(#ff5050 var(--risk-angle,180deg),#3c1f29 0);display:grid;place-items:center;margin:5px 0;position:relative}.risk-gauge:after{content:"";width:66px;height:66px;border-radius:50%;background:#24151c;position:absolute}.risk-number{position:relative;z-index:1;font-size:24px}.risk-level{font-size:11px;color:#ff5c5c}.action-question{margin:13px 8px 9px;font-size:13px}.decision-row{display:grid;grid-template-columns:1fr 1.25fr 1fr;gap:10px}.decision-btn{min-height:74px;border-radius:8px;background:transparent;border:1px solid;font-weight:700;color:white;font-size:14px}.decision-btn small{display:block;font-size:11px;font-weight:400;margin-top:5px;color:#d1d4dc;line-height:1.25}.allow-button{border-color:#318b3f;background:#15331b}.sanitize-button{border-color:#a4771d;background:#392a0f}.block-button{border-color:#a43838;background:#421b1e}.decision-btn:hover{filter:brightness(1.12);transform:translateY(-1px)}.decision-btn:disabled{opacity:.45;cursor:not-allowed;transform:none}.security-note{margin:11px auto 0;max-width:700px;text-align:center;color:#7e8799;font-size:11px}.security-note span{color:#b0b7c6}.scroll-down{position:fixed;right:350px;bottom:92px;margin:-48px 18px 0 0;width:38px;height:38px;border:1px solid #3b465b;border-radius:50%;background:#111a2a;color:#fff;display:grid;place-items:center;font-size:19px;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.35);z-index:12;opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity .18s ease,transform .18s ease,visibility .18s ease}.scroll-down.show{opacity:1;visibility:visible;transform:translateY(0)}.scroll-down:hover{background:#6f2fe5;border-color:#7c3aed}.scroll-down:active{transform:translateY(1px)}
+.main{min-width:0;min-height:0;display:flex;flex-direction:column;position:relative;background:var(--page);overflow:hidden;color:var(--ink)}.topbar{height:76px;flex:0 0 76px;display:flex;align-items:center;gap:9px;padding:14px 14px;border-bottom:1px solid var(--line);background:rgba(247,242,237,.9);overflow:hidden}.status-pill{height:45px;border-radius:9px;border:1px solid var(--line);background:rgba(255,255,255,.76);padding:0 11px;display:flex;align-items:center;justify-content:center;gap:7px;font-size:12px;white-space:nowrap;flex:1;min-width:0;color:var(--ink-soft)}.status-pill.online{background:var(--success-soft);border-color:var(--success);color:var(--success-text)}.status-pill .icon{font-size:15px}.provider{display:flex;align-items:center;gap:8px;flex:0 0 184px;min-width:0}.provider-shield{width:38px;height:38px;border-radius:50%;border:1px solid rgba(var(--accent-rgb),.35);background:linear-gradient(145deg,var(--pale-taupe),var(--rose-dust));display:grid;place-items:center;color:var(--accent-text);font-size:18px;flex:0 0 auto}.provider-title{font-size:12px;white-space:nowrap;color:var(--ink-soft)}.provider-model{font-size:11px;color:var(--accent-text);margin-top:3px;white-space:nowrap}.theme-btn{width:38px;height:38px;flex:0 0 38px;border-radius:50%;border:1px solid var(--line-strong);background:var(--surface-raised);color:var(--accent-text);font-size:18px}
+.chat-area{flex:1 1 auto;min-width:0;min-height:0;height:auto;display:flex;flex-direction:column;overflow:hidden}.main-scroll{flex:1 1 auto;min-width:0;min-height:0;height:auto;overflow-y:auto;overflow-x:hidden;padding:22px 28px 24px;overscroll-behavior:contain}.main-scroll{scrollbar-width:thin;scrollbar-color:rgba(var(--accent-rgb),.28) transparent}.main-scroll::-webkit-scrollbar,.rightbar::-webkit-scrollbar{width:9px}.main-scroll::-webkit-scrollbar-track,.rightbar::-webkit-scrollbar-track{background:transparent}.main-scroll::-webkit-scrollbar-thumb,.rightbar::-webkit-scrollbar-thumb{background:rgba(var(--accent-rgb),.35);border-radius:8px;border:2px solid transparent}.main-scroll::-webkit-scrollbar-thumb:hover,.rightbar::-webkit-scrollbar-thumb:hover{background:rgba(var(--accent-rgb),.55)}
+.assistant-head{display:flex;align-items:center;gap:11px;margin:0 0 11px 14px}.assistant-avatar{width:45px;height:45px;border-radius:50%;border:1px solid rgba(var(--accent-rgb),.55);background:radial-gradient(circle at 35% 30%,var(--soft-rose),var(--deep-rose));display:grid;place-items:center;font-size:21px}.assistant-name{font-size:17px;font-weight:600;color:var(--ink)}.welcome{width:min(72%,560px);margin-left:59px;background:linear-gradient(180deg,var(--surface-raised),var(--surface));border:1px solid var(--line);border-radius:0 13px 13px 13px;padding:15px 17px;line-height:1.55;color:var(--ink-soft);font-size:14px;box-shadow:var(--shadow)}
+.messages{display:flex;flex-direction:column;gap:18px;margin-top:16px}.user-message{align-self:flex-end;max-width:72%;background:linear-gradient(145deg,var(--muted-text),var(--graphite));border:1px solid rgba(var(--accent-rgb),.28);border-radius:14px 14px 4px 14px;padding:14px 15px;box-shadow:0 12px 28px rgba(48,43,42,.18);color:#fff}.message-text{line-height:1.45;font-size:14px}.attachment{margin-top:10px;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.12);border-radius:7px;padding:8px 10px;display:flex;align-items:center;gap:9px;min-width:190px}.file-icon{width:28px;height:32px;border-radius:5px;background:var(--critical);display:grid;place-items:center}.file-name{font-size:12px}.file-size{font-size:10px;color:rgba(255,255,255,.7);margin-top:3px}.message-meta{margin-top:7px;text-align:right;font-size:10px;color:rgba(255,255,255,.78)}
+/* HITL — semantic status colors preserved */
+.warning-wrap{max-width:700px;margin:0 auto;width:94%}.hitl-card{border:1px solid var(--line);background:var(--surface-raised);border-radius:12px;padding:15px 16px;box-shadow:var(--shadow-raised);color:var(--ink)}.hitl-card.medium{border-color:var(--line)}.medium .warning-icon{background:var(--ink-muted)}.medium .warning-title{color:var(--ink)}.medium .warning-desc{color:var(--ink-muted)}.medium .findings,.medium .finding,.medium .risk-box{border-color:var(--line)}.medium .finding-detected{color:var(--warning)}.medium .risk-label,.medium .risk-level{color:var(--ink-muted)}.medium .risk-gauge{background:conic-gradient(var(--warning) var(--risk-angle,180deg),var(--surface-soft) 0)}.medium .risk-gauge:after{background:var(--surface)}.warning-head{display:flex;gap:12px;align-items:flex-start}.warning-icon{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--critical);color:white;font-size:17px;flex:0 0 auto}.warning-title{font-size:16px;font-weight:700;letter-spacing:.2px}.warning-desc{font-size:13px;color:var(--ink-muted);margin-top:3px;line-height:1.4}.critical .warning-title{color:var(--critical)}.high .warning-icon{background:var(--warning)}.high{border-color:var(--warning);background:var(--warning-soft)}.high .warning-title{color:var(--warning-text)}.hitl-inner{margin-top:13px;display:grid;grid-template-columns:minmax(0,1.25fr) 185px;gap:10px}.findings{border:1px solid var(--line);border-radius:9px;overflow:hidden}.finding{min-height:38px;display:flex;align-items:center;padding:0 12px;border-bottom:1px solid var(--line);font-size:12px;color:var(--ink)}.finding:last-child{border-bottom:0}.finding-icon{width:24px;color:var(--critical)}.finding-name{flex:1}.finding-detected{font-weight:600;color:var(--critical)}.finding.medium .finding-detected{color:var(--warning)}.risk-box{border:1px solid var(--line);border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:155px;background:var(--surface)}.risk-label{font-size:11px;color:var(--critical);font-weight:700}.risk-gauge{width:88px;height:88px;border-radius:50%;background:conic-gradient(var(--critical) var(--risk-angle,180deg),var(--critical-soft) 0);display:grid;place-items:center;margin:5px 0;position:relative}.risk-gauge:after{content:"";width:66px;height:66px;border-radius:50%;background:var(--surface);position:absolute}.risk-number{position:relative;z-index:1;font-size:24px}.risk-level{font-size:11px;color:var(--critical)}.action-question{margin:13px 8px 9px;font-size:13px}.decision-row{display:grid;grid-template-columns:1fr 1.25fr 1fr;gap:10px}.decision-btn{min-height:74px;border-radius:8px;background:transparent;border:1px solid;font-weight:700;color:var(--ink);font-size:14px}.decision-btn small{display:block;font-size:11px;font-weight:400;margin-top:5px;color:var(--ink-muted);line-height:1.25}.allow-button{border-color:var(--success);background:var(--success-soft);color:var(--success-text)}.sanitize-button{border-color:var(--warning);background:var(--warning-soft);color:var(--warning-text)}.block-button{border-color:var(--critical);background:var(--critical-soft);color:var(--critical-text)}.decision-btn:hover{filter:brightness(1.04);transform:translateY(-1px)}.decision-btn:disabled{opacity:.45;cursor:not-allowed;transform:none}.security-note{margin:11px auto 0;max-width:700px;text-align:center;color:var(--ink-muted);font-size:11px}.security-note span{color:var(--ink-soft)}.scroll-down{position:fixed;right:350px;bottom:92px;margin:-48px 18px 0 0;width:38px;height:38px;border:1px solid var(--line-strong);border-radius:50%;background:var(--surface-raised);color:var(--accent-text);display:grid;place-items:center;font-size:19px;cursor:pointer;box-shadow:var(--shadow);z-index:12;opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity .18s ease,transform .18s ease,visibility .18s ease}.scroll-down.show{opacity:1;visibility:visible;transform:translateY(0)}.scroll-down:hover{background:var(--accent);border-color:var(--accent);color:var(--button-primary-text)}.scroll-down:active{transform:translateY(1px)}
 /* COMPOSER */
-.composer{flex:0 0 auto;position:relative;z-index:20;padding:10px 28px 8px;background:linear-gradient(180deg,rgba(5,9,20,.75),#050914 45%);border-top:1px solid rgba(32,42,59,.65)}.composer-box{min-height:60px;border:1px solid #2a3447;background:#0d1320;border-radius:12px;display:flex;align-items:center;padding:7px 10px;gap:8px;box-shadow:0 8px 25px rgba(0,0,0,.15)}.icon-btn{border:0;background:transparent;color:#9aa4b8;width:32px;height:40px;font-size:22px}.icon-btn:hover{color:white}.attach-plus{width:36px;height:36px;border-radius:7px;background:#6b2de2;color:white;border:0;font-size:23px}.composer textarea{flex:1;min-width:0;height:42px;resize:none;background:transparent;border:0;outline:0;color:#dce1ea;padding:10px 5px;font-size:14px}.composer textarea::placeholder{color:#70798b}.send-btn{width:46px;height:46px;border:0;border-radius:9px;background:#6f2fe5;color:white;font-size:23px;box-shadow:0 7px 18px rgba(111,47,229,.28)}.send-btn:hover{filter:brightness(1.1)}.send-btn:disabled{opacity:.5;cursor:not-allowed}.composer-file{display:none;align-items:center;gap:7px;color:#bfc7d8;font-size:11px;padding:5px 0}.composer-file.show{display:flex}.composer-file button{border:0;background:transparent;color:#9aa4b8;font-size:15px}.footer-note{text-align:center;color:#626d80;font-size:10px;padding:5px 0 0}
+.composer{flex:0 0 auto;position:relative;z-index:20;padding:10px 28px 8px;background:linear-gradient(180deg,rgba(241,233,226,.6),rgba(241,233,226,.98) 55%);border-top:1px solid var(--line)}.composer-box{min-height:60px;border:1px solid var(--line-strong);background:var(--surface-raised);border-radius:12px;display:flex;align-items:center;padding:7px 10px;gap:8px;box-shadow:var(--shadow)}.icon-btn{border:0;background:transparent;color:var(--muted-text);width:32px;height:40px;font-size:22px}.icon-btn:hover{color:var(--ink)}.attach-plus{width:36px;height:36px;border-radius:7px;background:var(--accent);color:var(--charcoal);border:0;font-size:23px}.composer textarea{flex:1;min-width:0;height:42px;resize:none;background:transparent;border:0;outline:0;color:var(--ink);padding:10px 5px;font-size:14px}.composer textarea::placeholder{color:var(--ink-muted)}.send-btn{width:46px;height:46px;border:0;border-radius:9px;background:var(--accent);color:var(--charcoal);font-size:23px;box-shadow:0 7px 18px rgba(var(--accent-rgb),.28)}.send-btn:hover{filter:brightness(1.06)}.send-btn:disabled{opacity:.5;cursor:not-allowed}.composer-file{display:none;align-items:center;gap:7px;color:var(--ink-muted);font-size:11px;padding:5px 0}.composer-file.show{display:flex}.composer-file button{border:0;background:transparent;color:var(--ink-muted);font-size:15px}.footer-note{text-align:center;color:var(--ink-muted);font-size:10px;padding:5px 0 0}
 /* RIGHT INSIGHTS */
-.rightbar{border-left:1px solid #1e2636;padding:18px 16px;overflow:auto;background:linear-gradient(180deg,#070c16,#080c15)}.side-card{background:linear-gradient(180deg,#101725,#0d1420);border:1px solid #202a3b;border-radius:11px;padding:15px;margin-bottom:13px}.side-title{font-size:12px;letter-spacing:.03em;font-weight:700;margin-bottom:13px}.donut-row{display:flex;align-items:center;gap:15px}.donut{width:88px;height:88px;flex:0 0 88px;border-radius:50%;background:conic-gradient(#49c95b 0 33%,#f2a92f 33% 66%,#f14f4f 66% 100%);position:relative}.donut:after{content:"";position:absolute;inset:15px;border-radius:50%;background:#101725}.total{text-align:center;flex:1}.total strong{display:block;font-size:25px}.total span{font-size:12px;color:#d3d8e2}.legend{margin-top:13px;display:flex;flex-direction:column;gap:8px}.legend-row{display:flex;align-items:center;font-size:12px;color:#cfd4df}.legend-dot{width:8px;height:8px;border-radius:50%;margin-right:8px}.legend-count{margin-left:auto}.recent{display:flex;flex-direction:column}.recent-row{display:flex;align-items:center;min-height:38px;border-bottom:1px solid #202838;font-size:11px}.recent-row:last-child{border-bottom:0}.recent-dot{width:8px;height:8px;border-radius:50%;background:#ff4d4d;margin-right:8px}.recent-dot.yellow{background:#f2ad2e}.recent-name{flex:1;color:#d5dbe7}.recent-time{color:#8791a6}.stats{display:flex;flex-direction:column;gap:0}.stat-row{display:flex;justify-content:space-between;align-items:center;min-height:34px;font-size:12px;color:#cfd4df}.stat-row strong{color:#eef1f7;font-size:12px}.policy-row{display:flex;justify-content:space-between;align-items:center;min-height:37px;font-size:12px;color:#d7dce6;border-bottom:1px solid #202838}.policy-row:last-child{border-bottom:0}.active-badge{padding:4px 8px;border-radius:6px;background:#10351e;color:#55e678;font-size:10px;font-weight:700}
-#toast{position:fixed;left:50%;bottom:92px;transform:translateX(-50%) translateY(15px);background:#151d2c;border:1px solid #334057;color:#eef2f8;padding:10px 15px;border-radius:8px;font-size:12px;opacity:0;pointer-events:none;transition:.2s;z-index:100}.toast-show{opacity:1!important;transform:translateX(-50%) translateY(0)!important}
-@media(max-width:1200px){.app{grid-template-columns:250px minmax(540px,1fr) 290px}.provider{flex-basis:145px}.provider-title,.provider-model{font-size:10px}.status-pill{padding:0 7px;font-size:11px}.main-scroll{padding-left:20px;padding-right:20px}.composer{padding-left:20px;padding-right:20px}}
-@media(max-width:980px){.scroll-down{right:22px;bottom:88px}.app{grid-template-columns:235px minmax(0,1fr)}.rightbar{display:none}.status-pill{font-size:11px}.provider{display:none}}
-@media(max-width:700px){.scroll-down{right:18px;bottom:78px}html,body{overflow:auto}.app{height:auto;min-height:100vh;display:block}.sidebar{display:none}.main{min-height:100vh}.topbar{overflow-x:auto}.status-pill{flex:0 0 auto}.main-scroll{min-height:calc(100vh - 150px);padding:16px 12px}.welcome{width:auto;margin-left:0}.assistant-head{margin-left:0}.user-message{max-width:92%}.warning-wrap{width:100%}.hitl-inner{grid-template-columns:1fr}.decision-row{grid-template-columns:1fr}.composer{padding:8px 10px;position:sticky;bottom:0;z-index:20}.composer textarea{font-size:13px}.footer-note{display:none}}
-
-
-/* === SHADOW AI · AURORA LIGHT === */
-:root {
-  color-scheme: light;
-  --bg: #f4f7fc;
-  --panel: #ffffff;
-  --panel2: #f8faff;
-  --panel3: #eef2fb;
-  --line: #e0e6f0;
-  --muted: #758198;
-  --text: #202941;
-  --purple: #6852e8;
-  --purple2: #8975ff;
-  --green: #178653;
-  --yellow: #a66b08;
-  --red: #d83e53;
-  --cyan: #078f9f;
-}
-
-html,
-body {
-  background: var(--bg);
-  color: var(--text);
-}
-
-.app {
-  background:
-    radial-gradient(ellipse at 48% 0%, rgba(146, 174, 255, .20), transparent 42%),
-    #f4f7fc;
-}
-
-.sidebar,
-.rightbar {
-  background: rgba(255, 255, 255, .88);
-  border-color: var(--line);
-}
-
-.brand-mark:before {
-  background: linear-gradient(145deg, #8ba8ff, #7456e8 68%, #b5a8ff);
-  box-shadow: 0 5px 20px rgba(104, 82, 232, .20);
-}
-
-.brand-mark:after {
-  color: #fff;
-}
-
-.brand-name span {
-  color: var(--purple);
-}
-
-.brand-sub,
-.nav-title,
-.user-role {
-  color: var(--muted);
-}
-
-.new-chat,
-.attach-plus,
-.send-btn {
-  background: linear-gradient(115deg, #6752e8, #8d71f5);
-  box-shadow: 0 7px 18px rgba(104, 82, 232, .18);
-}
-
-.nav-item {
-  color: #4d5870;
-  border-radius: 10px;
-  transition: background .2s ease, color .2s ease, transform .2s ease;
-}
-
-.nav-item.active,
-.nav-item:hover {
-  color: #5140c8;
-  background: #efedff;
-}
-
-.nav-icon {
-  color: inherit;
-}
-
-.nav-separator,
-.user {
-  border-color: var(--line);
-}
-
-.user:hover {
-  background: #f3f5fb;
-}
-
-.avatar {
-  background: #ece8ff;
-  color: #5b48cc;
-}
-
-.main {
-  background: transparent;
-}
-
-.topbar {
-  background: rgba(255, 255, 255, .82);
-  border-color: var(--line);
-  backdrop-filter: blur(16px);
-}
-
-.status-pill {
-  color: #566179;
-  background: #fff;
-  border-color: var(--line);
-}
-
-.status-pill.online {
-  background: #eaf8f0;
-  border-color: #c9ebd7;
-  color: #177b4b;
-}
-
-.provider-shield {
-  background: #eaf8f0;
-  border-color: #cdebd8;
-  color: #178653;
-}
-
-.provider-title {
-  color: #46516a;
-}
-
-.provider-model {
-  color: #178653;
-}
-
-.theme-btn {
-  background: #fff;
-  color: #6550d8;
-  border-color: var(--line);
-}
-
-.main-scroll {
-  scrollbar-color: #c6cee0 #f4f7fc;
-}
-
-.main-scroll::-webkit-scrollbar-track,
-.rightbar::-webkit-scrollbar-track {
-  background: #f4f7fc;
-}
-
-.main-scroll::-webkit-scrollbar-thumb,
-.rightbar::-webkit-scrollbar-thumb {
-  background: #c6cee0;
-  border-color: #f4f7fc;
-}
-
-.assistant-avatar {
-  background: linear-gradient(145deg, #e0eaff, #eee8ff);
-  border-color: #d4dcf5;
-}
-
-.welcome {
-  color: #39445d;
-  background: rgba(255, 255, 255, .94);
-  border-color: #e1e6f1;
-  box-shadow: 0 12px 32px rgba(43, 59, 95, .06);
-}
-
-.user-message {
-  color: #fff;
-  background: linear-gradient(135deg, #6752e8, #8770ed);
-  border-color: #7665e8;
-  box-shadow: 0 8px 24px rgba(104, 82, 232, .14);
-}
-
-.message-meta,
-.file-size {
-  color: #e6e2ff;
-}
-
-.attachment {
-  background: rgba(255, 255, 255, .12);
-  border-color: rgba(255, 255, 255, .22);
-}
-
-.hitl-card,
-.hitl-card.medium {
-  color: #28334b;
-  background: rgba(255, 255, 255, .97);
-  border-color: #e0e6f0;
-  box-shadow: 0 12px 30px rgba(43, 59, 95, .07);
-}
-
-.warning-desc,
-.medium .warning-desc {
-  color: #667189;
-}
-
-.medium .warning-title {
-  color: #344059;
-}
-
-.findings,
-.finding,
-.risk-box {
-  border-color: #e4dfe5;
-}
-
-.finding {
-  color: #46516a;
-  border-bottom-color: #edf0f6;
-}
-
-.medium .finding-detected {
-  color: #a66b08;
-}
-
-.medium .risk-gauge {
-  background: conic-gradient(#e9ae39 var(--risk-angle, 180deg), #edf0f6 0);
-}
-
-.medium .risk-gauge:after {
-  background: #fff;
-}
-
-.medium .risk-label,
-.medium .risk-level {
-  color: #667189;
-}
-
-.medium .risk-number {
-  color: #344059;
-}
-
-.action-question {
-  color: #46516a;
-}
-
-.decision-btn {
-  color: #344059;
-  transition: transform .2s ease, box-shadow .2s ease;
-}
-
-.decision-btn small {
-  color: #667189;
-}
-
-.allow-button {
-  color: #176b43;
-  background: #eaf8f0;
-  border-color: #bce5ce;
-}
-
-.sanitize-button {
-  color: #895b09;
-  background: #fff6df;
-  border-color: #f0d89d;
-}
-
-.block-button {
-  color: #b52f43;
-  background: #fff0f2;
-  border-color: #f0c4cb;
-}
-
-.decision-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 14px rgba(43, 59, 95, .08);
-}
-
-.security-note,
-.footer-note {
-  color: #7b879d;
-}
-
-.security-note span {
-  color: #58647c;
-}
-
-.composer {
-  background: linear-gradient(180deg, rgba(244, 247, 252, .80), #f4f7fc 45%);
-  border-top-color: #e3e8f2;
-}
-
-.composer-box {
-  background: #fff;
-  border-color: #dce3ef;
-  box-shadow: 0 8px 25px rgba(43, 59, 95, .06);
-}
-
-.composer textarea {
-  color: #27324b;
-}
-
-.composer textarea::placeholder {
-  color: #8b95a9;
-}
-
-.icon-btn {
-  color: #7b859b;
-}
-
-.icon-btn:hover {
-  color: var(--purple);
-}
-
-.side-card {
-  background: rgba(255, 255, 255, .94);
-  border-color: #e1e7f0;
-  box-shadow: 0 6px 20px rgba(43, 59, 95, .035);
-}
-
-.side-title {
-  color: #4c5872;
-}
-
-.total span,
-.legend-row,
-.recent-name,
-.stat-row,
-.policy-row {
-  color: #667189;
-}
-
-.total strong,
-.stat-row strong {
-  color: #27324b;
-}
-
-.recent-row,
-.policy-row {
-  border-bottom-color: #edf0f6;
-}
-
-.recent-time {
-  color: #8b95a9;
-}
-
-.active-badge {
-  background: #e8f7ef;
-  color: #177b4b;
-}
-
-.scroll-down {
-  background: #fff;
-  color: #6550d8;
-  border-color: #dce3ef;
-  box-shadow: 0 8px 24px rgba(43, 59, 95, .12);
-}
-
-#toast {
-  color: #27324b;
-  background: #fff;
-  border-color: #dce3ef;
-  box-shadow: 0 8px 30px rgba(43, 59, 95, .12);
-}
-
-button:focus-visible,
-textarea:focus-visible {
-  outline: 2px solid #8b75f5;
-  outline-offset: 3px;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .side-card,
-  .welcome,
-  .hitl-card {
-    animation: aurora-enter .35s ease both;
-  }
-
-  @keyframes aurora-enter {
-    from { opacity: 0; transform: translateY(5px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: .01ms !important;
-    transition-duration: .01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
+.rightbar{border-left:1px solid var(--line);padding:18px 16px;overflow:auto;background:var(--surface-soft)}.side-card{background:var(--surface-raised);border:1px solid var(--line);border-radius:11px;padding:15px;margin-bottom:13px}.side-title{font-size:12px;letter-spacing:.03em;font-weight:700;margin-bottom:13px;color:var(--ink-soft)}.donut-row{display:flex;align-items:center;gap:15px}.donut{width:88px;height:88px;flex:0 0 88px;border-radius:50%;background:conic-gradient(var(--success) 0 33%,var(--warning) 33% 66%,var(--critical) 66% 100%);position:relative}.donut:after{content:"";position:absolute;inset:15px;border-radius:50%;background:var(--surface)}.total{text-align:center;flex:1}.total strong{display:block;font-size:25px;color:var(--ink)}.total span{font-size:12px;color:var(--ink-muted)}.legend{margin-top:13px;display:flex;flex-direction:column;gap:8px}.legend-row{display:flex;align-items:center;font-size:12px;color:var(--ink-soft)}.legend-dot{width:8px;height:8px;border-radius:50%;margin-right:8px}.legend-count{margin-left:auto;color:var(--ink)}.recent{display:flex;flex-direction:column}.recent-row{display:flex;align-items:center;min-height:38px;border-bottom:1px solid var(--line);font-size:11px}.recent-row:last-child{border-bottom:0}.recent-dot{width:8px;height:8px;border-radius:50%;background:var(--critical);margin-right:8px}.recent-dot.yellow{background:var(--warning)}.recent-name{flex:1;color:var(--ink-muted)}.recent-time{color:var(--ink-muted)}.stats{display:flex;flex-direction:column;gap:0}.stat-row{display:flex;justify-content:space-between;align-items:center;min-height:34px;font-size:12px;color:var(--ink-soft)}.stat-row strong{color:var(--ink);font-size:12px}.policy-row{display:flex;justify-content:space-between;align-items:center;min-height:37px;font-size:12px;color:var(--ink-muted);border-bottom:1px solid var(--line)}.policy-row:last-child{border-bottom:0}.active-badge{padding:4px 8px;border-radius:6px;background:var(--success-soft);color:var(--success-text);font-size:10px;font-weight:700}
+#toast{position:fixed;left:50%;bottom:92px;transform:translateX(-50%) translateY(15px);background:var(--graphite);border:1px solid var(--line-strong);color:var(--nav-text);padding:10px 15px;border-radius:8px;font-size:12px;opacity:0;pointer-events:none;transition:.2s;z-index:100}.toast-show{opacity:1!important;transform:translateX(-50%) translateY(0)!important}
+@media(max-width:1200px){.provider{flex-basis:145px}.provider-title,.provider-model{font-size:10px}.status-pill{padding:0 7px;font-size:11px}.main-scroll{padding-left:20px;padding-right:20px}.composer{padding-left:20px;padding-right:20px}}
+@media(max-width:980px){.scroll-down{right:22px;bottom:88px}.status-pill{font-size:11px}.provider{display:none}}
+@media(max-width:700px){.scroll-down{right:18px;bottom:78px}.status-pill{flex:0 0 auto}.main-scroll{padding:20px 14px 24px}.user-message{max-width:92%}.warning-wrap{width:100%}.hitl-inner{grid-template-columns:1fr}.decision-row{grid-template-columns:1fr}.composer{padding:8px 10px}.composer textarea{font-size:13px}.footer-note{display:none}}
 </style>
-  <link rel="stylesheet" href="/aurora-motion.css">
 <style>
 
 /* SHADOW SIGNATURE — shared login/dashboard logo */
@@ -443,12 +63,12 @@ textarea:focus-visible {
     display: block;
     width: 46px;
     height: 46px;
-    filter: drop-shadow(0 0 5px rgba(52, 211, 153, .14));
+    filter: drop-shadow(0 0 5px rgba(217, 169, 174, .22));
     transition: filter .25s ease, transform .25s ease;
 }
 
 .brand:hover .shadow-signature {
-    filter: drop-shadow(0 0 9px rgba(52, 211, 153, .3));
+    filter: drop-shadow(0 0 9px rgba(217, 169, 174, .38));
     transform: translateY(-1px);
 }
 
@@ -480,8 +100,8 @@ textarea:focus-visible {
     transform: translate(-50%, -50%);
     background: radial-gradient(
         circle,
-        rgba(48, 220, 130, .09) 0%,
-        rgba(30, 175, 105, .045) 36%,
+        rgba(217,169,174,.09) 0%,
+        rgba(200,179,169,.05) 36%,
         transparent 72%
     );
     opacity: 0;
@@ -508,11 +128,11 @@ body::before {
     pointer-events: none;
     background:
         radial-gradient(ellipse at 15% 20%,
-            rgba(35, 155, 105, .13), transparent 42%),
+            rgba(217,169,174,.13), transparent 42%),
         radial-gradient(ellipse at 82% 25%,
-            rgba(35, 110, 155, .10), transparent 43%),
+            rgba(200,179,169,.10), transparent 43%),
         radial-gradient(ellipse at 52% 88%,
-            rgba(75, 100, 110, .08), transparent 45%);
+            rgba(169,149,139,.08), transparent 45%);
     filter: blur(42px);
     animation: shadowDashboardAurora 20s ease-in-out infinite alternate;
 }
@@ -533,65 +153,6 @@ body::before {
 }
 </style>
 
-<style id="shadow-dashboard-effects-layer-fix">
-/* Keep effects visible without covering dashboard controls */
-html, body {
-    background-color: #202326;
-}
-
-/* Put the animated canvas and aurora behind the UI */
-#shadow-constellation {
-    position: fixed !important;
-    inset: 0 !important;
-    z-index: 3 !important;
-    pointer-events: none !important;
-    opacity: .62 !important;
-}
-
-body::before {
-    z-index: 0 !important;
-    pointer-events: none !important;
-}
-
-/* Cursor glow sits above the page background */
-#shadow-cursor-glow {
-    z-index: 4 !important;
-    pointer-events: none !important;
-}
-
-/* Keep the actual app layout above the effects */
-.app {
-    position: relative;
-    z-index: 2;
-    background: transparent !important;
-}
-
-/* Let the background show through the main chat area */
-.main,
-.main-scroll {
-    background-color: rgba(32, 35, 38, .84) !important;
-}
-
-/* Avoid opaque sidebar and right-panel backgrounds hiding everything */
-.sidebar,
-.right-panel,
-.insights-panel {
-    background-color: rgba(32, 35, 38, .90);
-}
-
-/* Green accent on interactive elements */
-.brand-name span {
-    color: #4ade80 !important;
-}
-
-@media (prefers-reduced-motion: reduce) {
-    #shadow-constellation,
-    #shadow-cursor-glow {
-        display: none !important;
-    }
-}
-</style>
-
 <style>
 
 /* Shadow AI Operative avatar */
@@ -601,8 +162,8 @@ body::before {
     flex: 0 0 48px;
     overflow: hidden;
     border-radius: 50%;
-    border: 1px solid rgba(74, 222, 128, .7);
-    box-shadow: 0 0 14px rgba(16, 185, 129, .22);
+    border: 1px solid rgba(var(--accent-rgb),.55);
+    box-shadow: 0 0 14px rgba(var(--accent-rgb),.18);
 }
 .assistant-avatar img {
     display: block;
@@ -613,12 +174,19 @@ body::before {
 }
 
 </style>
+<link rel="stylesheet" href="/assets/prism-chat.css">
+  <link rel="stylesheet" href="/assets/prism-workspace.css">
+  <link rel="stylesheet" href="/assets/prism-chat-final.css">
+  <link rel="stylesheet" href="/assets/prism-theme.css">
+  <link rel="stylesheet" href="/assets/prism-aura.css">
+  <script defer src="/assets/prism-effects.js"></script>
+  <script defer src="/assets/prism-theme.js"></script>
 </head>
 <body>
 <canvas id="shadow-constellation" aria-hidden="true"></canvas>
 <div id="shadow-cursor-glow" aria-hidden="true"></div>
 <div class="app">
-  <aside class="sidebar">
+  <aside class="sidebar" id="primaryNavigation" aria-label="Primary navigation">
     <div class="brand"><div class="brand-mark">
   <svg class="shadow-signature"
        viewBox="0 0 64 64"
@@ -627,12 +195,12 @@ body::before {
        aria-label="Shadow AI monogram">
     <defs>
       <linearGradient id="shadowSilver" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0%" stop-color="#e2e8f0"/>
-        <stop offset="100%" stop-color="#687581"/>
+        <stop offset="0%" stop-color="#E4D7CF"/>
+        <stop offset="100%" stop-color="#545C69"/>
       </linearGradient>
       <linearGradient id="shadowEmerald" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0%" stop-color="#a7f3d0"/>
-        <stop offset="100%" stop-color="#34d399"/>
+        <stop offset="0%" stop-color="#EBCDD0"/>
+        <stop offset="100%" stop-color="#D9A9AE"/>
       </linearGradient>
     </defs>
     <path d="M39 12H23L13 22L23 32H40L50 42L40 52H22"
@@ -641,7 +209,7 @@ body::before {
     <path d="M25 51L39 17L54 51M31 38H47"
           fill="none" stroke="url(#shadowEmerald)" stroke-width="4"
           stroke-linecap="square" stroke-linejoin="miter"/>
-    <path d="M10 39L17 46" stroke="#8a98a5" stroke-width="2"
+    <path d="M10 39L17 46" stroke="var(--ink-muted)" stroke-width="2"
           stroke-linecap="square"/>
   </svg>
 </div><div><div class="brand-name">SHADOW <span>AI</span></div><div class="brand-sub">Security Gateway</div></div></div>
@@ -670,20 +238,36 @@ body::before {
 
   <main class="main">
     <header class="topbar">
+      <button class="mobile-nav-toggle" id="mobileNavToggle" type="button" aria-label="Open navigation" aria-controls="primaryNavigation" aria-expanded="false">☰</button>
       <div class="status-pill online"><span class="icon">⬡</span>GATEWAY ONLINE</div>
       <div class="status-pill"><span class="icon">♙</span>DLP Active</div>
       <div class="status-pill"><span class="icon">♧</span>OCR Active</div>
-      <div class="status-pill"><span class="icon" style="color:#f5b72f">●</span>Threat Detection</div>
-      <div class="status-pill"><span class="icon" style="color:#f5b72f">⬡</span>Risk Engine</div>
+      <div class="status-pill"><span class="icon" style="color:var(--warning)">●</span>Threat Detection</div>
+      <div class="status-pill"><span class="icon" style="color:var(--warning)">⬡</span>Risk Engine</div>
       <div class="provider"><div class="provider-shield">⬡</div><div><div class="provider-title">Approved AI Provider</div><div class="provider-model" id="providerModel">Ollama (Gemma 3:4B)</div></div></div>
-      <button class="theme-btn" id="themeBtn" title="Toggle appearance">☾</button>
+      <button class="insights-panel-toggle" id="insightsPanelToggle" type="button" aria-controls="securityInsightsPanel" aria-expanded="false" aria-label="Open security insights">Insights</button>
+      <button class="theme-btn" id="themeBtn" data-theme-toggle type="button" title="Switch to dark theme" aria-label="Switch to dark theme" aria-pressed="false">☾</button>
     </header>
 
     <section class="chat-area">
       <div class="main-scroll" id="mainScroll">
         <button class="scroll-down" id="scrollDown" aria-label="Scroll to latest message" title="Scroll to latest message">↓</button>
-        <div class="assistant-head"><div class="assistant-avatar"><img src="/assets/shadow-ai-avatar.png" alt="Shadow AI Assistant"></div><div class="assistant-name">Shadow AI Assistant</div></div>
-        <div class="welcome">Hello! I am your secure AI assistant.<br>You can ask questions or upload text, documents or images.<br>Everything is checked by the Shadow AI Security Gateway before reaching the AI.</div>
+        <div class="assistant-head"><div class="assistant-avatar"><img src="/assets/shadow-ai-avatar.png" alt="Shadow AI Assistant"><span class="assistant-prism" aria-hidden="true"><span class="prism-face prism-face-left"></span><span class="prism-face prism-face-right"></span><span class="prism-face prism-face-top"></span></span><svg class="prism-wireframe" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 5 91 34 76 82 50 96 22 82 9 35 50 5ZM50 5 50 96M9 35 50 49 91 34M22 82 50 49 76 82M50 49 50 5" fill="none" stroke="rgba(255,255,255,.76)" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="assistant-name">Shadow AI Assistant</div></div>
+        <div class="welcome"><span class="welcome-kicker"><span class="welcome-pulse"></span>PRIVATE AI WORKSPACE</span><strong class="welcome-title">A clearer view of every security question.</strong><span class="welcome-copy">Ask naturally, attach a document or image, and Shadow AI checks content through the security gateway before it reaches the approved provider.</span></div>
+        <section class="starter-section" aria-label="Conversation starters">
+          <div class="starter-heading"><span>START A SECURE CONVERSATION</span><i></i><span>Choose a place to begin</span></div>
+          <div class="starter-grid">
+            <button class="starter-card" type="button" data-starter-prompt="Help me understand this security finding and suggest practical next steps: ">
+              <span class="starter-icon finding-icon">⌖</span><span class="starter-copy"><strong>Review a finding</strong><small>Understand risk and next steps</small></span><span class="starter-arrow">↗</span>
+            </button>
+            <button class="starter-card" type="button" data-starter-prompt="Summarize the key points in the document I attach.">
+              <span class="starter-icon document-icon">▤</span><span class="starter-copy"><strong>Summarize a document</strong><small>Attach a file in the composer</small></span><span class="starter-arrow">↗</span>
+            </button>
+            <button class="starter-card" type="button" data-starter-prompt="Explain what this IP address or URL may indicate: ">
+              <span class="starter-icon network-icon">⌁</span><span class="starter-copy"><strong>Explore an indicator</strong><small>Ask about an IP or URL</small></span><span class="starter-arrow">↗</span>
+            </button>
+          </div>
+        </section>
         <div class="messages" id="messages"></div><div style="height:18px;flex:0 0 18px"></div>
       </div>
 
@@ -701,18 +285,23 @@ body::before {
     </section>
   </main>
 
-  <aside class="rightbar">
-    <div class="side-card">
-      <div class="side-title">SECURITY INSIGHTS</div>
+  <button class="mobile-nav-backdrop" id="mobileNavBackdrop" type="button" aria-label="Close navigation" tabindex="-1"></button>
+  <button class="insights-backdrop" id="insightsBackdrop" type="button" aria-label="Close security insights" tabindex="-1"></button>
+  <aside class="rightbar" id="securityInsightsPanel" aria-label="Security insights">
+    <button class="insights-panel-close" id="insightsPanelClose" type="button" aria-label="Close security insights">Close insights <span aria-hidden="true">×</span></button>
+    <section class="side-card insight-card" aria-labelledby="insightsToggle">
+      <button class="side-title insight-toggle" id="insightsToggle" type="button" aria-expanded="false" aria-controls="insightsDetail">SECURITY INSIGHTS <span aria-hidden="true">＋</span></button>
       <div class="donut-row"><div class="donut" id="donut"></div><div class="total"><strong id="totalRequests">0</strong><span>Total Requests</span></div></div>
-      <div class="legend"><div class="legend-row"><span class="legend-dot" style="background:#49c95b"></span>Allowed <span class="legend-count" id="allowedCount">0</span></div><div class="legend-row"><span class="legend-dot" style="background:#f2a92f"></span>Sanitized <span class="legend-count" id="sanitizedCount">0</span></div><div class="legend-row"><span class="legend-dot" style="background:#f14f4f"></span>Blocked <span class="legend-count" id="blockedCount">0</span></div></div>
-    </div>
-    <div class="side-card"><div class="side-title">RECENT DETECTIONS</div><div class="recent" id="recentDetections"><div style="color:#71809a;font-size:12px;padding:10px 0">No detections in this session.</div></div></div>
-    <div class="side-card"><div class="side-title">GATEWAY STATS</div><div class="stats"><div class="stat-row">PII Detections <strong id="piiCount">0</strong></div><div class="stat-row">Secrets Detections <strong id="secretCount">0</strong></div><div class="stat-row">OCR Analyses <strong id="ocrCount">0</strong></div><div class="stat-row">Files Processed <strong id="filesCount">0</strong></div><div class="stat-row">Images Processed <strong id="imagesCount">0</strong></div></div></div>
-    <div class="side-card"><div class="side-title">ACTIVE POLICIES</div><div class="policy-row">PII Detection <span class="active-badge">Active</span></div><div class="policy-row">Credential Detection <span class="active-badge">Active</span></div><div class="policy-row">Prompt Injection Guard <span class="active-badge">Active</span></div><div class="policy-row">Output Inspection <span class="active-badge">Active</span></div></div>
+      <div class="legend"><div class="legend-row"><span class="legend-dot" style="background:var(--success)"></span>Allowed <span class="legend-count" id="allowedCount">0</span></div><div class="legend-row"><span class="legend-dot" style="background:var(--warning)"></span>Sanitized <span class="legend-count" id="sanitizedCount">0</span></div><div class="legend-row"><span class="legend-dot" style="background:var(--critical)"></span>Blocked <span class="legend-count" id="blockedCount">0</span></div></div>
+      <div class="insight-detail" id="insightsDetail" hidden><p>Current browser session decision mix. A request is counted after the gateway returns its security analysis.</p><div class="insight-detail-stats"><span>Checked <b id="insightChecked">0</b></span><span>Awaiting review <b id="reviewCount">0</b></span></div><a href="/views/security-policy-summary.html">View saved security posture <span aria-hidden="true">↗</span></a></div>
+    </section>
+    <section class="side-card insight-card" aria-labelledby="detectionsToggle"><button class="side-title insight-toggle" id="detectionsToggle" type="button" aria-expanded="false" aria-controls="detectionsDetail">RECENT DETECTIONS <span aria-hidden="true">＋</span></button><div class="recent" id="recentDetections"><div class="insight-empty">No detections in this session.</div></div><div class="insight-detail" id="detectionsDetail" hidden><p>Findings from the latest gateway analysis in this browser session. Select a finding to inspect the available record fields.</p><div id="detectionDetailRows" class="detection-detail-rows"></div></div></section>
+    <section class="side-card insight-card" aria-labelledby="gatewayStatsToggle"><button class="side-title insight-toggle" id="gatewayStatsToggle" type="button" aria-expanded="false" aria-controls="gatewayStatsDetail">GATEWAY STATS <span aria-hidden="true">＋</span></button><div class="stats"><div class="stat-row">PII Detections <strong id="piiCount">0</strong></div><div class="stat-row">Secrets Detections <strong id="secretCount">0</strong></div><div class="stat-row">OCR Analyses <strong id="ocrCount">0</strong></div><div class="stat-row">Files Processed <strong id="filesCount">0</strong></div><div class="stat-row">Images Processed <strong id="imagesCount">0</strong></div></div><div class="insight-detail" id="gatewayStatsDetail" hidden><p>Counts are derived from gateway responses received in this browser session; they reset when the page session ends.</p><div class="stats-chart" id="gatewayStatsChart" aria-label="Session gateway activity"></div><a href="/views/dashboard.html">Open saved activity dashboard <span aria-hidden="true">↗</span></a></div></section>
+    <section class="side-card insight-card" aria-labelledby="policiesToggle"><button class="side-title insight-toggle" id="policiesToggle" type="button" aria-expanded="false" aria-controls="policiesDetail">GATEWAY POLICY CHECKS <span aria-hidden="true">＋</span></button><div class="policy-row">Sensitive-data detection <span class="policy-state">Input</span></div><div class="policy-row">Credential detection <span class="policy-state">Input</span></div><div class="policy-row">Prompt-injection detection <span class="policy-state">Input</span></div><div class="policy-row">Risk-based review <span class="policy-state">Analyst</span></div><div class="insight-detail" id="policiesDetail" hidden><p>These checks reflect the current gateway detection and risk-review flow. The browser does not infer backend runtime status.</p><a href="/views/policy-management.html">Inspect policy details <span aria-hidden="true">↗</span></a></div></section>
   </aside>
 </div>
 <div id="toast"></div>
+<dialog class="finding-dialog" id="findingDialog" aria-labelledby="findingDialogTitle"><form method="dialog"><button class="dialog-close" aria-label="Close finding details">×</button></form><div class="dialog-eyebrow">GATEWAY FINDING</div><h2 id="findingDialogTitle">Finding details</h2><div id="findingDialogBody"></div></dialog>
 <script>
 const $=id=>document.getElementById(id);
 const LOGIN_URL='/';
@@ -744,9 +333,10 @@ async function logout(){
 function scrollBottom(smooth=true){requestAnimationFrame(()=>{const el=$('mainScroll');el.scrollTo({top:el.scrollHeight,behavior:smooth?'smooth':'auto'});updateScrollButton()})}
 function updateScrollButton(){const el=$('mainScroll');const distance=el.scrollHeight-el.clientHeight-el.scrollTop;const btn=$('scrollDown');if(btn)btn.classList.toggle('show',distance>120)}
 function scrollToLatest(){const el=$('mainScroll');el.scrollTo({top:el.scrollHeight,behavior:'smooth'});setTimeout(updateScrollButton,350)}
-function resetConversation(){currentSessionId=null;sessionStorage.removeItem('shadow_ai_session_id');selectedFile=null;$('fileInput').value='';$('message').value='';$('messages').innerHTML='';clearAttachment();$('mainScroll').scrollTop=0;updateScrollButton();toast('New secure chat started');}
+function setStarterVisible(visible){const starter=document.querySelector('.starter-section');if(starter)starter.hidden=!visible}
+function resetConversation(){currentSessionId=null;sessionStorage.removeItem('shadow_ai_session_id');selectedFile=null;$('fileInput').value='';$('message').value='';$('messages').innerHTML='';setStarterVisible(true);clearAttachment();$('mainScroll').scrollTop=0;if(typeof setMobileNav==='function')setMobileNav(false);updateScrollButton();toast('New secure chat started');}
 function clearAttachment(){selectedFile=null;$('fileInput').value='';$('composerFile').classList.remove('show');$('composerFileName').textContent=''}
-function appendUserMessage(text,fileName,fileSize){const wrap=document.createElement('div');wrap.className='user-message';let file='';if(fileName){file=`<div class="attachment"><div class="file-icon">▣</div><div><div class="file-name">${escapeHtml(fileName)}</div><div class="file-size">${escapeHtml(fileSize||'')}</div></div></div>`}wrap.innerHTML=`<div class="message-text">${escapeHtml(text).replace(/\n/g,'<br>')}</div>${file}<div class="message-meta">Now ✓✓</div>`;$('messages').appendChild(wrap);scrollBottom()}
+function appendUserMessage(text,fileName,fileSize){setStarterVisible(false);const wrap=document.createElement('div');wrap.className='user-message';let file='';if(fileName){file=`<div class="attachment"><div class="file-icon">▣</div><div><div class="file-name">${escapeHtml(fileName)}</div><div class="file-size">${escapeHtml(fileSize||'')}</div></div></div>`}wrap.innerHTML=`<div class="message-text">${escapeHtml(text).replace(/\n/g,'<br>')}</div>${file}<div class="message-meta">Now ✓✓</div>`;$('messages').appendChild(wrap);scrollBottom()}
 function riskClass(level){return level==='CRITICAL'?'critical':level==='HIGH'?'high':level==='MEDIUM'?'medium':''}
 function findingLabel(type){const map={PASSWORD:'Credential (Password)',API_KEY_LIKE:'API Key',CREDIT_CARD:'Credit Card Number',DATABASE_CREDENTIAL:'Database Credential',IP_ADDRESS:'Internal IP Address',EMAIL:'Email Address',PHONE:'Phone Number',PHONE_NUMBER:'Phone Number',EMPLOYEE_ID:'Employee ID',PERSON:'Person',LOCATION:'Location',URL:'URL',DATE_TIME:'Date / Time'};return map[type]||String(type||'').replaceAll('_',' ')}
 function findingIcon(type){const map={PASSWORD:'⌕',API_KEY_LIKE:'⚿',CREDIT_CARD:'▣',DATABASE_CREDENTIAL:'▤',IP_ADDRESS:'⊕',EMAIL:'✉',PHONE:'☎',PHONE_NUMBER:'☎',EMPLOYEE_ID:'▣',PERSON:'●',LOCATION:'⌖',URL:'↗',DATE_TIME:'◷'};return map[type]||'•'}
@@ -762,12 +352,13 @@ function renderHitl(data){
  const card=document.createElement('div');card.className='warning-wrap';card.innerHTML=`<div class="hitl-card ${cls}"><div class="warning-head"><div class="warning-icon">${warningIcon}</div><div><div class="warning-title">${warningTitle}</div><div class="warning-desc">${warningDesc}</div></div></div><div class="hitl-inner"><div class="findings">${rows||'<div class="finding"><span class="finding-name">Sensitive content detected</span><span class="finding-detected">Detected</span></div>'}</div><div class="risk-box"><div class="risk-label">RISK SCORE</div><div class="risk-gauge" style="--risk-angle:${angle}deg"><div class="risk-number">${escapeHtml(score)}</div></div><div class="risk-level">${escapeHtml(level)} Risk</div></div></div><div class="action-question">What would you like to do?</div><div class="decision-row"><button class="decision-btn allow-button" onclick="submitDecision('ALLOW')">✓ &nbsp; ALLOW<small>Send as it is</small></button><button class="decision-btn sanitize-button" onclick="submitDecision('SANITIZE_AND_SEND')">⬡ &nbsp; SANITIZE &amp; SEND<small>Remove sensitive data<br>and send</small></button><button class="decision-btn block-button" onclick="submitDecision('BLOCK')">× &nbsp; BLOCK<small>Do not send<br>anything</small></button></div></div><div class="security-note">🔒 &nbsp;Nothing will be sent to the AI until you choose an option.</div>`;
  $('messages').appendChild(card);scrollBottom();
 }
-function renderAi(data){const text=data?.ai_response?.response||data?.response||'';if(!text)return;const wrap=document.createElement('div');wrap.className='assistant-head';wrap.style.marginTop='12px';wrap.innerHTML='<div class="assistant-avatar"><img src="/assets/shadow-ai-avatar.png" alt="Shadow AI Assistant"></div><div class="assistant-name">Shadow AI Assistant</div>';const bubble=document.createElement('div');bubble.className='welcome';bubble.style.marginTop='0';bubble.innerHTML=escapeHtml(text).replace(/\n/g,'<br>');$('messages').appendChild(wrap);$('messages').appendChild(bubble);scrollBottom()}
-function renderBlocked(){const card=document.createElement('div');card.className='warning-wrap';card.innerHTML='<div class="hitl-card critical"><div class="warning-head"><div class="warning-icon">!</div><div><div class="warning-title">🚨 Request Blocked</div><div class="warning-desc">The request was stopped. No AI call was made.</div></div></div></div><div class="security-note">🔒 &nbsp;No content was forwarded to the AI provider.</div>';$('messages').appendChild(card);scrollBottom()}
-function updateStats(data,decision){stats.total++;if(decision==='ALLOW')stats.allowed++;if(decision==='SANITIZE_AND_SEND')stats.sanitized++;if(decision==='BLOCK')stats.blocked++;(data.findings||[]).forEach(f=>{if(sensitiveTypes.has(f.type))stats.pii++;if(secretTypes.has(f.type))stats.secrets++});if(data.input_type==='IMAGE')stats.images++;if(data.input_type&&data.input_type!=='TEXT')stats.files++;$('totalRequests').textContent=stats.total;$('allowedCount').textContent=stats.allowed;$('sanitizedCount').textContent=stats.sanitized;$('blockedCount').textContent=stats.blocked;$('piiCount').textContent=stats.pii;$('secretCount').textContent=stats.secrets;$('ocrCount').textContent=stats.ocr;$('filesCount').textContent=stats.files;$('imagesCount').textContent=stats.images;const recent=$('recentDetections');const fs=(data.findings||[]).slice(0,5);if(fs.length){recent.innerHTML=fs.map(f=>`<div class="recent-row"><span class="recent-dot ${f.type==='EMAIL'?'yellow':''}"></span><span class="recent-name">${escapeHtml(findingLabel(f.type))}</span><span class="recent-time">Now</span></div>`).join('')}}
-function updateDonut(){const total=stats.total||1;const a=stats.allowed/total*100,s=stats.sanitized/total*100;const start2=a,start3=a+s;$('donut').style.background=`conic-gradient(#49c95b 0 ${a}%,#f2a92f ${start2}% ${start3}%,#f14f4f ${start3}% 100%)`}
-async function scanText(){const text=$('message').value.trim();if(!text&&!selectedFile){toast('Enter a message or attach a file');return}const btn=$('sendBtn');btn.disabled=true;currentSessionId='web-ui-'+Date.now();sessionStorage.setItem('shadow_ai_session_id',currentSessionId);appendUserMessage(text||'Analyze this file.',selectedFile?.name,selectedFile?formatBytes(selectedFile.size):'');$('message').value='';try{let response,data;if(selectedFile){const fd=new FormData();fd.append('file',selectedFile);fd.append('session_id',currentSessionId);response=await fetch('/gateway/scan-file',{method:'POST',body:fd})}else{const fd=new URLSearchParams();fd.append('session_id',currentSessionId);fd.append('text',text);response=await fetch('/gateway/scan',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:fd.toString()})}if(response.status===401){goToLogin();return}data=await response.json();if(!response.ok)throw new Error(data.detail||'Gateway request failed.');updateStats(data,data.policy.decision);updateDonut();if(data.policy.decision==='HITL'){renderHitl(data);toast(data.policy.risk_level+' risk — human review required')}else if(data.policy.decision==='ALLOW'){toast('Request allowed');renderAi(data)}else if(data.policy.decision==='BLOCK'){toast('Request blocked by security policy');renderBlocked(data)}}catch(err){toast(err.message||'Gateway request failed')}finally{btn.disabled=false;clearAttachment()}}
-async function submitDecision(decision){if(!currentSessionId){toast('No active Shadow AI session. Please send the message again.');return;}document.querySelectorAll('.decision-btn').forEach(b=>b.disabled=true);try{const fd=new URLSearchParams();fd.append('session_id',currentSessionId);fd.append('decision',decision);const response=await fetch('/gateway/hitl',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:fd.toString()});if(response.status===401){goToLogin();return}const data=await response.json();if(!response.ok)throw new Error(data.detail||'HITL request failed.');sessionStorage.removeItem('shadow_ai_session_id');
+function renderAi(data){if(window.setAssistantState)window.setAssistantState('responding');const text=data?.ai_response?.response||data?.response||'';if(!text)return;const wrap=document.createElement('div');wrap.className='assistant-head';wrap.style.marginTop='12px';wrap.innerHTML='<div class="assistant-avatar" data-state="responding"><img src="/assets/shadow-ai-avatar.png" alt="Shadow AI Assistant"><span class="assistant-prism" aria-hidden="true"><span class="prism-face prism-face-left"></span><span class="prism-face prism-face-right"></span><span class="prism-face prism-face-top"></span></span><svg class="prism-wireframe" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 5 91 34 76 82 50 96 22 82 9 35 50 5ZM50 5 50 96M9 35 50 49 91 34M22 82 50 49 76 82M50 49 50 5" fill="none" stroke="rgba(255,255,255,.76)" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="assistant-name">Shadow AI Assistant</div>';const bubble=document.createElement('div');bubble.className='welcome assistant-bubble-entrance';bubble.style.marginTop='0';bubble.innerHTML=escapeHtml(text).replace(/\n/g,'<br>');$('messages').appendChild(wrap);$('messages').appendChild(bubble);scrollBottom()}
+function renderBlocked(){if(window.setAssistantState)window.setAssistantState('idle');const card=document.createElement('div');card.className='warning-wrap';card.innerHTML='<div class="hitl-card critical"><div class="warning-head"><div class="warning-icon">!</div><div><div class="warning-title">🚨 Request Blocked</div><div class="warning-desc">The request was stopped. No AI call was made.</div></div></div></div><div class="security-note">🔒 &nbsp;No content was forwarded to the AI provider.</div>';$('messages').appendChild(card);scrollBottom()}
+function updateStats(data,decision){stats.total++;if(decision==='ALLOW')stats.allowed++;if(decision==='SANITIZE_AND_SEND')stats.sanitized++;if(decision==='BLOCK')stats.blocked++;(data.findings||[]).forEach(f=>{if(sensitiveTypes.has(f.type))stats.pii++;if(secretTypes.has(f.type))stats.secrets++});if(data.input_type==='IMAGE'){stats.images++;if(data.ocr_used)stats.ocr++}if(data.input_type&&data.input_type!=='TEXT')stats.files++;$('totalRequests').textContent=stats.total;$('insightChecked').textContent=stats.total;$('allowedCount').textContent=stats.allowed;$('sanitizedCount').textContent=stats.sanitized;$('blockedCount').textContent=stats.blocked;$('reviewCount').textContent=stats.total-stats.allowed-stats.sanitized-stats.blocked;$('piiCount').textContent=stats.pii;$('secretCount').textContent=stats.secrets;$('ocrCount').textContent=stats.ocr;$('filesCount').textContent=stats.files;$('imagesCount').textContent=stats.images;window.__shadowLatestFindings=data.findings||[];const recent=$('recentDetections');const fs=window.__shadowLatestFindings.slice(0,5);if(fs.length){const at=Number(data.timestamp);const when=at?new Date(at*1000).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}):'Now';recent.innerHTML=fs.map((f,i)=>`<button class="recent-row" type="button" data-finding-index="${i}" aria-label="Inspect ${escapeHtml(findingLabel(f.type))}"><span class="recent-dot ${f.type==='EMAIL'?'yellow':''}"></span><span class="recent-name">${escapeHtml(findingLabel(f.type))}</span><span class="recent-time">${escapeHtml(when)} · ${escapeHtml(data.policy?.risk_level||'')}</span></button>`).join('');$('detectionDetailRows').innerHTML=fs.map((f,i)=>`<button class="detection-detail-button" type="button" data-finding-index="${i}">${escapeHtml(findingLabel(f.type))}<span>Inspect record ↗</span></button>`).join('')}else{recent.innerHTML='<div class="insight-empty">No findings were returned for the latest request.</div>';$('detectionDetailRows').innerHTML='<div class="insight-empty">No finding records are available.</div>'}renderGatewayActivity()}
+function renderGatewayActivity(){const values=[['Allowed',stats.allowed,'var(--prism-green)'],['Sanitized',stats.sanitized,'var(--prism-amber)'],['Blocked',stats.blocked,'var(--prism-red)'],['PII findings',stats.pii,'var(--prism-violet)'],['Secrets',stats.secrets,'var(--prism-cyan)']];const max=Math.max(1,...values.map(([,v])=>v));$('gatewayStatsChart').innerHTML=values.map(([name,value,color])=>`<div class="activity-row"><span>${name}</span><div class="activity-track"><i style="--activity-width:${Math.max(value?5:0,value/max*100)}%;--activity-color:${color}"></i></div><strong>${value}</strong></div>`).join('')}
+function updateDonut(){if(!stats.total){$('donut').style.background='conic-gradient(var(--line) 0 100%)';return}const total=stats.total;const a=stats.allowed/total*100,s=stats.sanitized/total*100,b=stats.blocked/total*100;const start2=a,start3=a+s,start4=a+s+b;$('donut').style.background=`conic-gradient(var(--prism-green) 0 ${a}%,var(--prism-amber) ${start2}% ${start3}%,var(--prism-red) ${start3}% ${start4}%,var(--prism-cyan) ${start4}% 100%)`}
+async function scanText(){const text=$('message').value.trim();if(!text&&!selectedFile){toast('Enter a message or attach a file');return}const btn=$('sendBtn');btn.disabled=true;if(window.setAssistantState)window.setAssistantState('thinking');currentSessionId='web-ui-'+Date.now();sessionStorage.setItem('shadow_ai_session_id',currentSessionId);appendUserMessage(text||'Analyze this file.',selectedFile?.name,selectedFile?formatBytes(selectedFile.size):'');$('message').value='';try{let response,data;if(selectedFile){const fd=new FormData();fd.append('file',selectedFile);fd.append('session_id',currentSessionId);response=await fetch('/gateway/scan-file',{method:'POST',body:fd})}else{const fd=new URLSearchParams();fd.append('session_id',currentSessionId);fd.append('text',text);response=await fetch('/gateway/scan',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:fd.toString()})}if(response.status===401){if(window.setAssistantState)window.setAssistantState('idle');goToLogin();return}data=await response.json();if(!response.ok)throw new Error(data.detail||'Gateway request failed.');updateStats(data,data.policy.decision);updateDonut();if(data.policy.decision==='HITL'){if(window.setAssistantState)window.setAssistantState('idle');renderHitl(data);toast(data.policy.risk_level+' risk — human review required')}else if(data.policy.decision==='ALLOW'){if(window.setAssistantState)window.setAssistantState('responding');toast('Request allowed');renderAi(data)}else if(data.policy.decision==='BLOCK'){if(window.setAssistantState)window.setAssistantState('idle');toast('Request blocked by security policy');renderBlocked(data)}}catch(err){if(window.setAssistantState)window.setAssistantState('idle');toast(err.message||'Gateway request failed')}finally{btn.disabled=false;clearAttachment()}}
+async function submitDecision(decision){if(!currentSessionId){toast('No active Shadow AI session. Please send the message again.');return;}document.querySelectorAll('.decision-btn').forEach(b=>b.disabled=true);if(decision==='ALLOW'||decision==='SANITIZE_AND_SEND'){if(window.setAssistantState)window.setAssistantState('thinking');}else{if(window.setAssistantState)window.setAssistantState('idle');}try{const fd=new URLSearchParams();fd.append('session_id',currentSessionId);fd.append('decision',decision);const response=await fetch('/gateway/hitl',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:fd.toString()});if(response.status===401){if(window.setAssistantState)window.setAssistantState('idle');goToLogin();return}const data=await response.json();if(!response.ok)throw new Error(data.detail||'HITL request failed.');sessionStorage.removeItem('shadow_ai_session_id');
 document.querySelectorAll('.hitl-card').forEach(card => {
     const wrapper = card.closest('.warning-wrap');
     if (wrapper) {
@@ -776,7 +367,7 @@ document.querySelectorAll('.hitl-card').forEach(card => {
         card.remove();
     }
 });
-if(decision==='SANITIZE_AND_SEND'&&data.sanitized_text){const p=document.createElement('div');p.className='warning-wrap';p.innerHTML=`<div class="side-card" style="margin-top:10px"><div class="side-title">WHAT AI WILL RECEIVE</div><pre style="white-space:pre-wrap;color:#d8e0ee;margin:0;font-family:inherit;font-size:13px">${escapeHtml(data.sanitized_text)}</pre></div>`;$('messages').appendChild(p)}if(decision==='BLOCK'){stats.blocked++;$('blockedCount').textContent=stats.blocked;toast('Request blocked — no AI call');renderBlocked()}else if(decision==='SANITIZE_AND_SEND'){stats.sanitized++;$('sanitizedCount').textContent=stats.sanitized;toast('Sanitized request sent to AI');renderAi(data)}else{stats.allowed++;$('allowedCount').textContent=stats.allowed;toast('Original request sent to AI');renderAi(data)}updateDonut();scrollBottom()}catch(err){toast(err.message||'HITL request failed');document.querySelectorAll('.decision-btn').forEach(b=>b.disabled=false)}}
+if(decision==='SANITIZE_AND_SEND'&&data.sanitized_text){const p=document.createElement('div');p.className='warning-wrap';p.innerHTML=`<div class="side-card" style="margin-top:10px"><div class="side-title">WHAT AI WILL RECEIVE</div><pre style="white-space:pre-wrap;color:var(--ink-soft);margin:0;font-family:inherit;font-size:13px">${escapeHtml(data.sanitized_text)}</pre></div>`;$('messages').appendChild(p)}if(decision==='BLOCK'){stats.blocked++;$('blockedCount').textContent=stats.blocked;if(window.setAssistantState)window.setAssistantState('idle');toast('Request blocked — no AI call');renderBlocked()}else if(decision==='SANITIZE_AND_SEND'){stats.sanitized++;$('sanitizedCount').textContent=stats.sanitized;if(window.setAssistantState)window.setAssistantState('responding');toast('Sanitized request sent to AI');renderAi(data)}else{stats.allowed++;$('allowedCount').textContent=stats.allowed;if(window.setAssistantState)window.setAssistantState('responding');toast('Original request sent to AI');renderAi(data)}updateDonut();scrollBottom()}catch(err){if(window.setAssistantState)window.setAssistantState('idle');toast(err.message||'HITL request failed');document.querySelectorAll('.decision-btn').forEach(b=>b.disabled=false)}}
 function formatBytes(bytes){if(bytes<1024)return bytes+' B';if(bytes<1024*1024)return(bytes/1024).toFixed(1)+' KB';return(bytes/1024/1024).toFixed(2)+' MB'}
 $('sendBtn').addEventListener('click',scanText);$('scrollDown').addEventListener('click',scrollToLatest);$('mainScroll').addEventListener('scroll',updateScrollButton,{passive:true});window.addEventListener('resize',updateScrollButton);$('newChat').addEventListener('click',resetConversation);$('plusBtn').addEventListener('click',()=>$('fileInput').click());$('attachBtn').addEventListener('click',()=>$('fileInput').click());$('clearFile').addEventListener('click',clearAttachment);$('fileInput').addEventListener('change',e=>{selectedFile=e.target.files[0]||null;if(selectedFile){$('composerFileName').textContent=selectedFile.name;$('composerFile').classList.add('show');toast('Attached: '+selectedFile.name)}});$('message').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();scanText()}});$('message').addEventListener('input',e=>{e.target.style.height='42px';e.target.style.height=Math.min(e.target.scrollHeight,120)+'px'});/* SHADOW AI PAGE NAVIGATION — routes to real HTML views */
 const shadowRoutes={
@@ -798,10 +389,6 @@ const shadowRoutes={
   "Threat Detection":"views/threat-detection.html",
   "Risk Engine":"views/risk-engine.html",
   "Approved AI Provider":"views/ai-provider.html",
-  "SECURITY INSIGHTS":"views/security-insights.html",
-  "RECENT DETECTIONS":"views/recent-detections.html",
-  "GATEWAY STATS":"views/gateway-stats.html",
-  "ACTIVE POLICIES":"views/active-policies.html"
 };
 function navigateShadowPage(label){
   const route=shadowRoutes[String(label||'').trim()];
@@ -821,15 +408,117 @@ document.querySelectorAll('.topbar .status-pill').forEach(item=>{
 });
 const provider=document.querySelector('.provider');
 if(provider){provider.style.cursor='pointer';provider.addEventListener('click',()=>navigateShadowPage('Approved AI Provider'));}
-document.querySelectorAll('.rightbar .side-card').forEach(card=>{
-  card.style.cursor='pointer';
-  card.addEventListener('click',()=>{
-    const title=card.querySelector('.side-title');
-    if(title)navigateShadowPage(title.textContent.trim());
-  });
+document.querySelectorAll('.insight-toggle').forEach(button=>button.addEventListener('click',()=>{
+  const open=button.getAttribute('aria-expanded')!=='true';
+  button.setAttribute('aria-expanded',String(open));
+  const panel=$(button.getAttribute('aria-controls'));
+  if(panel)panel.hidden=!open;
+  const symbol=button.querySelector('span[aria-hidden="true"]');
+  if(symbol)symbol.textContent=open?'−':'＋';
+}));
+const SHADOW_URL_PATTERN = /(https?:\/\/[^\s<>\"']+|www\.[^\s<>\"']+|[a-zA-Z0-9-]+\.(?:com|org|net|io|dev|ai|app|co|edu|gov|xyz|info|biz|me|cc|tv|online|ly|site|top|live|club|icu|pro|security)(?::\d+)?(?:\/[^\s<>\"']*)?)/gi;
+function isUrlLike(val){if(!val||typeof val!=='string')return false;const t=val.trim();return /^(https?:\/\/|www\.|\/\/|ftp:\/\/)[^\s]+$/i.test(t)||/^[a-zA-Z0-9-]+\.(?:com|org|net|io|dev|ai|app|co|edu|gov|xyz|info|biz|me|cc|tv|online|ly|site|top|live|club|icu|pro|security)(?::\d+)?(?:\/[^\s]*)?$/i.test(t)}
+function sanitizePopupUrls(text){if(!text||typeof text!=='string')return text;return text.replace(SHADOW_URL_PATTERN,'[URL Hidden for Security]')}
+document.addEventListener('click',event=>{
+  const row=event.target.closest('[data-finding-index]');
+  if(!row)return;
+  const finding=window.__shadowLatestFindings?.[Number(row.dataset.findingIndex)];
+  if(!finding)return;
+  const title=findingLabel(finding.type);
+  $('findingDialogTitle').textContent=sanitizePopupUrls(title);
+  const rawFields=[['Category',finding.type],['Severity',finding.severity],['Confidence',finding.confidence],['Source',finding.source],['Detected at',finding.timestamp||finding.created_at]];
+  if(finding.location)rawFields.push(['Location',finding.location]);
+  if(finding.document_source)rawFields.push(['Document',finding.document_source]);
+  const safeFields=rawFields.filter(([label,value])=>{
+    if(value===undefined||value===null||value==='')return false;
+    const l=String(label).toLowerCase();
+    if(l==='url'||l==='target url'||l==='link'||l==='url preview')return false;
+    if(finding.type==='URL'&&(l==='value'||l==='match'||l==='text'||l==='content'))return false;
+    if(isUrlLike(String(value)))return false;
+    return true;
+  }).map(([label,value])=>[label,sanitizePopupUrls(String(value))]);
+  const dialogBody=$('findingDialogBody');
+  dialogBody.innerHTML=safeFields.map(([label,value])=>`<div class="finding-detail-row"><span>${escapeHtml(label)}</span><strong>${escapeHtml(value)}</strong></div>`).join('')||'<p>Only the finding category was returned for this record.</p>';
+  const dialogEl=$('findingDialog');
+  dialogEl.querySelectorAll('a').forEach(a=>{const h=a.getAttribute('href')||'',t=a.textContent||'';if(isUrlLike(h)||isUrlLike(t)||SHADOW_URL_PATTERN.test(h)||SHADOW_URL_PATTERN.test(t))a.replaceWith(document.createTextNode('[URL Hidden for Security]'))});
+  dialogEl.querySelectorAll('[title]').forEach(el=>{const t=el.getAttribute('title')||'';if(SHADOW_URL_PATTERN.test(t))el.setAttribute('title',sanitizePopupUrls(t))});
+  dialogEl.showModal();
 });
-$('themeBtn').addEventListener('click',()=>toast('Dark security workspace active'));
+$('findingDialog')?.addEventListener('click',e=>{if(e.target===$('findingDialog'))$('findingDialog').close()});
 $('userBox').addEventListener('click',logout);$('userBox').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();logout()}});
+const mobileNavToggle=$('mobileNavToggle'),mobileNavBackdrop=$('mobileNavBackdrop');
+const insightsPanelToggle=$('insightsPanelToggle'),insightsPanel=$('securityInsightsPanel'),insightsBackdrop=$('insightsBackdrop'),insightsPanelClose=$('insightsPanelClose');
+const insightsDrawerMedia=window.matchMedia('(max-width: 1180px)');
+const chatMain=document.querySelector('.app > .main'),primaryNavigation=$('primaryNavigation');
+function setInsightsOpen(open){
+  const active=Boolean(open),wasOpen=insightsPanelToggle.getAttribute('aria-expanded')==='true';
+  if(active&&mobileNavToggle.getAttribute('aria-expanded')==='true')setMobileNav(false);
+  insightsPanel.classList.toggle('is-open',active);
+  insightsBackdrop.classList.toggle('is-open',active);
+  insightsBackdrop.tabIndex=active?0:-1;
+  insightsPanelToggle.setAttribute('aria-expanded',String(active));
+  insightsPanelToggle.setAttribute('aria-label',active?'Close security insights':'Open security insights');
+  const modal=insightsDrawerMedia.matches;
+  insightsPanel.inert=modal&&!active;
+  insightsPanel.setAttribute('aria-hidden',String(modal&&!active));
+  chatMain.inert=modal&&active;
+  primaryNavigation.inert=modal&&active;
+  if(modal){insightsPanel.setAttribute('role','dialog');insightsPanel.setAttribute('aria-modal','true')}
+  else{insightsPanel.removeAttribute('role');insightsPanel.removeAttribute('aria-modal')}
+  if(active)insightsPanelClose.focus({preventScroll:true});
+  else if(wasOpen&&getComputedStyle(insightsPanelToggle).display!=='none')insightsPanelToggle.focus({preventScroll:true});
+}
+function setMobileNav(open){
+  const active=Boolean(open);
+  const wasOpen=mobileNavToggle.getAttribute('aria-expanded')==='true';
+  if(active&&insightsPanelToggle.getAttribute('aria-expanded')==='true')setInsightsOpen(false);
+  document.querySelector('.app').classList.toggle('mobile-nav-open',active);
+  document.querySelector('.sidebar').classList.toggle('is-open',active);
+  mobileNavBackdrop.classList.toggle('is-open',active);
+  mobileNavBackdrop.tabIndex=active?0:-1;
+  chatMain.inert=window.matchMedia('(max-width: 760px)').matches&&active;
+  primaryNavigation.inert=false;
+  insightsPanel.inert=insightsDrawerMedia.matches&&(active||insightsPanelToggle.getAttribute('aria-expanded')!=='true');
+  if(insightsDrawerMedia.matches)insightsPanel.setAttribute('aria-hidden',String(insightsPanel.inert));
+  mobileNavToggle.setAttribute('aria-expanded',String(active));
+  mobileNavToggle.setAttribute('aria-label',active?'Close navigation':'Open navigation');
+  if(active)document.querySelector('.sidebar .new-chat,.sidebar .nav-item')?.focus({preventScroll:true});
+  if(!active&&wasOpen&&getComputedStyle(mobileNavToggle).display!=='none')mobileNavToggle.focus({preventScroll:true});
+}
+mobileNavToggle.addEventListener('click',()=>setMobileNav(mobileNavToggle.getAttribute('aria-expanded')!=='true'));
+mobileNavBackdrop.addEventListener('click',()=>setMobileNav(false));
+insightsPanelToggle.addEventListener('click',()=>setInsightsOpen(insightsPanelToggle.getAttribute('aria-expanded')!=='true'));
+insightsPanelClose.addEventListener('click',()=>setInsightsOpen(false));
+insightsBackdrop.addEventListener('click',()=>setInsightsOpen(false));
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){
+    if(insightsPanelToggle.getAttribute('aria-expanded')==='true')setInsightsOpen(false);
+    else if(mobileNavToggle.getAttribute('aria-expanded')==='true')setMobileNav(false);
+    return;
+  }
+  if(e.key!=='Tab')return;
+  const scope=insightsPanelToggle.getAttribute('aria-expanded')==='true'?insightsPanel:mobileNavToggle.getAttribute('aria-expanded')==='true'?primaryNavigation:null;
+  if(!scope)return;
+  const focusable=[...scope.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),textarea:not([disabled]),select:not([disabled]),[tabindex]:not([tabindex="-1"])')].filter(el=>el.getClientRects().length);
+  if(!focusable.length){e.preventDefault();scope.focus();return;}
+  const first=focusable[0],last=focusable[focusable.length-1];
+  if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+  else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+});
+function syncPanelAccessibility(){
+  if(!insightsDrawerMedia.matches){insightsPanel.classList.remove('is-open');insightsBackdrop.classList.remove('is-open');insightsPanelToggle.setAttribute('aria-expanded','false');insightsPanel.setAttribute('aria-hidden','false');insightsPanel.inert=false;}
+  else if(insightsPanelToggle.getAttribute('aria-expanded')!=='true'){insightsPanel.setAttribute('aria-hidden','true');insightsPanel.inert=true;}
+}
+window.addEventListener('resize',()=>{if(innerWidth>760)setMobileNav(false);if(innerWidth>1180)setInsightsOpen(false);syncPanelAccessibility()},{passive:true});
+insightsDrawerMedia.addEventListener('change',syncPanelAccessibility);
+syncPanelAccessibility();
+document.querySelectorAll('[data-starter-prompt]').forEach(button=>button.addEventListener('click',()=>{
+  const field=$('message');
+  field.value=button.dataset.starterPrompt||'';
+  field.dispatchEvent(new Event('input',{bubbles:true}));
+  field.focus({preventScroll:true});
+  document.querySelector('.composer').scrollIntoView({behavior:'smooth',block:'end'});
+}));
 updateScrollButton();loadUser();
 </script>
 
@@ -884,7 +573,7 @@ updateScrollButton();loadUser();
 
     let w = 0, h = 0, stars = [], raf = 0;
     const spacing = 125;
-    const colors = ["80,255,170", "110,230,190", "180,255,220"];
+    const colors = ["200,179,169", "217,169,174", "185,130,139"];
 
     function resize() {
         const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -932,7 +621,7 @@ updateScrollButton();loadUser();
 
                 if (d < spacing) {
                     const alpha = (1 - d / spacing) * .32;
-                    ctx.strokeStyle = `rgba(100,255,175,${alpha})`;
+                    ctx.strokeStyle = `rgba(217,169,174,${alpha * .65})`;
                     ctx.lineWidth = .65;
                     ctx.beginPath();
                     ctx.moveTo(a.x, a.y);
@@ -948,7 +637,7 @@ updateScrollButton();loadUser();
             ctx.arc(s.x, s.y, s.r * pulse, 0, Math.PI * 2);
             ctx.fillStyle = `rgba(${s.color},${.72 + pulse * .25})`;
             ctx.shadowBlur = 8;
-            ctx.shadowColor = "rgba(80,255,170,.7)";
+            ctx.shadowColor = "rgba(217,169,174,.45)";
             ctx.fill();
         }
 

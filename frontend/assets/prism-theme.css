@@ -1,0 +1,169 @@
+/* Shared semantic component colors. Layout and page structure live elsewhere. */
+html, body { color: var(--ink); background-color: var(--page); }
+body { accent-color: var(--accent); }
+
+body :where(h1, h2, h3, h4, .title, .assistant-name, .welcome-title) { color: var(--ink); }
+body :where(p, label, .sub, .hint, .muted, .small-label, .tsub, .tilesub, .foot, .footer, .empty, .notice) { color: var(--ink-soft); }
+body :where(.muted, .hint, .small-label, .tsub, .tilesub, .foot, .footer, .empty, .notice, .field-hint) { color: var(--ink-muted); }
+
+body :where(.page, .main) { color: var(--ink); }
+body :where(.card, .tile, .group, .metrics, .tracebox, .side-card, .welcome, .auth-card) {
+  color: var(--ink-soft);
+  background-color: var(--surface);
+  border-color: var(--line);
+}
+body :where(.kpi, .step, .res, .code, .policy-detail, .insight-detail) {
+  color: var(--ink-soft);
+  background-color: var(--surface-soft);
+  border-color: var(--line);
+}
+
+body :where(input, textarea, select, .select) {
+  color: var(--ink);
+  background-color: var(--surface-raised);
+  border-color: var(--line-strong);
+  caret-color: var(--accent-text);
+}
+body :where(input, textarea, select, .select)::placeholder { color: var(--ink-muted); opacity: 1; }
+body select option, body optgroup { color: var(--ink); background-color: var(--surface-raised); }
+body :where(input[type="checkbox"], input[type="radio"]) { accent-color: var(--accent); }
+body :where(input, textarea, select):focus-visible { outline-color: var(--accent); border-color: var(--accent); }
+body :where(input, textarea, select):disabled,
+body :where(button, .btn, [role="button"]):disabled,
+body [aria-disabled="true"] {
+  color: var(--ink-muted);
+  background-color: var(--surface-soft);
+  border-color: var(--line);
+  cursor: not-allowed;
+  opacity: 1;
+}
+body :is(button, input, textarea, select, [role="button"]):disabled { opacity: 1; }
+
+body :where(button, .btn, .prism-tool-link) { color: var(--ink); }
+body :where(button, .btn, .prism-tool-link):hover { border-color: var(--accent); }
+body[data-prism-page="dashboard"] .page .grouphead button:hover { color: var(--accent-hover-text); }
+body :where(.btn.primary, .btn.pr, .primary-btn, .btn-primary, .send-btn, .attach-plus) {
+  color: var(--button-primary-text);
+  background-color: var(--button-primary-bg);
+  border-color: var(--accent);
+}
+body :where(.btn.primary, .btn.pr, .primary-btn, .btn-primary, .send-btn, .attach-plus):hover {
+  filter: brightness(1.06);
+}
+
+body :where(.top, .sidebar) { color: var(--nav-text); background-color: var(--nav); }
+body .top :where(a, button, .brand, .crumb) { color: var(--nav-text); }
+body .top .brand b, body .top .crumb b { color: var(--champagne); }
+body :where(.status-pill, .tag, .badge, .pill, .sbadge, .status) { color: var(--ink-soft); }
+body :where(.tag.ok, .badge.low, .low, .active-badge, .ok) {
+  color: var(--success-text);
+  background-color: var(--success-soft);
+}
+body :where(.tag.md, .badge.medium, .medium, .md) {
+  color: var(--warning-text);
+  background-color: var(--warning-soft);
+}
+body :where(.tag.hi, .badge.high, .high, .hi, .err, .error) {
+  color: var(--critical-text);
+  background-color: var(--critical-soft);
+}
+body :where(.tag.minimal, .badge.minimal) { color: var(--ink-soft); background-color: var(--surface-soft); }
+
+body :where(table, .tr, .row, .rowline, th, td) { border-color: var(--line); }
+body :where(th, .tr.th) { color: var(--ink-muted); background-color: var(--surface-soft); }
+body :where(td, .tr:not(.th), .row, .rowline) { color: var(--ink-soft); }
+body tbody tr:hover, body .tr:not(.th):hover { background-color: var(--accent-soft); }
+body :where(dialog, [role="dialog"], .modal, .dropdown, .menu, .prism-tools-menu, [role="menu"]) {
+  color: var(--ink);
+  background-color: var(--surface-raised);
+  border-color: var(--line-strong);
+}
+dialog::backdrop { background: rgba(25, 26, 25, .48); }
+body :where([role="tooltip"], .tooltip) { color: var(--nav-text); background-color: var(--graphite); border-color: var(--line-strong); }
+body :where(.chart text, svg.chart text, .chart-label) { fill: var(--ink-muted); color: var(--ink-muted); }
+body :where(.chart .bar, .chart .series-primary) { fill: var(--chart-primary); }
+body :where(.chart .bar2, .chart .series-secondary) { fill: var(--chart-secondary); }
+body :where(.chart .gl, .chart .gridline) { stroke: var(--line); }
+body :where(a, .link, .secondary-link, .insight-detail a) { color: var(--accent-text); }
+body :where(a, .link, .secondary-link, .insight-detail a):hover { color: var(--accent-hover-text); }
+
+html[data-theme="dark"] body { color: var(--ink); background-color: var(--page); }
+html[data-theme="dark"] body :where(.card, .tile, .group, .metrics, .tracebox, .side-card, .welcome, .auth-card) {
+  background-color: var(--surface);
+  border-color: var(--line);
+}
+html[data-theme="dark"] body :where(.kpi, .step, .res, .code, .policy-detail, .insight-detail) {
+  background-color: var(--surface-soft);
+  border-color: var(--line);
+}
+html[data-theme="dark"] body :where(input, textarea, select, .select) {
+  color: var(--ink);
+  background-color: var(--surface-raised);
+  border-color: var(--line-strong);
+}
+html[data-theme="dark"] body :where(input, textarea, select)::placeholder { color: var(--ink-muted); opacity: 1; }
+html[data-theme="dark"] body :where(th, .tr.th) { color: var(--ink-muted); background-color: var(--surface-soft); }
+html[data-theme="dark"] body :where(td, .tr:not(.th), .row, .rowline) { color: var(--ink-soft); }
+html[data-theme="dark"] body :where(dialog, [role="dialog"], .modal, .dropdown, .menu, .prism-tools-menu, [role="menu"]) {
+  color: var(--ink);
+  background-color: var(--surface-raised);
+  border-color: var(--line-strong);
+}
+
+@media (forced-colors: active) {
+  :focus-visible { outline: 2px solid Highlight; }
+}
+
+/* Legacy tool pages use short, high-specificity status selectors such as
+   `.low`, `.medium`, and `.high`. Keep their meaning while resolving those
+   selectors against the shared theme, instead of letting old fixed colors win. */
+body[data-prism-page] .page :where(.low, .ok, .success, .success-text, .online, .active-badge) {
+  color: var(--success-text);
+}
+body[data-prism-page] .page :where(.medium, .md, .warning, .warning-text) {
+  color: var(--warning-text);
+}
+body[data-prism-page] .page :where(.high, .hi, .critical, .error, .err, .danger) {
+  color: var(--critical-text);
+}
+body[data-prism-page] .page :where(.low, .ok, .success, .success-text, .online, .active-badge) {
+  background-color: var(--success-soft);
+}
+body[data-prism-page] .page :where(.medium, .md, .warning, .warning-text) {
+  background-color: var(--warning-soft);
+}
+body[data-prism-page] .page :where(.high, .hi, .critical, .error, .err, .danger) {
+  background-color: var(--critical-soft);
+}
+body[data-prism-page] .page :where(h1, h2, h3, h4, .title, .name, .heading, strong, b) { color: var(--ink); }
+body[data-prism-page] .page :where(p, label, .sub, .hint, .muted, .small, .small-label, .tsub, .tilesub, .foot, .footer, .empty, .notice, .field-hint, .crumb) { color: var(--ink-soft); }
+body[data-prism-page] .page :where(.muted, .hint, .small-label, .tsub, .tilesub, .foot, .footer, .empty, .notice, .field-hint) { color: var(--ink-muted); }
+body[data-prism-page] .page :where(th, .tr.th) { color: var(--ink-muted); background-color: var(--surface-soft); }
+body[data-prism-page] .page :where(td, .tr:not(.th), .row, .rowline) { color: var(--ink-soft); }
+body[data-prism-page] .page :where(input, textarea, select) { color: var(--ink); background-color: var(--surface-raised); border-color: var(--line-strong); }
+body[data-prism-page] .page :where(input, textarea, select)::placeholder { color: var(--ink-muted); opacity: 1; }
+body[data-prism-page] .page :where(svg text, .chart-label) { fill: var(--ink-muted); color: var(--ink-muted); }
+body[data-prism-page] .page :where(.status, .badge, .tag, .pill, .sbadge) { border-color: var(--line-strong); }
+
+/* Chat and sign-in legacy rules also contain fixed colors. These selectors
+   intentionally target the affected regions while preserving status hues. */
+body:has(.app) .main :where(.assistant-name, .welcome-title, .message-text, .starter-copy strong, .total strong, .stat-row strong, .side-title, .finding, .risk-number) { color: var(--ink); }
+body:has(.app) .main :where(.welcome, .starter-card, .side-card, .hitl-card, .finding-dialog, .composer-box) { border-color: var(--line); }
+body:has(.app) .main :where(.welcome-copy, .starter-copy small, .starter-heading, .message-meta, .file-size, .footer-note, .security-note, .total span, .legend-row, .recent-name, .recent-time, .stat-row, .policy-row, .warning-desc, .risk-label, .risk-level, .decision-btn small, .finding-detail-row span) { color: var(--ink-muted); }
+body:has(.app) .main :where(.hitl-card, .finding-dialog) { color: var(--ink); background-color: var(--surface-raised); }
+body:has(.app) .main :where(.composer, .composer-box, .main-scroll > .welcome, .messages .welcome, .starter-card, .side-card, .rightbar) { color: var(--ink-soft); }
+body:has(.app) .main :where(input, textarea, select) { color: var(--ink); }
+html[data-theme="dark"] body:has(.app) .main :where(.composer, .composer-box, .main-scroll > .welcome, .messages .welcome, .starter-card, .side-card, .rightbar, .hitl-card, .finding-dialog) { background-color: var(--surface); }
+html[data-theme="dark"] body:has(.app) .main :where(.composer textarea, input, textarea, select) { color: var(--ink); background-color: var(--surface-raised); }
+html[data-theme="dark"] body:has(.app) .main :where(.welcome-copy, .starter-copy small, .starter-heading, .message-meta, .file-size, .footer-note, .security-note, .total span, .legend-row, .recent-name, .recent-time, .stat-row, .policy-row, .warning-desc, .risk-label, .risk-level, .decision-btn small, .finding-detail-row span) { color: var(--ink-soft); }
+body:has(.auth-container) .auth-card :where(.title, h1, h2, p, label, .subtitle, .security-info, .password-rule, .bottom-row, .footer) { color: var(--ink-soft); }
+body:has(.auth-container) .auth-card :where(.security-info, .password-rule, .bottom-row, .footer) { color: var(--ink-muted); }
+body:has(.auth-container) .auth-card :where(input, textarea, select) { color: var(--ink); background-color: var(--surface-raised); border-color: var(--line-strong); }
+body:has(.auth-container) .auth-card :where(input, textarea, select)::placeholder { color: var(--ink-muted); opacity: 1; }
+body:has(.auth-container) .auth-card :where(.password-toggle, .secondary-link) { color: var(--accent-text); }
+body:has(.auth-container) .auth-card :where(.password-toggle, .secondary-link):hover { color: var(--accent-hover-text); }
+body:has(.auth-container) .auth-container .brand-sub { color: var(--ink-muted); }
+body:has(.auth-container) .auth-card .message.error { color: var(--critical-text); background-color: var(--critical-soft); border-color: var(--critical); }
+body:has(.auth-container) .auth-card .message.success { color: var(--success-text); background-color: var(--success-soft); border-color: var(--success); }
+html[data-theme="dark"] body:has(.auth-container) .auth-card :where(.title, h1, h2, p, label, .subtitle) { color: var(--ink); }
+body[data-prism-page="analyze-server-logs"] .page .status { color: var(--success-text); }

@@ -1,0 +1,813 @@
+/* Pastel Aura — premium motion, glass, typography & micro-interactions.
+   Load LAST. Tokens remain source of truth. No backend/API coupling. */
+
+/* ---------- Typography (single stack) ---------- */
+html, body,
+body[data-prism-page],
+body:has(.app),
+body:has(.auth-container) {
+  font-family: var(--font) !important;
+}
+body[data-prism-page] .page,
+body[data-prism-page] .page * {
+  font-family: inherit;
+}
+h1, h2, h3, .title, .welcome-title, .assistant-name {
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+.small-label, .tsub, .welcome-kicker, .starter-heading,
+.crumb, .nav-title, .dialog-eyebrow {
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+/* ---------- Smooth theme surface transition ---------- */
+html {
+  transition: color-scheme 220ms ease;
+}
+body,
+.app,
+.sidebar,
+.main,
+.topbar,
+.rightbar,
+.top,
+.auth-card,
+.page .card,
+.page .tile,
+.page .kpi,
+.side-card,
+.welcome,
+.composer-box {
+  transition:
+    background-color 240ms var(--ease, cubic-bezier(.2,.75,.25,1)),
+    background 240ms var(--ease, cubic-bezier(.2,.75,.25,1)),
+    color 240ms var(--ease, cubic-bezier(.2,.75,.25,1)),
+    border-color 240ms var(--ease, cubic-bezier(.2,.75,.25,1)),
+    box-shadow 240ms var(--ease, cubic-bezier(.2,.75,.25,1));
+}
+
+/* ---------- A. Ambient Aura Glow ---------- */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.55;
+  background:
+    radial-gradient(ellipse 70% 45% at 18% 8%, rgba(var(--accent-rgb), 0.14), transparent 55%),
+    radial-gradient(ellipse 55% 40% at 88% 18%, rgba(200, 179, 169, 0.16), transparent 50%),
+    radial-gradient(ellipse 50% 35% at 70% 92%, rgba(185, 130, 139, 0.08), transparent 55%);
+  animation: aura-drift 28s ease-in-out infinite alternate;
+}
+html[data-theme="dark"] body::after {
+  opacity: 0.4;
+  background:
+    radial-gradient(ellipse 65% 42% at 20% 6%, rgba(var(--accent-rgb), 0.1), transparent 55%),
+    radial-gradient(ellipse 50% 38% at 90% 20%, rgba(200, 179, 169, 0.07), transparent 52%),
+    radial-gradient(ellipse 48% 32% at 60% 95%, rgba(185, 130, 139, 0.06), transparent 55%);
+}
+body:has(.app)::after,
+body[data-prism-page]::after,
+body:has(.auth-container)::after {
+  z-index: 0;
+}
+@keyframes aura-drift {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to { transform: translate3d(1.2%, -1%, 0) scale(1.03); }
+}
+
+/* ---------- B. Premium Glass Cards ---------- */
+.page .card,
+.page .tile,
+.page .kpi,
+.page .group,
+.page .metrics,
+/* ---------- B. Pastel Aura Glass Interaction System ---------- */
+.page .tracebox,
+.side-card,
+.welcome,
+.starter-card,
+.auth-card,
+.hitl-card,
+.finding-dialog,
+.prism-tools-menu {
+  backdrop-filter: blur(14px) saturate(118%);
+  -webkit-backdrop-filter: blur(14px) saturate(118%);
+}
+.page .card,
+.page .tile,
+.page .kpi,
+.starter-card,
+.side-card {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.82),
+    rgba(247, 242, 237, 0.76)
+  ) !important;
+  backdrop-filter: blur(12px) saturate(118%);
+  -webkit-backdrop-filter: blur(12px) saturate(118%);
+  border: 1px solid rgba(200, 179, 169, 0.45) !important;
+  border-radius: var(--radius-md, 12px) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    var(--shadow) !important;
+  transition:
+    transform 220ms var(--ease, cubic-bezier(.2,.75,.25,1)),
+    box-shadow 220ms ease,
+    border-color 220ms ease,
+    background 220ms ease !important;
+}
+html[data-theme="dark"] .page .card,
+html[data-theme="dark"] .page .tile,
+html[data-theme="dark"] .page .kpi,
+html[data-theme="dark"] .starter-card,
+html[data-theme="dark"] .side-card {
+  background: linear-gradient(
+    135deg,
+    rgba(69, 61, 58, 0.82),
+    rgba(57, 51, 49, 0.78)
+  ) !important;
+  backdrop-filter: blur(12px) saturate(118%);
+  -webkit-backdrop-filter: blur(12px) saturate(118%);
+  border: 1px solid rgba(169, 149, 139, 0.35) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(247, 242, 237, 0.08),
+    0 12px 28px rgba(0, 0, 0, 0.28) !important;
+}
+.page .card:hover,
+.page .tile:hover,
+.page .kpi:hover,
+.starter-card:hover,
+.side-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(var(--accent-rgb), 0.55) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 16px 36px rgba(48, 43, 42, 0.12) !important;
+}
+html[data-theme="dark"] .page .card:hover,
+html[data-theme="dark"] .page .tile:hover,
+html[data-theme="dark"] .page .kpi:hover,
+html[data-theme="dark"] .starter-card:hover,
+html[data-theme="dark"] .side-card:hover {
+  border-color: rgba(var(--accent-rgb), 0.6) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(247, 242, 237, 0.16),
+    0 18px 40px rgba(0, 0, 0, 0.38) !important;
+}
+.main-scroll > .welcome,
+.welcome {
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.88),
+    rgba(247, 242, 237, 0.82)
+  ) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(200, 179, 169, 0.45) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    0 10px 26px rgba(48, 43, 42, 0.07) !important;
+  border-radius: var(--radius-md, 12px) !important;
+}
+html[data-theme="dark"] .main-scroll > .welcome,
+html[data-theme="dark"] .welcome {
+  background: linear-gradient(
+    145deg,
+    rgba(57, 51, 49, 0.88),
+    rgba(48, 43, 42, 0.82)
+  ) !important;
+  border: 1px solid var(--line) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(247, 242, 237, 0.08),
+    0 12px 30px rgba(0, 0, 0, 0.3) !important;
+}
+.composer-box {
+  background: rgba(255, 255, 255, 0.82) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--line) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 4px 18px rgba(48, 43, 42, 0.05) !important;
+  transition: border-color 180ms ease, box-shadow 180ms ease !important;
+}
+html[data-theme="dark"] .composer-box {
+  background: rgba(57, 51, 49, 0.82) !important;
+  border: 1px solid var(--line) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(247, 242, 237, 0.08),
+    0 6px 20px rgba(0, 0, 0, 0.25) !important;
+}
+.composer-box:focus-within {
+  border-color: var(--accent) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    0 0 0 3px rgba(var(--accent-rgb), 0.25),
+    0 8px 24px rgba(48, 43, 42, 0.09) !important;
+}
+.finding-dialog,
+dialog.finding-dialog {
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.94),
+    rgba(247, 242, 237, 0.9)
+  ) !important;
+  backdrop-filter: blur(18px) saturate(120%);
+  -webkit-backdrop-filter: blur(18px) saturate(120%);
+  border: 1px solid var(--line-strong) !important;
+  border-radius: var(--radius-lg, 16px) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    var(--shadow-raised) !important;
+}
+html[data-theme="dark"] .finding-dialog,
+html[data-theme="dark"] dialog.finding-dialog {
+  background: linear-gradient(
+    145deg,
+    rgba(69, 61, 58, 0.94),
+    rgba(57, 51, 49, 0.9)
+  ) !important;
+  border: 1px solid var(--line) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(247, 242, 237, 0.12),
+    var(--shadow-raised) !important;
+}
+.auth-card {
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.96),
+    rgba(241, 233, 226, 0.94)
+  ) !important;
+  border: 1px solid var(--line-strong) !important;
+  box-shadow: var(--shadow-raised), inset 0 1px rgba(255, 255, 255, 0.75) !important;
+}
+html[data-theme="dark"] .auth-card {
+  background: linear-gradient(145deg, #453D3A, #393331) !important;
+}
+@supports not (backdrop-filter: blur(1px)) {
+  .page .card,
+  .page .tile,
+  .page .kpi,
+  .starter-card,
+  .side-card,
+  .welcome,
+  .composer-box,
+  .finding-dialog {
+    background: var(--surface) !important;
+  }
+}
+
+/* ---------- C. Enhanced Assistant Avatar Engine: IDLE, THINKING, RESPONDING ---------- */
+.assistant-avatar {
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.85) !important;
+  transition: transform 380ms var(--ease, cubic-bezier(.2,.75,.25,1)), box-shadow 380ms ease, border-color 380ms ease !important;
+}
+
+/* 1. IDLE: Gentle breathing, soft ambient glow, minimal orbital movement */
+.assistant-avatar,
+.assistant-avatar[data-state="idle"] {
+  animation: avatar-breathe 6.5s ease-in-out infinite alternate !important;
+  box-shadow:
+    0 0 0 4px rgba(var(--accent-rgb), 0.12),
+    0 10px 26px rgba(48, 43, 42, 0.14),
+    inset 0 0 14px rgba(255, 255, 255, 0.55) !important;
+}
+html[data-theme="dark"] .assistant-avatar,
+html[data-theme="dark"] .assistant-avatar[data-state="idle"] {
+  border-color: rgba(var(--accent-rgb), 0.45) !important;
+  box-shadow:
+    0 0 0 4px rgba(var(--accent-rgb), 0.14),
+    0 12px 28px rgba(0, 0, 0, 0.32),
+    inset 0 0 14px rgba(217, 169, 174, 0.15) !important;
+}
+.assistant-avatar::before {
+  animation: chrome-orbit 22s linear infinite !important;
+}
+.assistant-avatar::after {
+  animation: chrome-orbit 34s linear infinite reverse !important;
+}
+
+/* 2. THINKING: Animated orbital rings, pulsing wireframe, iridescent shimmer */
+.assistant-avatar[data-state="thinking"],
+.assistant-avatar.is-thinking {
+  animation: avatar-thinking-pulse 1.6s ease-in-out infinite !important;
+  box-shadow:
+    0 0 0 7px rgba(var(--accent-rgb), 0.28),
+    0 0 24px rgba(var(--accent-rgb), 0.5),
+    inset 0 0 16px rgba(255, 255, 255, 0.75) !important;
+  border-color: rgba(var(--accent-rgb), 0.95) !important;
+}
+html[data-theme="dark"] .assistant-avatar[data-state="thinking"],
+html[data-theme="dark"] .assistant-avatar.is-thinking {
+  box-shadow:
+    0 0 0 7px rgba(var(--accent-rgb), 0.32),
+    0 0 28px rgba(var(--accent-rgb), 0.6),
+    inset 0 0 16px rgba(217, 169, 174, 0.25) !important;
+}
+.assistant-avatar[data-state="thinking"]::before,
+.assistant-avatar.is-thinking::before {
+  border-color: rgba(var(--accent-rgb), 0.95) !important;
+  border-width: 1.5px !important;
+  box-shadow: 0 0 12px rgba(var(--accent-rgb), 0.7) !important;
+  animation: chrome-orbit 3.2s linear infinite !important;
+}
+.assistant-avatar[data-state="thinking"]::after,
+.assistant-avatar.is-thinking::after {
+  border-color: rgba(200, 179, 169, 0.75) !important;
+  border-width: 1.5px !important;
+  box-shadow: 0 0 16px rgba(var(--accent-rgb), 0.45) !important;
+  animation: chrome-orbit 5.2s linear infinite reverse !important;
+}
+.assistant-avatar[data-state="thinking"] .prism-wireframe,
+.assistant-avatar.is-thinking .prism-wireframe {
+  animation: wireframe-thinking-pulse 2s ease-in-out infinite !important;
+  filter: drop-shadow(0 0 6px rgba(var(--accent-rgb), 0.85)) !important;
+}
+.assistant-avatar[data-state="thinking"] .assistant-prism,
+.assistant-avatar.is-thinking .assistant-prism {
+  animation: prism-thinking-shimmer 1.8s ease-in-out infinite alternate !important;
+}
+
+/* 3. RESPONDING: Expanding warm bloom, scale expansion, smooth settle */
+.assistant-avatar[data-state="responding"],
+.assistant-avatar.is-responding {
+  animation: avatar-respond-bloom 1.4s var(--ease, cubic-bezier(.2,.75,.25,1)) both !important;
+  border-color: rgba(185, 130, 139, 0.95) !important;
+}
+.assistant-avatar[data-state="responding"]::before,
+.assistant-avatar.is-responding::before {
+  animation: chrome-orbit 7s linear infinite !important;
+  border-color: rgba(185, 130, 139, 0.8) !important;
+  box-shadow: 0 0 18px rgba(var(--accent-rgb), 0.6) !important;
+}
+.assistant-avatar[data-state="responding"]::after,
+.assistant-avatar.is-responding::after {
+  animation: chrome-orbit 11s linear infinite reverse !important;
+  border-color: rgba(var(--accent-rgb), 0.6) !important;
+}
+
+/* Keyframes for Avatar States */
+@keyframes avatar-breathe {
+  0% {
+    transform: translateY(0) scale(1);
+    box-shadow: 0 0 0 4px rgba(var(--accent-rgb), 0.1), 0 8px 22px rgba(48, 43, 42, 0.12);
+  }
+  50% {
+    transform: translateY(-2px) scale(1.015);
+    box-shadow: 0 0 0 6px rgba(var(--accent-rgb), 0.18), 0 12px 28px rgba(48, 43, 42, 0.16);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    box-shadow: 0 0 0 4px rgba(var(--accent-rgb), 0.1), 0 8px 22px rgba(48, 43, 42, 0.12);
+  }
+}
+
+@keyframes avatar-thinking-pulse {
+  0%, 100% {
+    transform: scale(1.01);
+  }
+  50% {
+    transform: scale(1.04) rotate(1.5deg);
+  }
+}
+
+@keyframes wireframe-thinking-pulse {
+  0% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.06) rotate(6deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.8;
+  }
+}
+
+@keyframes prism-thinking-shimmer {
+  0% {
+    filter: hue-rotate(0deg) brightness(1.02);
+  }
+  100% {
+    filter: hue-rotate(25deg) brightness(1.18);
+  }
+}
+
+@keyframes avatar-respond-bloom {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 4px rgba(var(--accent-rgb), 0.2), 0 0 10px rgba(var(--accent-rgb), 0.3);
+  }
+  35% {
+    transform: scale(1.055);
+    box-shadow: 0 0 0 12px rgba(var(--accent-rgb), 0.3), 0 0 34px rgba(var(--accent-rgb), 0.65);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 5px rgba(var(--accent-rgb), 0.12), 0 10px 24px rgba(48, 43, 42, 0.14);
+  }
+}
+
+@keyframes assistant-message-enter {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.assistant-bubble-entrance {
+  animation: assistant-message-enter 0.35s var(--ease, cubic-bezier(.2,.75,.25,1)) both;
+}
+
+/* ---------- D. Premium button interactions ---------- */
+.new-chat,
+.send-btn,
+.attach-plus,
+.primary-btn,
+.btn.pr,
+.btn.primary,
+.btn,
+.theme-btn,
+.prism-theme-toggle,
+.prism-tools-trigger,
+.starter-card,
+.nav-item,
+.decision-btn,
+.icon-btn {
+  transition:
+    transform 220ms var(--ease, cubic-bezier(.2,.75,.25,1)),
+    box-shadow 220ms var(--ease, cubic-bezier(.2,.75,.25,1)),
+    border-color 220ms var(--ease, cubic-bezier(.2,.75,.25,1)),
+    background 220ms var(--ease, cubic-bezier(.2,.75,.25,1)),
+    color 220ms var(--ease, cubic-bezier(.2,.75,.25,1)),
+    filter 220ms ease !important;
+}
+.new-chat:hover,
+.send-btn:hover,
+.attach-plus:hover,
+.primary-btn:hover,
+.btn.pr:hover,
+.btn.primary:hover,
+.btn:hover:not(:disabled),
+.theme-btn:hover,
+.prism-theme-toggle:hover,
+.prism-tools-trigger:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.04);
+}
+.new-chat:active,
+.send-btn:active,
+.primary-btn:active,
+.btn:active:not(:disabled) {
+  transform: translateY(0);
+  filter: brightness(0.97);
+}
+.nav-item:hover {
+  border-color: rgba(var(--accent-rgb), 0.22) !important;
+}
+.nav-item.active,
+.nav-item[aria-current="page"] {
+  transition: background 240ms ease, box-shadow 240ms ease;
+}
+button:disabled,
+.btn:disabled,
+.primary-btn:disabled,
+.send-btn:disabled {
+  transform: none !important;
+  filter: none !important;
+  opacity: 0.55 !important;
+  cursor: not-allowed !important;
+}
+
+/* ---------- E. Security scanning (real busy / thinking only) ---------- */
+@keyframes scan-sweep {
+  0% { transform: translateX(-120%); opacity: 0; }
+  20% { opacity: 0.7; }
+  100% { transform: translateX(120%); opacity: 0; }
+}
+@keyframes status-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(var(--accent-rgb), 0.28); }
+  50% { box-shadow: 0 0 0 6px rgba(var(--accent-rgb), 0); }
+}
+.status-pill.online {
+  animation: status-pulse 3.2s ease-in-out infinite;
+}
+body[data-prism-page="red-team"] .btn:disabled,
+body[data-prism-page="red-team"] button:disabled {
+  position: relative;
+  overflow: hidden;
+}
+body[data-prism-page="red-team"] .btn:disabled::after,
+body[data-prism-page="red-team"] button:disabled::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 42%;
+  background: linear-gradient(90deg, transparent, rgba(217, 169, 174, 0.45), transparent);
+  animation: scan-sweep 1.4s linear infinite;
+  pointer-events: none;
+}
+.send-btn:disabled {
+  position: relative;
+  overflow: hidden;
+}
+.send-btn:disabled::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+  animation: scan-sweep 1.2s linear infinite;
+  pointer-events: none;
+}
+
+/* ---------- F. Particle / constellation polish ---------- */
+#shadow-constellation {
+  opacity: 0.04 !important;
+  mix-blend-mode: multiply;
+}
+html[data-theme="dark"] #shadow-constellation {
+  opacity: 0.055 !important;
+  mix-blend-mode: screen;
+}
+#shadow-cursor-glow {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* ---------- G. Micro-interactions ---------- */
+.page {
+  animation: page-settle 0.32s var(--ease, cubic-bezier(.2,.75,.25,1)) both;
+}
+@keyframes page-settle {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+.prism-tools-menu:not([hidden]) {
+  animation: menu-in 0.2s var(--ease, cubic-bezier(.2,.75,.25,1)) both;
+}
+@keyframes menu-in {
+  from { opacity: 0; transform: translateY(-6px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+input:focus,
+textarea:focus,
+select:focus,
+.composer-box:focus-within {
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+/* #toast must NOT always-animate: fill-mode:both was locking opacity:1 and
+   wiping translateX(-50%), leaving a permanent dark bar over the composer. */
+#toast.toast-show {
+  animation: toast-show-in 0.28s var(--ease, cubic-bezier(.2,.75,.25,1)) both;
+}
+.message,
+.auth-card .message {
+  animation: toast-in 0.28s var(--ease, cubic-bezier(.2,.75,.25,1)) both;
+}
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes toast-show-in {
+  from { opacity: 0; transform: translateX(-50%) translateY(15px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* Surface ownership: login→prism-login.css, pages→prism-pages.css, chat→prism-chat-final.css.
+   Aura keeps motion, glass, interactions, and cross-page contrast polish only. */
+
+/* ---------- AI Provider / status contrast ---------- */
+.provider {
+  cursor: pointer !important;
+  user-select: none;
+}
+.provider-model,
+.provider-title {
+  color: var(--ink-soft) !important;
+}
+.provider-title {
+  font-weight: 600;
+}
+.provider-model {
+  color: var(--accent-text) !important;
+  font-weight: 650;
+}
+.provider-shield {
+  color: var(--accent-text) !important;
+  background: linear-gradient(145deg, #E4D7CF, #D9A9AE) !important;
+  border-color: rgba(var(--accent-rgb), 0.35) !important;
+}
+html[data-theme="dark"] .provider {
+  background: var(--surface-raised) !important;
+  border: 1px solid var(--line) !important;
+  color: var(--ink-soft) !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.22) !important;
+}
+html[data-theme="dark"] .provider:hover {
+  background: var(--surface-soft) !important;
+  border-color: rgba(var(--accent-rgb), 0.5) !important;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.28) !important;
+  transform: translateY(-1px);
+}
+html[data-theme="dark"] .provider .provider-title {
+  color: var(--ink-soft) !important;
+  font-weight: 600;
+}
+html[data-theme="dark"] .provider .provider-model {
+  color: var(--accent-text) !important;
+  font-weight: 650;
+}
+html[data-theme="dark"] .provider-shield {
+  background: linear-gradient(145deg, #504744, #393331) !important;
+  color: #F0C9CE !important;
+  border: 1px solid rgba(var(--accent-rgb), 0.35) !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2) !important;
+}
+body[data-prism-page="ai-provider"] .tag,
+body[data-prism-page="ai-provider"] .status,
+body[data-prism-page="gateway"] .tag {
+  font-weight: 650;
+  border: 1px solid var(--line-strong);
+}
+
+/* ---------- Ambient Falling Star / Stardust Sprinkle System (All 20 Pages) ---------- */
+.prism-stardust-layer {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
+  overflow: hidden !important;
+  contain: strict;
+}
+.prism-stardust-layer.is-paused .stardust-particle {
+  animation-play-state: paused !important;
+}
+
+.stardust-particle {
+  position: absolute;
+  top: -16px;
+  left: var(--left, 50%);
+  width: var(--size, 2px);
+  height: var(--size, 2px);
+  border-radius: 50%;
+  background: var(--star-color, #F7F2ED);
+  opacity: 0;
+  pointer-events: none;
+  box-shadow: 0 0 3px var(--star-color, #F7F2ED), 0 0 8px rgba(217, 169, 174, 0.32);
+  animation:
+    stardust-drift var(--duration, 20s) var(--delay, 0s) linear infinite,
+    stardust-twinkle var(--twinkle-duration, 4s) ease-in-out infinite alternate;
+  will-change: transform, opacity;
+}
+
+.stardust-particle.stardust-sparkle {
+  border-radius: 1px;
+  transform: rotate(45deg);
+  box-shadow: 0 0 4px var(--star-color, #F7F2ED), 0 0 10px rgba(217, 169, 174, 0.45);
+}
+
+@keyframes stardust-drift {
+  0% {
+    transform: translate3d(0, -12px, 0) scale(0.6);
+    opacity: 0;
+  }
+  12% {
+    opacity: var(--star-opacity, 0.65);
+    transform: translate3d(calc(var(--drift-x, 15px) * 0.15), 14vh, 0) scale(1);
+  }
+  50% {
+    opacity: var(--star-opacity, 0.75);
+    transform: translate3d(calc(var(--drift-x, 15px) * 0.55), 52vh, 0) scale(1.1);
+  }
+  85% {
+    opacity: var(--star-opacity, 0.6);
+    transform: translate3d(calc(var(--drift-x, 15px) * 0.88), 86vh, 0) scale(0.95);
+  }
+  100% {
+    transform: translate3d(var(--drift-x, 15px), calc(100vh + 18px), 0) scale(0.5);
+    opacity: 0;
+  }
+}
+
+@keyframes stardust-twinkle {
+  0%, 100% {
+    filter: drop-shadow(0 0 1px var(--star-color, #F7F2ED));
+  }
+  50% {
+    filter: drop-shadow(0 0 4px var(--star-color, #F7F2ED)) drop-shadow(0 0 8px rgba(217, 169, 174, 0.55));
+  }
+}
+
+html[data-theme="light"] .stardust-particle {
+  box-shadow: 0 0 2px var(--star-color, #C8B3A9), 0 0 6px rgba(200, 179, 169, 0.25);
+  opacity: calc(var(--star-opacity, 0.5) * 0.75);
+}
+
+/* ---------- Chat responsive polish ---------- */
+@media (max-width: 1400px) {
+  .topbar .status-pill {
+    flex: 0 0 auto;
+    max-width: none;
+  }
+}
+@media (max-width: 1180px) {
+  .app {
+    grid-template-columns: 230px minmax(0, 1fr) !important;
+  }
+}
+@media (max-width: 760px) {
+  .page .tw,
+  .page .tablewrap,
+  .tw,
+  .tablewrap {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+  }
+  .page .card,
+  .page .kpi,
+  .page .tile {
+    min-width: 0;
+  }
+}
+html, body {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+/* ---------- Tables usable on narrow screens ---------- */
+.page .tw > div,
+.page .tablewrap > div {
+  min-width: min(100%, 560px);
+}
+@media (max-width: 480px) {
+  .page .tw > div,
+  .page .tablewrap > div {
+    min-width: 480px;
+  }
+}
+
+/* ---------- Modal / dialog entrance ---------- */
+dialog[open],
+.finding-dialog {
+  animation: menu-in 0.22s var(--ease, cubic-bezier(.2,.75,.25,1)) both;
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .prism-stardust-layer {
+    display: none !important;
+  }
+  .stardust-particle,
+  body::after,
+  .assistant-avatar,
+  .assistant-avatar::before,
+  .assistant-avatar::after,
+  .status-pill.online,
+  .page,
+  .prism-tools-menu:not([hidden]),
+  #toast,
+  .message,
+  dialog[open],
+  .finding-dialog,
+  .send-btn:disabled::after,
+  body[data-prism-page="red-team"] .btn:disabled::after,
+  body[data-prism-page="red-team"] button:disabled::after {
+    animation: none !important;
+  }
+  body::after {
+    transform: none !important;
+    opacity: 0.35;
+  }
+  .page .card:hover,
+  .page .tile:hover,
+  .page .kpi:hover,
+  .starter-card:hover,
+  .side-card:hover,
+  .new-chat:hover,
+  .send-btn:hover,
+  .btn:hover:not(:disabled),
+  .primary-btn:hover {
+    transform: none !important;
+  }
+  * {
+    transition-duration: 0.01ms !important;
+  }
+  #shadow-constellation {
+    display: none !important;
+  }
+}

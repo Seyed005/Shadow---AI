@@ -1,22 +1,22 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<script src="/assets/prism-theme-init.js"></script>
+  <link rel="stylesheet" href="/assets/prism-tokens.css">
 <title>Shadow AI — Security Dashboard</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0b1020;--nav:#0e1527;--card:#111829;--card2:#0e1527;--line:#1f2a40;--line2:#2a3855;--text:#e8ecf4;--muted:#8a95ab;--soft:#c4ccdb;--violet:#8b7bff;--red:#f26d6d;--amber:#f5b642;--teal:#2dd4bf;--green:#3dd68c}
+:root{--bg:var(--page);--nav:var(--surface-soft);--card:var(--surface);--card2:var(--surface-soft);--line:var(--line);--line2:var(--line-strong);--text:var(--ink);--muted:var(--ink-muted);--soft:var(--ink-soft);--violet:var(--accent);--red:var(--critical);--amber:var(--warning);--teal:var(--neutral);--green:var(--success)}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font:14px/1.45 'IBM Plex Sans','Segoe UI',Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{margin:0;background:var(--bg);color:var(--text);font:14px/1.45 var(--font);-webkit-font-smoothing:antialiased}
 button,select{font:inherit}
 .hidden{display:none!important}
 /* top bar */
 .top{height:60px;display:flex;align-items:center;gap:32px;padding:0 32px;background:var(--nav);border-bottom:1px solid var(--line)}
 .brand{font-weight:600;font-size:17px;letter-spacing:.04em;line-height:1.1;white-space:nowrap}
 .brand b{color:var(--violet)}
-.brand small{display:block;font-size:10px;letter-spacing:.14em;color:#7d89a3;font-weight:500;margin-top:2px}
+.brand small{display:block;font-size:10px;letter-spacing:.14em;color:var(--ink-muted);font-weight:500;margin-top:2px}
 .tabs{display:flex;gap:6px;height:100%;flex:1}
 .tabs button{background:none;border:0;border-bottom:2px solid transparent;color:var(--muted);padding:0 14px;cursor:pointer;transition:color .15s}
 .tabs button:hover{color:#fff}
@@ -24,11 +24,11 @@ button,select{font:inherit}
 .topright{display:flex;align-items:center;gap:12px}
 .online{display:flex;align-items:center;gap:8px;color:var(--green);font-size:12px}
 .online i{width:8px;height:8px;border-radius:50%;background:var(--green)}
-.btn{height:36px;padding:0 16px;border-radius:8px;border:1px solid var(--line2);background:#141d33;color:var(--text);cursor:pointer;transition:border-color .15s,background .15s}
-.btn:hover{background:#1a2540;border-color:#4a5d8a}
+.btn{height:36px;padding:0 16px;border-radius:8px;border:1px solid var(--line2);background:var(--surface-soft);color:var(--text);cursor:pointer;transition:border-color .15s,background .15s}
+.btn:hover{background:var(--surface-soft);border-color:var(--line-strong)}
 .btn:focus-visible,.select:focus-visible,.tabs button:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
-.select{height:36px;padding:0 12px;border-radius:8px;border:1px solid var(--line2);background:#141d33;color:var(--text)}
-.pill{padding:2px 9px;border-radius:99px;background:#1c2742;color:var(--soft);font-size:12px}
+.select{height:36px;padding:0 12px;border-radius:8px;border:1px solid var(--line2);background:var(--surface-soft);color:var(--text)}
+.pill{padding:2px 9px;border-radius:99px;background:var(--surface-soft);color:var(--soft);font-size:12px}
 /* page */
 .page{max-width:1440px;margin:0 auto;padding:28px 32px 40px;display:flex;flex-direction:column;gap:20px}
 .pagehead{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap}
@@ -37,7 +37,7 @@ button,select{font:inherit}
 .spacer{flex:1}
 .small-label{font-size:12px;color:var(--muted)}
 .notice{margin:0;font-size:12px;color:var(--muted)}
-.error{color:#ff8c8c}
+.error{color:var(--critical-text)}
 /* KPI row */
 .kpirow{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
 .kpi{padding:18px 20px;border-radius:12px;background:var(--card);border:1px solid var(--line)}
@@ -60,7 +60,7 @@ button,select{font:inherit}
 .gaugebox{display:flex;justify-content:center}
 .gaugebox svg{width:200px;height:116px}
 .badgewrap{text-align:center;margin-top:2px}
-.sbadge{display:inline-block;padding:4px 12px;border-radius:99px;font-size:12px;font-weight:500;background:#1c2742;color:var(--soft)}
+.sbadge{display:inline-block;padding:4px 12px;border-radius:99px;font-size:12px;font-weight:500;background:var(--surface-soft);color:var(--soft)}
 .legend{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:14px;font-size:12px;color:var(--muted)}
 .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}
 .chart{width:100%;height:auto;display:block}
@@ -92,17 +92,23 @@ button,select{font:inherit}
 table{width:100%;min-width:860px;border-collapse:collapse;font-size:13px}
 th{padding:12px 20px;background:var(--card2);color:var(--muted);text-align:left;font-size:11px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
 td{padding:14px 20px;border-top:1px solid var(--line);color:var(--soft);white-space:nowrap}
-tbody tr:hover{background:#151f35}
+tbody tr:hover{background:var(--accent-soft)}
 .badge{display:inline-block;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:500}
-.high{color:#ff8c8c;background:#3a1d24}
-.medium{color:var(--amber);background:#3a2e12}
-.low{color:#9fe8d6;background:#12332f}
-.minimal{color:var(--teal);background:#0f2f33}
+.high{color:var(--critical-text);background:var(--critical-soft)}
+.medium{color:var(--warning-text);background:var(--warning-soft)}
+.low{color:var(--success-text);background:var(--success-soft)}
+.minimal{color:var(--ink-soft);background:var(--surface-soft)}
 .empty{padding:28px 20px;text-align:center;color:var(--muted)}
-.foot{text-align:center;color:#6b7690;font-size:11px}
+.foot{text-align:center;color:var(--ink-muted);font-size:11px}
 @media(max-width:1100px){.g3,.g4{grid-template-columns:1fr 1fr}.kpirow{grid-template-columns:1fr 1fr}.top{gap:16px;padding:0 16px}.page{padding:20px 16px 32px}}
 @media(max-width:700px){.g3,.g4,.kpirow{grid-template-columns:1fr}.online,.hide-mobile{display:none}.tabs button{padding:0 8px}.donutrow{flex-direction:column;align-items:flex-start}}
 </style>
+<link rel="stylesheet" href="/assets/prism-workspace.css">
+  <link rel="stylesheet" href="/assets/prism-pages.css">
+  <script defer src="/assets/prism-pages.js"></script>
+  <link rel="stylesheet" href="/assets/prism-theme.css">
+  <link rel="stylesheet" href="/assets/prism-aura.css">
+  <script defer src="/assets/prism-theme.js"></script>
 </head>
 <body>
 <nav class="top">
@@ -139,7 +145,7 @@ tbody tr:hover{background:#151f35}
       <div class="tile">
         <div class="tiletitle">Average risk score</div>
         <div class="tilesub">Gateway <b id="gatewayStatus">CHECKING</b> &middot; scale 0–150</div>
-        <div class="gaugebox"><svg viewBox="0 0 200 116" role="img" aria-label="Average risk score"><path d="M20 100 A80 80 0 0 1 180 100" fill="none" stroke="#1f2a40" stroke-width="14" stroke-linecap="round"/><path id="gaugeArc" d="M20 100 A80 80 0 0 1 180 100" fill="none" stroke="#f5b642" stroke-width="14" stroke-linecap="round" pathLength="100" stroke-dasharray="0 100"/><text id="riskGauge" x="100" y="90" text-anchor="middle" fill="#e8ecf4" font-size="34" font-weight="600" font-family="IBM Plex Sans, sans-serif">—</text></svg></div>
+        <div class="gaugebox"><svg viewBox="0 0 200 116" role="img" aria-label="Average risk score"><path d="M20 100 A80 80 0 0 1 180 100" fill="none" stroke="var(--line)" stroke-width="14" stroke-linecap="round"/><path id="gaugeArc" d="M20 100 A80 80 0 0 1 180 100" fill="none" stroke="var(--warning)" stroke-width="14" stroke-linecap="round" pathLength="100" stroke-dasharray="0 100"/><text id="riskGauge" x="100" y="90" text-anchor="middle" fill="var(--ink)" font-size="34" font-weight="600" font-family="Manrope, Segoe UI, system-ui, sans-serif">—</text></svg></div>
         <div class="badgewrap"><span class="sbadge" id="riskBadge">NO DATA</span></div>
       </div>
       <div class="tile">
@@ -168,7 +174,7 @@ tbody tr:hover{background:#151f35}
       <div class="tile">
         <div class="tiletitle">Threat level overview</div>
         <div class="tilesub">Flagged percentage of requests</div>
-        <div class="gaugebox"><svg viewBox="0 0 200 116" role="img" aria-label="Flagged percentage"><path d="M20 100 A80 80 0 0 1 180 100" fill="none" stroke="#1f2a40" stroke-width="14" stroke-linecap="round"/><path id="threatArc" d="M20 100 A80 80 0 0 1 180 100" fill="none" stroke="#f26d6d" stroke-width="14" stroke-linecap="round" pathLength="100" stroke-dasharray="0 100"/><text id="threatGauge" x="100" y="90" text-anchor="middle" fill="#e8ecf4" font-size="34" font-weight="600" font-family="IBM Plex Sans, sans-serif">0</text></svg></div>
+        <div class="gaugebox"><svg viewBox="0 0 200 116" role="img" aria-label="Flagged percentage"><path d="M20 100 A80 80 0 0 1 180 100" fill="none" stroke="var(--line)" stroke-width="14" stroke-linecap="round"/><path id="threatArc" d="M20 100 A80 80 0 0 1 180 100" fill="none" stroke="var(--critical)" stroke-width="14" stroke-linecap="round" pathLength="100" stroke-dasharray="0 100"/><text id="threatGauge" x="100" y="90" text-anchor="middle" fill="var(--ink)" font-size="34" font-weight="600" font-family="Manrope, Segoe UI, system-ui, sans-serif">0</text></svg></div>
         <div class="legend"><span><i class="dot" style="background:var(--red)"></i>High <b id="highCount">0</b></span><span><i class="dot" style="background:var(--amber)"></i>Medium <b id="mediumCount">0</b></span><span><i class="dot" style="background:var(--teal)"></i>Low <b id="lowCount">0</b></span></div>
       </div>
       <div class="tile">
@@ -239,13 +245,13 @@ function render(){
   set('totalRequests',users.length);set('sessions',records.filter(r=>Number(r.updated_at||0)>=cutoff).length);
   set('highCount',high.length);set('mediumCount',medium.length);set('lowCount',low.length);
   set('piiCount',users.filter(m=>m.redacted).length);set('fileCount',files.length);set('avgRisk',risks.length?avg.toFixed(1):'—');
-  const col=avg>=61?'#f26d6d':avg>=26?'#f5b642':'#3dd68c';
+  const col=avg>=61?'var(--critical)':avg>=26?'var(--warning)':'var(--success)';
   setGauge('gaugeArc','riskGauge',avg/150*100,col,avg);
   const rb=$('riskBadge');rb.textContent=!risks.length?'NO DATA':avg>=61?'CRITICAL':avg>=26?'HIGH':avg>=11?'MEDIUM':'LOW';
-  rb.style.background=avg>=61?'#3a1d24':avg>=26?'#3a2e12':'#12332f';rb.style.color=col;
-  setGauge('threatArc','threatGauge',users.length?flagged.length/users.length*100:0,'#f26d6d',users.length?flagged.length/users.length*100:0);
+  rb.style.background=avg>=61?'var(--critical-soft)':avg>=26?'var(--warning-soft)':'var(--success-soft)';rb.style.color=avg>=61?'var(--critical-text)':avg>=26?'var(--warning-text)':'var(--success-text)';
+  setGauge('threatArc','threatGauge',users.length?flagged.length/users.length*100:0,'var(--critical)',users.length?flagged.length/users.length*100:0);
   const n=users.length||1,a=allowed.length/n*100,s=a+sanitized.length/n*100,b=s+blocked.length/n*100;
-  $('decisionDonut').style.background=users.length?`conic-gradient(#3dd68c 0 ${a}%,#2dd4bf ${a}% ${s}%,#f26d6d ${s}% ${b}%,#f5b642 ${b}% 100%)`:'#1f2a40';
+  $('decisionDonut').style.background=users.length?`conic-gradient(var(--success) 0 ${a}%,var(--neutral) ${a}% ${s}%,var(--critical) ${s}% ${b}%,var(--warning) ${b}% 100%)`:'var(--line)';
   const days=[],range=$('dateRange').value==='all'?30:Number($('dateRange').value);
   for(let i=Math.min(range,7)-1;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);const key=d.toLocaleDateString();
     const dm=msgs.filter(m=>new Date(Number(m.created_at||0)*1000).toLocaleDateString()===key);
@@ -267,13 +273,13 @@ async function refresh(){
     if(!response.ok)throw new Error('History API returned '+response.status);
     const data=await response.json();records=Array.isArray(data.conversations)?data.conversations:[];allMessages=[];
     for(const c of records){try{const r=await fetch('/conversations/'+encodeURIComponent(c.session_id),{credentials:'same-origin',cache:'no-store'});if(!r.ok)continue;const detail=await r.json(),conv=detail.conversation||{};for(const m of(conv.messages||[]))allMessages.push({...m,session_id:c.session_id,conversation_title:c.title})}catch(e){}}
-    set('storeStatus','CONNECTED');$('storeStatus').style.color='#3dd68c';
-    set('gatewayStatus','ONLINE');$('gatewayStatus').style.color='#3dd68c';
+    set('storeStatus','CONNECTED');$('storeStatus').style.color='var(--success-text)';
+    set('gatewayStatus','ONLINE');$('gatewayStatus').style.color='var(--success-text)';
     set('alerts',allMessages.filter(m=>m.role==='user'&&(m.redacted||m.decision==='HITL'||m.decision==='BLOCK')).length);
     render();
   }catch(e){
-    set('storeStatus','UNAVAILABLE');$('storeStatus').style.color='#ff8c8c';
-    set('gatewayStatus','API ERROR');$('gatewayStatus').style.color='#ff8c8c';
+    set('storeStatus','UNAVAILABLE');$('storeStatus').style.color='var(--critical-text)';
+    set('gatewayStatus','API ERROR');$('gatewayStatus').style.color='var(--critical-text)';
     $('sourceNote').innerHTML='<span class="error">Cannot load persistent history. Confirm the FastAPI backend is running and /conversations is available. The dashboard will not invent metrics.</span>';
     $('traceRows').innerHTML=`<tr><td colspan="7" class="empty">${escapeHtml(e.message)}. Check backend integration and login session.</td></tr>`;
   }

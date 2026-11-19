@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="/assets/prism-theme-init.js"></script>
+  <link rel="stylesheet" href="/assets/prism-tokens.css">
   <title>Shadow AI — Analyze Server Logs</title>
   <style>
     * {
@@ -11,9 +13,9 @@
 
     body {
       margin: 0;
-      background: #050914;
-      color: #f5f7fb;
-      font-family: Inter, Segoe UI, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-family:var(--font);
       padding: 30px;
     }
 
@@ -35,29 +37,30 @@
     }
 
     .sub {
-      color: #8993a8;
+      color: var(--ink-muted);
       margin-top: 6px;
       font-size: 13px;
     }
 
     button {
-      background: #101725;
-      border: 1px solid #263147;
-      color: #fff;
+      background: var(--surface);
+      border: 1px solid var(--line-strong);
+      color: var(--text);
       padding: 10px 15px;
       border-radius: 8px;
       cursor: pointer;
     }
 
     button:hover {
-      background: #171f30;
+      background: var(--surface-soft);
+      border-color: var(--line-strong);
     }
 
     .status {
       display: inline-block;
-      background: #071d12;
-      border: 1px solid #103b21;
-      color: #55e678;
+      background: var(--success-soft);
+      border: 1px solid var(--success);
+      color: var(--success);
       padding: 8px 12px;
       border-radius: 7px;
       font-size: 12px;
@@ -71,8 +74,8 @@
     }
 
     .card {
-      background: linear-gradient(180deg, #101725, #0d1420);
-      border: 1px solid #263147;
+      background: linear-gradient(180deg, var(--surface), var(--surface));
+      border: 1px solid var(--line);
       border-radius: 11px;
       padding: 19px;
     }
@@ -87,7 +90,7 @@
       justify-content: space-between;
       gap: 20px;
       padding: 13px 0;
-      border-bottom: 1px solid #202838;
+      border-bottom: 1px solid var(--line);
       font-size: 13px;
     }
 
@@ -96,16 +99,16 @@
     }
 
     .row span {
-      color: #cfd4df;
+      color: var(--ink-soft);
     }
 
     .row strong {
-      color: #55e678;
+      color: var(--success);
       text-align: right;
     }
 
     .footer {
-      color: #626d80;
+      color: var(--ink-muted);
       text-align: center;
       font-size: 10px;
       margin-top: 22px;
@@ -127,6 +130,12 @@
       }
     }
   </style>
+<link rel="stylesheet" href="/assets/prism-workspace.css">
+  <link rel="stylesheet" href="/assets/prism-pages.css">
+  <script defer src="/assets/prism-pages.js"></script>
+  <link rel="stylesheet" href="/assets/prism-theme.css">
+  <link rel="stylesheet" href="/assets/prism-aura.css">
+  <script defer src="/assets/prism-theme.js"></script>
 </head>
 <body>
   <div class="page">
@@ -138,7 +147,7 @@
     <button onclick="window.location.href='/dashboard'">← Back to Gateway</button>
     </header>
 
-    <div class="status">â— SHADOW AI SECURITY GATEWAY</div>
+    <div class="status">● SHADOW AI SECURITY GATEWAY</div>
 
     <div class="grid">
       <section class="card">
