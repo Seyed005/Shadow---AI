@@ -725,12 +725,16 @@ html[data-theme="light"] .stardust-particle {
     max-width: none;
   }
 }
-@media (max-width: 1180px) {
+@media (max-width: 1180px) and (min-width: 761px) {
   .app {
     grid-template-columns: 230px minmax(0, 1fr) !important;
   }
 }
 @media (max-width: 760px) {
+  .app {
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-areas: "workspace" !important;
+  }
   .page .tw,
   .page .tablewrap,
   .tw,

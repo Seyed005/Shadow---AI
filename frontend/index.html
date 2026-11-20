@@ -239,14 +239,18 @@ body::before {
   <main class="main">
     <header class="topbar">
       <button class="mobile-nav-toggle" id="mobileNavToggle" type="button" aria-label="Open navigation" aria-controls="primaryNavigation" aria-expanded="false">☰</button>
-      <div class="status-pill online"><span class="icon">⬡</span>GATEWAY ONLINE</div>
-      <div class="status-pill"><span class="icon">♙</span>DLP Active</div>
-      <div class="status-pill"><span class="icon">♧</span>OCR Active</div>
-      <div class="status-pill"><span class="icon" style="color:var(--warning)">●</span>Threat Detection</div>
-      <div class="status-pill"><span class="icon" style="color:var(--warning)">⬡</span>Risk Engine</div>
-      <div class="provider"><div class="provider-shield">⬡</div><div><div class="provider-title">Approved AI Provider</div><div class="provider-model" id="providerModel">Ollama (Gemma 3:4B)</div></div></div>
-      <button class="insights-panel-toggle" id="insightsPanelToggle" type="button" aria-controls="securityInsightsPanel" aria-expanded="false" aria-label="Open security insights">Insights</button>
-      <button class="theme-btn" id="themeBtn" data-theme-toggle type="button" title="Switch to dark theme" aria-label="Switch to dark theme" aria-pressed="false">☾</button>
+      <div class="topbar-status-track">
+        <div class="status-pill online"><span class="icon">⬡</span>GATEWAY ONLINE</div>
+        <div class="status-pill"><span class="icon">♙</span>DLP Active</div>
+        <div class="status-pill"><span class="icon">♧</span>OCR Active</div>
+        <div class="status-pill"><span class="icon" style="color:var(--warning)">●</span>Threat Detection</div>
+        <div class="status-pill"><span class="icon" style="color:var(--warning)">⬡</span>Risk Engine</div>
+        <div class="provider"><div class="provider-shield">⬡</div><div><div class="provider-title">Approved AI Provider</div><div class="provider-model" id="providerModel">Ollama (Gemma 3:4B)</div></div></div>
+      </div>
+      <div class="topbar-actions">
+        <button class="insights-panel-toggle" id="insightsPanelToggle" type="button" aria-controls="securityInsightsPanel" aria-expanded="false" aria-label="Open security insights">Insights</button>
+        <button class="theme-btn" id="themeBtn" data-theme-toggle type="button" title="Switch to dark theme" aria-label="Switch to dark theme" aria-pressed="false">☾</button>
+      </div>
     </header>
 
     <section class="chat-area">
