@@ -1,10 +1,10 @@
 # Shadow AI — Comprehensive System Architecture & Data Flow
 
-**Document:** Architecture Specification  
-**Project:** Shadow AI — Enterprise AI Security Gateway & Reverse Proxy  
-**Current Branch:** `redesign/pastel-aura`  
-**Author:** Senior Full-Stack Software Architect & Cybersecurity Auditor  
-**Date:** November 23, 2026  
+**Document:** Architecture Specification
+**Project:** Shadow AI — Enterprise AI Security Gateway & Reverse Proxy
+**Current Branch:** `redesign/pastel-aura`
+**Author:** Senior Full-Stack Software Architect & Cybersecurity Auditor
+**Date:** November 23, 2026
 
 ---
 

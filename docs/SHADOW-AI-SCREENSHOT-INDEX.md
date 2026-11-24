@@ -1,10 +1,10 @@
 # Shadow AI — Screenshot Deliverables Index
 
-**Project:** Shadow AI — AI Security Gateway & Reverse Proxy  
-**Directory:** `screenshots/project-documentation/`  
-**Standard Viewport:** 1440 × 900 Desktop  
-**Design System:** Pastel Aura (Taupe × Rose Dust) Light & Dark  
-**Generated Date:** November 23, 2026  
+**Project:** Shadow AI — AI Security Gateway & Reverse Proxy
+**Directory:** `screenshots/project-documentation/`
+**Standard Viewport:** 1440 × 900 Desktop
+**Design System:** Pastel Aura (Taupe × Rose Dust) Light & Dark
+**Generated Date:** November 23, 2026
 
 ---
 

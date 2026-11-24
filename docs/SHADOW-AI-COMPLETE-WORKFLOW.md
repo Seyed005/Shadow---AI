@@ -1,10 +1,10 @@
 # Shadow AI — Complete Project Workflow, DLP Pipeline & Module Audit
 
-**Document:** Comprehensive System Walkthrough & Technical Audit  
-**Project:** Shadow AI — Enterprise AI Security Gateway & Reverse Proxy  
-**Current Branch:** `redesign/pastel-aura`  
-**Author:** Senior Full-Stack Software Architect, Cybersecurity Auditor & QA Specialist  
-**Date:** November 23, 2026  
+**Document:** Comprehensive System Walkthrough & Technical Audit
+**Project:** Shadow AI — Enterprise AI Security Gateway & Reverse Proxy
+**Current Branch:** `redesign/pastel-aura`
+**Author:** Senior Full-Stack Software Architect, Cybersecurity Auditor & QA Specialist
+**Date:** November 23, 2026
 
 ---
 

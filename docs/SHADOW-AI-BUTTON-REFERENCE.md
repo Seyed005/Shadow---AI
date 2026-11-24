@@ -1,10 +1,10 @@
 # Shadow AI — Comprehensive Button-by-Button & Control Reference
 
-**Document:** Master Interactive Control Reference  
-**Project:** Shadow AI — Enterprise AI Security Gateway & Reverse Proxy  
-**Current Branch:** `redesign/pastel-aura`  
-**Author:** Senior Full-Stack Software Architect, QA Specialist & Security Auditor  
-**Date:** November 23, 2026  
+**Document:** Master Interactive Control Reference
+**Project:** Shadow AI — Enterprise AI Security Gateway & Reverse Proxy
+**Current Branch:** `redesign/pastel-aura`
+**Author:** Senior Full-Stack Software Architect, QA Specialist & Security Auditor
+**Date:** November 23, 2026
 
 ---
 

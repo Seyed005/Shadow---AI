@@ -1,10 +1,10 @@
 # Shadow AI — Complete Testing Baseline Report
 
-**Project:** Shadow AI  
-**Repository:** `~/Shadow---AI`  
-**Current Branch:** `redesign/pastel-aura`  
-**Date:** November 24, 2026  
-**Auditor:** Senior QA Automation Engineer, Application Security Tester & Full-Stack Developer  
+**Project:** Shadow AI
+**Repository:** `~/Shadow---AI`
+**Current Branch:** `redesign/pastel-aura`
+**Date:** November 24, 2026
+**Auditor:** Senior QA Automation Engineer, Application Security Tester & Full-Stack Developer
 
 ---
 

@@ -1,9 +1,9 @@
 # Shadow AI — Comprehensive Viva & Technical Interview Preparation Guide
 
-**Project:** Shadow AI — AI Security Gateway & Reverse Proxy  
-**Target Audience:** B.Tech Computer Science & Engineering (Cybersecurity) Students & Viva Examiners  
-**Author:** Senior Cybersecurity Architect & Academic Viva Specialist  
-**Date:** November 23, 2026  
+**Project:** Shadow AI — AI Security Gateway & Reverse Proxy
+**Target Audience:** B.Tech Computer Science & Engineering (Cybersecurity) Students & Viva Examiners
+**Author:** Senior Cybersecurity Architect & Academic Viva Specialist
+**Date:** November 23, 2026
 
 ---
 
@@ -13,10 +13,10 @@
 > *"Shadow AI is an enterprise cybersecurity firewall and reverse proxy that protects organizations when their employees use Artificial Intelligence. Normally, when an employee pastes source code, customer records, or credentials into an AI chat tool, that sensitive data leaves the company and can cause massive data breaches or regulatory violations. Shadow AI intercepts every prompt before it ever reaches the AI model. It scans the text and attached documents for sensitive entities like passwords, credit cards, emails, and prompt injections. If the prompt is safe, it lets it pass; if it contains sensitive data, it either redacts the secrets with synthetic tokens or stops the prompt entirely and asks a security analyst to approve it. In short, it is an intelligent, automated security gatekeeper for GenAI."*
 
 ### 1.2 Deep Technical Explanation (For Technical Evaluators)
-> *"Architecturally, Shadow AI is an inline, asynchronous reverse proxy built with FastAPI. It enforces multi-tiered Data Loss Prevention (DLP) across multimodal inputs (plain text, PDFs, Word documents, Excel sheets, PowerPoint decks, and OCR-extracted image text). The detection pipeline combines deterministic regular expressions, Microsoft Presidio Named Entity Recognition powered by Spacy NLP, and custom heuristic classifiers. 
-> 
-> Unlike conventional stateless DLP tools that only inspect a single query in isolation, Shadow AI implements a stateful, mathematical Contextual Risk Engine. It calculates total risk by synthesizing three variables: isolated prompt risk, historical risk decayed exponentially over prior conversation turns using a decay factor $\lambda = 0.8$, and a synergy multiplier $\alpha = 1.5$ that penalizes dangerous co-occurring entity pairs (such as a password appearing alongside an email address across multiple turns). 
-> 
+> *"Architecturally, Shadow AI is an inline, asynchronous reverse proxy built with FastAPI. It enforces multi-tiered Data Loss Prevention (DLP) across multimodal inputs (plain text, PDFs, Word documents, Excel sheets, PowerPoint decks, and OCR-extracted image text). The detection pipeline combines deterministic regular expressions, Microsoft Presidio Named Entity Recognition powered by Spacy NLP, and custom heuristic classifiers.
+>
+> Unlike conventional stateless DLP tools that only inspect a single query in isolation, Shadow AI implements a stateful, mathematical Contextual Risk Engine. It calculates total risk by synthesizing three variables: isolated prompt risk, historical risk decayed exponentially over prior conversation turns using a decay factor $\lambda = 0.8$, and a synergy multiplier $\alpha = 1.5$ that penalizes dangerous co-occurring entity pairs (such as a password appearing alongside an email address across multiple turns).
+>
 > The system enforces strict policy thresholds: prompts scoring $\le 10.0$ are allowed; scores between $10.0$ and $25.0$ are quarantined for Human-in-the-Loop (HITL) analyst review or synthetic token masking; scores exceeding $25.0$ are blocked. The persistence layer separates volatile, low-latency session tokens and conversation state in Redis from immutable, append-only audit trails stored in an ACID-compliant SQLite database with Write-Ahead Logging (WAL)."*
 
 ---
@@ -88,7 +88,7 @@
 **A:** GenAI traffic consists of unstructured natural language prompts and multi-turn conversational context. Generic firewalls only inspect headers and URLs; Shadow AI inspects semantic text, recognizes entity co-occurrences, understands prompt-injection attacks, and tracks risk across conversation turns.
 
 #### Q5: What are the three primary security policy decisions in Shadow AI?
-**A:** 
+**A:**
 1. `ALLOW`: Permits benign prompts to reach the AI model without modification.
 2. `SANITIZE_AND_SEND`: Replaces sensitive entities with synthetic tokens before forwarding.
 3. `BLOCK` / `HITL`: Quarantines high-risk prompts and prevents AI forwarding until a human analyst reviews the request.
@@ -122,7 +122,7 @@
 **A:** FastAPI is natively asynchronous (`async`/`await`), built on Starlette and Pydantic. It provides high throughput for I/O-bound operations (such as waiting for LLM completions or streaming file uploads), auto-generates OpenAPI documentation, and provides robust type validation.
 
 #### Q13: What port numbers are used across the system?
-**A:** 
+**A:**
 - Port `8000`: FastAPI Backend and Web UI.
 - Port `6379`: Redis in-memory cache and session store.
 - Port `11434`: Local Ollama AI daemon.
@@ -190,7 +190,7 @@
 ### Part 4: Risk Engine, Decay, & Policy Decisions
 
 #### Q31: State the total risk formula used by Shadow AI.
-**A:** 
+**A:**
 $$\text{Risk}_{\text{total}} = \text{Risk}_{\text{isolated}} + \text{Risk}_{\text{historical}} + \text{Risk}_{\text{synergy}}$$
 
 #### Q32: What is Isolated Risk?
@@ -255,7 +255,7 @@ $$\text{Risk}_{\text{isolated}} = \sum (\text{Weight} \times \text{Confidence})$
 **A:** The `Review Employee Data` module automatically replaces corporate employee names and identifiers with synthetic tokens (`[EMP_NAME]`, `[EMP_ID]`), preventing unauthorized internal snooping.
 
 #### Q50: What are the key academic and practical contributions of this project?
-**A:** 
+**A:**
 1. Real-time inline governance of GenAI interactions without requiring modifications to upstream LLM model weights.
 2. The introduction of a stateful, multi-turn risk scoring model using mathematical exponential decay and co-occurrence synergy.
 3. Multimodal document and OCR DLP coverage with automated synthetic token sanitization.

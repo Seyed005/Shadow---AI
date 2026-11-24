@@ -1,9 +1,9 @@
 # Shadow AI — Dashboard Spacing & Layout Optimization Report
 
-**Project:** `~/Shadow---AI`  
-**Date:** November 23, 2026  
-**Author:** Senior UI/UX Designer & Frontend Layout Engineer  
-**Design System:** Pastel Aura (`Taupe × Rose Dust`), Light & Dark Themes  
+**Project:** `~/Shadow---AI`
+**Date:** November 23, 2026
+**Author:** Senior UI/UX Designer & Frontend Layout Engineer
+**Design System:** Pastel Aura (`Taupe × Rose Dust`), Light & Dark Themes
 **Target Viewports Tested:** `1600×900`, `1440×900`, `1366×768`
 
 ---
