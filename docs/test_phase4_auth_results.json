@@ -1,0 +1,91 @@
+[
+  {
+    "case": "Valid Login",
+    "expected_status": 200,
+    "actual_status": 200,
+    "has_cookie": true,
+    "status": "PASS"
+  },
+  {
+    "case": "Invalid Login - Wrong Password",
+    "expected_status": 401,
+    "actual_status": 401,
+    "detail": "Invalid username/email or password.",
+    "status": "PASS"
+  },
+  {
+    "case": "Invalid Login - Nonexistent User",
+    "expected_status": 401,
+    "actual_status": 401,
+    "status": "PASS"
+  },
+  {
+    "case": "Empty Fields Login",
+    "expected_status": 400,
+    "actual_status": 400,
+    "status": "PASS"
+  },
+  {
+    "case": "Session Persistence (/auth/me)",
+    "expected_status": 200,
+    "actual_status": 200,
+    "user": "analyst_qa",
+    "status": "PASS"
+  },
+  {
+    "case": "Unauthorized /auth/me Access",
+    "expected_status": 401,
+    "actual_status": 401,
+    "status": "PASS"
+  },
+  {
+    "case": "Unauthorized /conversations Access",
+    "expected_status": 401,
+    "actual_status": 401,
+    "status": "PASS"
+  },
+  {
+    "case": "Unauthorized /gateway/scan Access",
+    "expected_status": 401,
+    "actual_status": 401,
+    "status": "PASS"
+  },
+  {
+    "case": "Logout Execution",
+    "expected_status": 200,
+    "actual_status": 200,
+    "cookie_revoked": true,
+    "status": "PASS"
+  },
+  {
+    "case": "Revoked Session Rejection",
+    "expected_status": 401,
+    "actual_status": 401,
+    "status": "PASS"
+  },
+  {
+    "case": "Signup Password Validation (Too short)",
+    "expected_status": 400,
+    "actual_status": 400,
+    "status": "PASS"
+  },
+  {
+    "case": "Signup Password Mismatch",
+    "expected_status": 400,
+    "actual_status": 400,
+    "status": "PASS"
+  },
+  {
+    "case": "Forgot Password - Token Generation",
+    "expected_status": 200,
+    "actual_status": 200,
+    "has_token": true,
+    "status": "PASS"
+  },
+  {
+    "case": "Forgot Password - Privacy Preservation",
+    "expected_status": 200,
+    "actual_status": 200,
+    "status": "PASS"
+  }
+]

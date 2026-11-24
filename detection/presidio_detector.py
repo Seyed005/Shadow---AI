@@ -91,13 +91,28 @@ def detect_with_presidio(text: str):
 
     # -----------------------------------------------------
     # REMOVE PHONE FINDINGS THAT OVERLAP IP ADDRESSES
+    # AND REMOVE URL FINDINGS THAT OVERLAP EMAIL ADDRESSES
+    # OR ARE NOT LEGITIMATE STANDALONE URLS
     # -----------------------------------------------------
+
+    import re
 
     ip_ranges = [
         (finding["start"], finding["end"])
         for finding in findings
         if finding["type"] == "IP_ADDRESS"
     ]
+
+    email_pattern = re.compile(
+        r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b"
+    )
+    email_ranges = [
+        (m.start(), m.end())
+        for m in email_pattern.finditer(text)
+    ]
+    for finding in findings:
+        if finding["type"] == "EMAIL_ADDRESS":
+            email_ranges.append((finding["start"], finding["end"]))
 
     filtered_findings = []
 
@@ -113,6 +128,49 @@ def detect_with_presidio(text: str):
 
             if overlaps_ip:
                 continue
+
+        if finding["type"] == "URL":
+
+            start = finding["start"]
+            end = finding["end"]
+
+            # Filter out URL if it overlaps any email address
+            overlaps_email = any(
+                start < ee and end > es
+                for es, ee in email_ranges
+            )
+            if overlaps_email:
+                continue
+
+            # Filter out if preceded by @ or part of an email address
+            if start > 0 and (text[start - 1] == "@" or text[start - 1].isalnum() or text[start - 1] in "._"):
+                continue
+
+            # Filter out if followed by alphanumeric characters without boundary
+            if end < len(text) and text[end].isalnum():
+                continue
+
+            # Verify legitimate URL structure
+            val_lower = finding["value"].lower().strip()
+            if not val_lower.startswith(("http://", "https://", "www.")):
+                if "." not in val_lower:
+                    continue
+                parts = val_lower.split("/")[0].split(".")
+                tld = parts[-1]
+                file_exts = {
+                    "pdf", "docx", "doc", "xlsx", "xls", "pptx", "ppt", "txt",
+                    "png", "jpg", "jpeg", "bmp", "gif", "zip", "tar", "gz",
+                    "py", "js", "html", "css", "json", "xml", "md", "do", "cx"
+                }
+                if tld in file_exts:
+                    continue
+                known_web_tlds = {
+                    "com", "org", "net", "edu", "gov", "io", "ai", "dev",
+                    "app", "co", "uk", "xyz", "info", "biz", "me", "tv",
+                    "online", "site", "top", "live", "club", "pro", "security"
+                }
+                if tld not in known_web_tlds:
+                    continue
 
         filtered_findings.append(finding)
 

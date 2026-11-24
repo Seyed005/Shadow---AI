@@ -12,6 +12,7 @@ def canonical_type(entity_type):
         "PASSWORD": "PASSWORD",
         "EMPLOYEE_ID": "EMPLOYEE_ID",
         "API_KEY_LIKE": "API_KEY_LIKE",
+        "URL": "URL",
     }
 
     return mapping.get(entity_type, entity_type)
@@ -116,6 +117,25 @@ def normalize_findings(findings):
 
         if not duplicate:
             merged.append(new_finding)
+
+    # --------------------------------------------------------
+    # Discard any URL finding that overlaps an EMAIL finding
+    # --------------------------------------------------------
+    email_spans = [
+        (f["start"], f["end"])
+        for f in merged
+        if f["type"] == "EMAIL" and f["start"] is not None and f["end"] is not None
+    ]
+    if email_spans:
+        merged = [
+            f for f in merged
+            if not (
+                f["type"] == "URL"
+                and f["start"] is not None
+                and f["end"] is not None
+                and any(f["start"] < ee and f["end"] > es for es, ee in email_spans)
+            )
+        ]
 
     return merged
 

@@ -1,0 +1,262 @@
+[
+  {
+    "name": "index.html (Dashboard)",
+    "url": "http://127.0.0.1:8000/dashboard",
+    "dom": {
+      "title": "Shadow AI \u2014 Security Gateway",
+      "buttonsCount": 32,
+      "inputsCount": 2,
+      "duplicateIds": [],
+      "themeToggleWorks": true
+    },
+    "console_errors": [],
+    "network_failed": []
+  },
+  {
+    "name": "login.html",
+    "url": "http://127.0.0.1:8000/",
+    "dom": {
+      "title": "Shadow AI \u2014 Secure Access",
+      "buttonsCount": 16,
+      "inputsCount": 11,
+      "duplicateIds": [],
+      "themeToggleWorks": true
+    },
+    "console_errors": [],
+    "network_failed": []
+  },
+  {
+    "name": "ai-provider.html",
+    "url": "http://127.0.0.1:8000/views/ai-provider.html",
+    "dom": {
+      "title": "Shadow AI \u2014 Approved AI Provider",
+      "buttonsCount": 3,
+      "inputsCount": 0,
+      "duplicateIds": [],
+      "themeToggleWorks": true
+    },
+    "console_errors": [],
+    "network_failed": []
+  },
+  {
+    "name": "analyze-server-logs.html",
+    "url": "http://127.0.0.1:8000/views/analyze-server-logs.html",
+    "dom": {
+      "title": "Shadow AI \u2014 Analyze Server Logs",
+      "buttonsCount": 3,
+      "inputsCount": 0,
+      "duplicateIds": [],
+      "themeToggleWorks": true
+    },
+    "console_errors": [],
+    "network_failed": []
+  },
+  {
+    "name": "audit-logs.html",
+    "url": "http://127.0.0.1:8000/views/audit-logs.html",
+    "dom": {
+      "title": "Shadow AI \u2014 Audit Logs",
+      "buttonsCount": 4,
+      "inputsCount": 3,
+      "duplicateIds": [],
+      "themeToggleWorks": true
+    },
+    "console_errors": [],
+    "network_failed": []
+  },
+  {
+    "name": "dashboard.html (Activity)",
+    "url": "http://127.0.0.1:8000/views/dashboard.html",
+    "dom": {
+      "title": "Shadow AI \u2014 Security Dashboard",
+      "buttonsCount": 10,
+      "inputsCount": 2,
+      "duplicateIds": [],
+      "themeToggleWorks": true
+    },
+    "console_errors": [],
+    "network_failed": []
+  },
+  {
+    "name": "data-analyst.html",
+    "url": "http://127.0.0.1:8000/views/data-analyst.html",
+    "dom": {
+      "title": "Shadow AI \u2014 Gateway Intelligence",
+      "buttonsCount": 3,
+      "inputsCount": 0,
+      "duplicateIds": [],
+      "themeToggleWorks": true
+    },
+    "console_errors": [],
+    "network_failed": []
+  },
+  {
+    "name": "dlp.html",
+    "url": "http://127.0.0.1:8000/views/dlp.html",
+    "dom": {
+      "title": "Shadow AI \u2014 DLP Active",
+      "buttonsCount": 3,
+      "inputsCount": 0,
+      "duplicateIds": [],
+      "themeToggleWorks": true
+    },
+    "console_errors": [],
+    "network_failed": []
+  },
+  {
+    "name": "gateway.html",
+    "url": "http://127.0.0.1:8000/views/gateway.html",
+    "dom": {
+      "title": "Shadow AI \u2014 Gateway Status",
+      "buttonsCount": 3,
+      "inputsCount": 0,
+      "duplicateIds": [],
+      "themeToggleWorks": true
+    },
+    "console_errors": [],
+    "network_failed": []
+  },
+  {
+    "name": "help-docs.html",
+    "url": "http://127.0.0.1:8000/views/help-docs.html",
+    "dom": {
+      "title": "Shadow AI \u2014 Help & Docs",
+      "buttonsCount": 3,
+      "inputsCount": 0,
+      "duplicateIds": [],
+      "themeToggleWorks": true
+    },
+    "console_errors": [],
+    "network_failed": []
+  },
+  {
+    "name": "network-report.html",
+    "url": "http://127.0.0.1:8000/views/network-report.html",
+    "dom": {
+      "title": "Shadow AI \u2014 Network Report",
+      "buttonsCount": 4,
+      "inputsCount": 0,
+      "duplicateIds": [],
+      "themeToggleWorks": true
+    },
+    "console_errors": [],
+    "network_failed": []
+  },
+  {
+    "name": "ocr.html",
+    "url": "http://127.0.0.1:8000/views/ocr.html",
+    "dom": {
+      "title": "Shadow AI \u2014 OCR Processing",
+      "buttonsCount": 3,
+      "inputsCount": 0,
+      "duplicateIds": [],
+      "themeToggleWorks": true
+    },
+    "console_errors": [],
+    "network_failed": []
+  },
+  {
+    "name": "policy-management.html",
+    "url": "http://127.0.0.1:8000/views/policy-management.html",
+    "dom": {
+      "title": "Shadow AI \u2014 Policy Management",
+      "buttonsCount": 3,
+      "inputsCount": 0,
+      "duplicateIds": [],
+      "themeToggleWorks": true
+    },
+    "console_errors": [],
+    "network_failed": []
+  },
+  {
+    "name": "red-team.html",
+    "url": "http://127.0.0.1:8000/views/red-team.html",
+    "dom": {
+      "title": "Shadow AI \u2014 Adversary Simulation",
+      "buttonsCount": 11,
+      "inputsCount": 1,
+      "duplicateIds": [],
+      "themeToggleWorks": true
+    },
+    "console_errors": [],
+    "network_failed": []
+  },
+  {
+    "name": "review-employee-data.html",
+    "url": "http://127.0.0.1:8000/views/review-employee-data.html",
+    "dom": {
+      "title": "Shadow AI \u2014 Review Employee Data",
+      "buttonsCount": 3,
+      "inputsCount": 0,
+      "duplicateIds": [],
+      "themeToggleWorks": true
+    },
+    "console_errors": [],
+    "network_failed": []
+  },
+  {
+    "name": "risk-engine.html",
+    "url": "http://127.0.0.1:8000/views/risk-engine.html",
+    "dom": {
+      "title": "Shadow AI \u2014 Risk Engine",
+      "buttonsCount": 3,
+      "inputsCount": 0,
+      "duplicateIds": [],
+      "themeToggleWorks": true
+    },
+    "console_errors": [],
+    "network_failed": []
+  },
+  {
+    "name": "security-policy-summary.html",
+    "url": "http://127.0.0.1:8000/views/security-policy-summary.html",
+    "dom": {
+      "title": "Shadow AI \u2014 Security Policy Summary",
+      "buttonsCount": 3,
+      "inputsCount": 0,
+      "duplicateIds": [],
+      "themeToggleWorks": true
+    },
+    "console_errors": [],
+    "network_failed": []
+  },
+  {
+    "name": "settings.html",
+    "url": "http://127.0.0.1:8000/views/settings.html",
+    "dom": {
+      "title": "Shadow AI \u2014 Settings",
+      "buttonsCount": 4,
+      "inputsCount": 0,
+      "duplicateIds": [],
+      "themeToggleWorks": true
+    },
+    "console_errors": [],
+    "network_failed": []
+  },
+  {
+    "name": "suspicious-activity.html",
+    "url": "http://127.0.0.1:8000/views/suspicious-activity.html",
+    "dom": {
+      "title": "Shadow AI \u2014 Suspicious Activity",
+      "buttonsCount": 4,
+      "inputsCount": 1,
+      "duplicateIds": [],
+      "themeToggleWorks": true
+    },
+    "console_errors": [],
+    "network_failed": []
+  },
+  {
+    "name": "threat-detection.html",
+    "url": "http://127.0.0.1:8000/views/threat-detection.html",
+    "dom": {
+      "title": "Shadow AI \u2014 Threat Detection",
+      "buttonsCount": 3,
+      "inputsCount": 0,
+      "duplicateIds": [],
+      "themeToggleWorks": true
+    },
+    "console_errors": [],
+    "network_failed": []
+  }
+]

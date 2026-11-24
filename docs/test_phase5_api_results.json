@@ -1,0 +1,92 @@
+[
+  {
+    "endpoint": "GET /health",
+    "description": "System health check",
+    "status_code": 200,
+    "pass": true
+  },
+  {
+    "endpoint": "POST /health (Wrong Method)",
+    "description": "Expect 405 Method Not Allowed",
+    "status_code": 405,
+    "pass": true
+  },
+  {
+    "endpoint": "GET /auth/me (Authenticated)",
+    "description": "Fetch current user profile",
+    "status_code": 200,
+    "pass": true
+  },
+  {
+    "endpoint": "GET /auth/me (Unauthenticated)",
+    "description": "Expect 401 Unauthorized",
+    "status_code": 401,
+    "pass": true
+  },
+  {
+    "endpoint": "GET /conversations (Authenticated)",
+    "description": "List user conversations",
+    "status_code": 200,
+    "pass": true
+  },
+  {
+    "endpoint": "GET /conversations (Unauthenticated)",
+    "description": "Expect 401 Unauthorized",
+    "status_code": 401,
+    "pass": true
+  },
+  {
+    "endpoint": "POST /gateway/scan (Normal prompt)",
+    "description": "Harmless prompt scan and policy evaluation",
+    "status_code": 200,
+    "pass": true
+  },
+  {
+    "endpoint": "POST /gateway/scan (Credential detection)",
+    "description": "Sensitive credentials trigger HITL or BLOCK policy",
+    "status_code": 200,
+    "pass": true
+  },
+  {
+    "endpoint": "POST /gateway/scan (Empty text)",
+    "description": "Expect 400 Bad Request on empty text",
+    "status_code": 400,
+    "pass": true
+  },
+  {
+    "endpoint": "POST /gateway/hitl (BLOCK decision)",
+    "description": "Analyst blocks high risk prompt",
+    "status_code": 200,
+    "pass": true
+  },
+  {
+    "endpoint": "POST /gateway/hitl (Invalid decision)",
+    "description": "Expect 400 Bad Request for unrecognized decision",
+    "status_code": 400,
+    "pass": true
+  },
+  {
+    "endpoint": "POST /gateway/scan-file (.txt upload)",
+    "description": "Scan text file attachment",
+    "status_code": 200,
+    "pass": true
+  },
+  {
+    "endpoint": "POST /gateway/scan-file (Unsupported extension)",
+    "description": "Expect 400 Bad Request on .exe upload",
+    "status_code": 400,
+    "pass": true
+  },
+  {
+    "endpoint": "GET /conversations/{session_id}",
+    "description": "Fetch saved messages for completed scan session",
+    "status_code": 200,
+    "pass": true
+  },
+  {
+    "endpoint": "GET /conversations/{session_id} (Nonexistent)",
+    "description": "Expect 404 Not Found for missing conversation",
+    "status_code": 404,
+    "pass": true
+  }
+]

@@ -1,0 +1,170 @@
+{
+  "1440x900": {
+    "viewport": {
+      "winW": 1440,
+      "winH": 900,
+      "docW": 1440,
+      "docH": 900,
+      "bodyW": 1440,
+      "bodyH": 900
+    },
+    "horizontalOverflow": false,
+    "overlapDetected": false,
+    "sidebar": {
+      "width": 260,
+      "height": 900,
+      "right": 260
+    },
+    "newChat": {
+      "width": 235,
+      "height": 46
+    },
+    "navItemsCount": 12,
+    "navItemAvgHeight": 44,
+    "main": {
+      "width": 872,
+      "height": 900,
+      "left": 260,
+      "right": 1132
+    },
+    "topbar": {
+      "width": 872,
+      "height": 62
+    },
+    "composer": {
+      "width": 872,
+      "height": 103.5,
+      "bottom": 0
+    },
+    "rightbar": {
+      "width": 308,
+      "height": 900,
+      "left": 1132
+    },
+    "metricCardsCount": 0,
+    "themeToggle": {
+      "themeSwitched": true,
+      "darkThemeActive": true
+    },
+    "conversationScrollTest": {
+      "initialScrollHeight": 735,
+      "newScrollHeight": 2212,
+      "canScroll": true,
+      "bodyScrolled": false,
+      "composerFixed": true,
+      "composerBottomOffset": 0
+    }
+  },
+  "1600x900": {
+    "viewport": {
+      "winW": 1600,
+      "winH": 900,
+      "docW": 1600,
+      "docH": 900,
+      "bodyW": 1600,
+      "bodyH": 900
+    },
+    "horizontalOverflow": false,
+    "overlapDetected": false,
+    "sidebar": {
+      "width": 268,
+      "height": 900,
+      "right": 268
+    },
+    "newChat": {
+      "width": 243,
+      "height": 46
+    },
+    "navItemsCount": 12,
+    "navItemAvgHeight": 44,
+    "main": {
+      "width": 1012,
+      "height": 900,
+      "left": 268,
+      "right": 1280
+    },
+    "topbar": {
+      "width": 1012,
+      "height": 64
+    },
+    "composer": {
+      "width": 1012,
+      "height": 103.5,
+      "bottom": 0
+    },
+    "rightbar": {
+      "width": 320,
+      "height": 900,
+      "left": 1280
+    },
+    "metricCardsCount": 0,
+    "themeToggle": {
+      "themeSwitched": true,
+      "darkThemeActive": true
+    },
+    "conversationScrollTest": {
+      "initialScrollHeight": 733,
+      "newScrollHeight": 2193,
+      "canScroll": true,
+      "bodyScrolled": false,
+      "composerFixed": true,
+      "composerBottomOffset": 0
+    }
+  },
+  "1366x768": {
+    "viewport": {
+      "winW": 1366,
+      "winH": 768,
+      "docW": 1366,
+      "docH": 768,
+      "bodyW": 1366,
+      "bodyH": 768
+    },
+    "horizontalOverflow": false,
+    "overlapDetected": false,
+    "sidebar": {
+      "width": 246,
+      "height": 768,
+      "right": 246
+    },
+    "newChat": {
+      "width": 219,
+      "height": 42
+    },
+    "navItemsCount": 12,
+    "navItemAvgHeight": 40,
+    "main": {
+      "width": 830,
+      "height": 768,
+      "left": 246,
+      "right": 1076
+    },
+    "topbar": {
+      "width": 830,
+      "height": 58
+    },
+    "composer": {
+      "width": 830,
+      "height": 103.5,
+      "bottom": 0
+    },
+    "rightbar": {
+      "width": 290,
+      "height": 768,
+      "left": 1076
+    },
+    "metricCardsCount": 0,
+    "themeToggle": {
+      "themeSwitched": true,
+      "darkThemeActive": true
+    },
+    "conversationScrollTest": {
+      "initialScrollHeight": 607,
+      "newScrollHeight": 2190,
+      "canScroll": true,
+      "bodyScrolled": false,
+      "composerFixed": true,
+      "composerBottomOffset": 0
+    }
+  }
+}

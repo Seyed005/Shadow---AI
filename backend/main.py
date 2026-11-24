@@ -158,6 +158,14 @@ async def get_current_user(request: Request):
 # FRONTEND ROUTES
 # ============================================================
 
+@app.get("/favicon.ico", include_in_schema=False)
+async def favicon():
+    icon_path = FRONTEND_DIR / "assets" / "shadow-ai-avatar.png"
+    if icon_path.is_file():
+        return FileResponse(icon_path, media_type="image/png")
+    return Response(status_code=204)
+
+
 @app.get("/", include_in_schema=False)
 async def root():
     """
@@ -343,8 +351,8 @@ async def signup(
 @app.post("/auth/login")
 async def login(
     response: Response,
-    login: str = Form(...),
-    password: str = Form(...),
+    login: str = Form(""),
+    password: str = Form(""),
 ):
     """
     Authenticate using username or email.

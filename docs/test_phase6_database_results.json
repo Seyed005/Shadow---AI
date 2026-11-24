@@ -1,0 +1,28 @@
+[
+  {
+    "test": "SQLite Connectivity and Tables",
+    "tables": [
+      "conversations",
+      "conversation_messages",
+      "sqlite_sequence"
+    ],
+    "pass": true
+  },
+  {
+    "test": "Isolated SQLite CRUD & Cascade",
+    "pass": true
+  },
+  {
+    "test": "Redis Connectivity & TTL",
+    "val": "pong",
+    "ttl_valid": true,
+    "pass": true
+  },
+  {
+    "test": "Conversation & Message Persistence",
+    "conv_count": 3,
+    "has_user_msg": true,
+    "has_assistant_msg": true,
+    "pass": true
+  }
+]

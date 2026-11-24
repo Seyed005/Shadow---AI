@@ -1,13 +1,19 @@
 import io
 from pathlib import Path
+import shutil
+import sys
 
 import pymupdf
 from PIL import Image
 import pytesseract
 
-pytesseract.pytesseract.tesseract_cmd = (
-    r"C:\Program Files\Tesseract-OCR\tesseract.exe"
-)
+_tesseract_bin = shutil.which("tesseract") or "/usr/bin/tesseract"
+if shutil.which("tesseract"):
+    pytesseract.pytesseract.tesseract_cmd = shutil.which("tesseract")
+elif sys.platform.startswith("win") and Path(r"C:\Program Files\Tesseract-OCR\tesseract.exe").exists():
+    pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+elif _tesseract_bin and Path(_tesseract_bin).exists():
+    pytesseract.pytesseract.tesseract_cmd = _tesseract_bin
 
 
 # ============================================================

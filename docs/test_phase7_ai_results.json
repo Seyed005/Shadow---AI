@@ -1,0 +1,37 @@
+[
+  {
+    "test": "Ollama Connection Status",
+    "status": "PASS",
+    "details": "Connected to Ollama. Models: ['qwen2.5:1.5b', 'qwen3:4b', 'gemma3:4b']"
+  },
+  {
+    "test": "Model Availability",
+    "status": "PASS",
+    "details": "Configured model 'gemma3:4b' present in: ['qwen2.5:1.5b', 'qwen3:4b', 'gemma3:4b']"
+  },
+  {
+    "test": "Safe Prompt Generation",
+    "status": "PASS",
+    "details": "Response received: Paris."
+  },
+  {
+    "test": "Empty Request Validation",
+    "status": "PASS",
+    "details": "Correctly rejected empty request: The AI request was empty."
+  },
+  {
+    "test": "Invalid Model Error Handling",
+    "status": "PASS",
+    "details": "Caught expected Ollama ResponseError: model 'nonexistent_shadow_model_xyz' not found"
+  },
+  {
+    "test": "Streaming Support",
+    "status": "NOT IMPLEMENTED",
+    "details": "Gateway architecture currently uses buffered request-response for complete DLP inspection before delivery."
+  },
+  {
+    "test": "Gemini Provider",
+    "status": "BLOCKED BY ENVIRONMENT",
+    "details": "GEMINI_API_KEY not configured in environment. In accordance with strict security rules, external unconfigured provider is blocked."
+  }
+]

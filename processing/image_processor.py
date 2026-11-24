@@ -1,14 +1,19 @@
 from pathlib import Path
+import shutil
+import sys
 
 from PIL import Image, ImageOps
 import pytesseract
 
 
-# Use the same Tesseract installation already verified
-# for the Shadow AI PDF OCR pipeline.
-pytesseract.pytesseract.tesseract_cmd = (
-    r"C:\Program Files\Tesseract-OCR\tesseract.exe"
-)
+# Dynamically detect Tesseract OCR on system PATH or fallback across OS
+_tesseract_bin = shutil.which("tesseract") or "/usr/bin/tesseract"
+if shutil.which("tesseract"):
+    pytesseract.pytesseract.tesseract_cmd = shutil.which("tesseract")
+elif sys.platform.startswith("win") and Path(r"C:\Program Files\Tesseract-OCR\tesseract.exe").exists():
+    pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+elif _tesseract_bin and Path(_tesseract_bin).exists():
+    pytesseract.pytesseract.tesseract_cmd = _tesseract_bin
 
 
 SUPPORTED_IMAGE_EXTENSIONS = {

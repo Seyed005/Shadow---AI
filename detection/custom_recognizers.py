@@ -38,6 +38,28 @@ PASSWORD_PATTERNS = [
     )
 ]
 
+NON_PASSWORD_WORDS = {
+    "a", "an", "the", "for", "to", "in", "on", "at", "by", "from", "of", "with",
+    "and", "or", "but", "not", "so", "as", "if", "that", "this", "which",
+    "management", "manager", "managers", "policy", "policies", "security",
+    "reset", "resets", "resetting", "change", "changes", "changing", "update", "updates", "updating",
+    "creation", "create", "creating", "protect", "protection", "generator", "generators",
+    "length", "strength", "complexity", "rule", "rules", "guideline", "guidelines",
+    "best", "practice", "practices", "requirement", "requirements", "hash", "hashes", "hashing",
+    "cracker", "cracking", "checker", "check", "checks", "checking", "audit", "auditing",
+    "field", "fields", "input", "inputs", "box", "boxes", "form", "forms",
+    "leak", "leaks", "leaked", "breach", "breaches", "breached", "stolen", "compromised",
+    "vault", "vaults", "store", "storage", "storing", "schema", "database", "table", "column",
+    "file", "files", "list", "lists", "type", "types", "sample", "samples", "example", "examples",
+    "test", "tests", "testing", "verification", "verify", "verifying", "pattern", "patterns",
+    "flow", "flows", "system", "systems", "service", "services", "tool", "tools",
+    "app", "apps", "application", "applications", "user", "users", "account", "accounts",
+    "admin", "admins", "help", "tips", "support", "question", "questions",
+    "issue", "issues", "error", "errors", "problem", "problems",
+    "information", "data", "details", "text", "string", "value", "values",
+    "prompt", "prompts", "model", "models", "ai", "gateway", "assistant"
+}
+
 
 # V6.1:
 # Conservative semantic credential patterns.
@@ -107,6 +129,10 @@ def detect_custom_entities(text: str):
     for pattern in PASSWORD_PATTERNS:
         for match in pattern.finditer(text):
             password_value = match.group(1)
+            clean_val = password_value.strip().rstrip("?.!,:;\"'").lower()
+            if pattern == PASSWORD_PATTERNS[2] and clean_val in NON_PASSWORD_WORDS:
+                continue
+
             start, end = match.span(1)
             position = (start, end)
 
